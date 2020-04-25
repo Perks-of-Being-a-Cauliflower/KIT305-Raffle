@@ -102,6 +102,9 @@
                                 <state key="normal" title="Start Raffle">
                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <segue destination="aqs-Wn-0aU" kind="show" id="Q5T-Ub-iTT"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5uT-NO-kLT">
                                 <rect key="frame" x="220" y="49" width="205" height="34"/>
@@ -205,10 +208,10 @@
             </objects>
             <point key="canvasLocation" x="324.77678571428572" y="111.59420289855073"/>
         </scene>
-        <!--View Controller-->
+        <!--Second View Controller-->
         <scene sceneID="ETl-PT-27g">
             <objects>
-                <viewController id="aqs-Wn-0aU" sceneMemberID="viewController">
+                <viewController id="aqs-Wn-0aU" customClass="SecondViewController" customModule="Tutorial5" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="opC-eu-WHx">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -306,10 +309,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="questionmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vhe-BJ-hkM">
-                                        <rect key="frame" x="384" y="53.5" width="58" height="61"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wa7-HL-0Rx">
                                         <rect key="frame" x="60" y="133" width="103" height="41"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -417,6 +416,17 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="teg-eX-CTD">
+                                        <rect key="frame" x="376" y="44" width="74" height="74"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                        <state key="normal" image="questionmark.circle" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="42" scale="large"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="KTz-9x-PBM" kind="show" id="AaU-b7-Htf"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -430,15 +440,16 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="TVb-KH-qtM"/>
                     </view>
+                    <navigationItem key="navigationItem" id="aX6-eN-7Dc"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WqB-Sx-Tvf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="988.39285714285711" y="100.00000000000001"/>
         </scene>
-        <!--View Controller-->
+        <!--Settings View Controller-->
         <scene sceneID="6iY-o3-ldP">
             <objects>
-                <viewController id="KTz-9x-PBM" sceneMemberID="viewController">
+                <viewController id="KTz-9x-PBM" customClass="SettingsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="egu-HT-Y1c">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -577,6 +588,9 @@
                                         <state key="normal" title="Save and Exit">
                                             <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="aqs-Wn-0aU" kind="show" id="mho-XX-efv"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Colour" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dnQ-OT-6o9">
                                         <rect key="frame" x="545" y="59" width="55" height="39"/>
@@ -617,10 +631,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="mTK-Kb-uuY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="hu8-BF-jdK"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jAd-A1-3pZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="987.72321428571422" y="840.57971014492762"/>
+            <point key="canvasLocation" x="988" y="1103"/>
         </scene>
     </scenes>
     <resources>
@@ -628,4 +643,7 @@
         <image name="plus.circle.fill" catalog="system" width="64" height="60"/>
         <image name="questionmark.circle" catalog="system" width="64" height="60"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Q5T-Ub-iTT"/>
+    </inferredMetricsTieBreakers>
 </document>
