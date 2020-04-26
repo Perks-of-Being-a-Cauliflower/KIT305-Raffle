@@ -21,31 +21,40 @@ class ViewController: UIViewController, UIPickerViewDelegate
     @IBOutlet weak var chosenNameField: UITextField!
     @IBOutlet weak var popUpView: UIView!
 
-    @IBAction func openInputBox(_ sender: UITextField) {
-        
-        popUpView.isHidden = false
-    }
+
     
+    @IBAction func showInputMenu(_ sender: UITextField) {
+        var temp: String? = chosenNameField.text
+        confirmedName.text = temp
+        chosenNameField.isUserInteractionEnabled = false
+        confirmedName.isUserInteractionEnabled = true
+        confirmedName.becomeFirstResponder()
+        popUpView.isHidden = false
+        print("STOP YOU VIOLATED THE LAW!")
+    }
     
     @IBAction func confirmButton(_ sender: UIButton) {
         //chosenNameField.resignFirstResponder()
         //self.view.endEditing(true)
+        confirmedName.isUserInteractionEnabled = false
         var newName: String? = confirmedName.text
         chosenNameField.text = newName
         popUpView.isHidden = true
+        chosenNameField.isUserInteractionEnabled = true
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
-        print("Delicious Biscuits")
+        confirmedName.isUserInteractionEnabled = false
         popUpView.isHidden = true
+        chosenNameField.isUserInteractionEnabled = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //popUpView.isHidden = true
-        //chosenNameField.allowsEditingTextAttributes = false
+        chosenNameField.allowsEditingTextAttributes = false
         //confirmedName.becomeFirstResponder()
-        chosenNameField.isUserInteractionEnabled = false
+        //chosenNameField.isUserInteractionEnabled = false
     }
     
 
