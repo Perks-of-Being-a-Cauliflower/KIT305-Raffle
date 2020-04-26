@@ -8,35 +8,44 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
+class ViewController: UIViewController, UIPickerViewDelegate
 {
-
-    
     
     // a handle to the database itself
     // you can switch databases or create new blank ones by changing databaseName
     var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabasesdfg")
+    
+    
+    @IBOutlet weak var confirmedName: UITextField!
+    
+    @IBOutlet weak var chosenNameField: UITextField!
+    @IBOutlet weak var popUpView: UIView!
 
+    @IBAction func openInputBox(_ sender: UITextField) {
+        
+        popUpView.isHidden = false
+    }
     
-    @IBOutlet weak var iD: UIPickerView!
     
-    var pickerData: [String] = [String]()
+    @IBAction func confirmButton(_ sender: UIButton) {
+        //chosenNameField.resignFirstResponder()
+        //self.view.endEditing(true)
+        var newName: String? = confirmedName.text
+        chosenNameField.text = newName
+        popUpView.isHidden = true
+    }
+    
+    @IBAction func backButtonTapped(_ sender: UIButton) {
+        print("Delicious Biscuits")
+        popUpView.isHidden = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.iD.delegate = self
-        self.iD.dataSource = self
-        
-        pickerData = ["A","B","C","D","E","F","G","H","I","J","K","L","M"]
-        
-    }
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        //popUpView.isHidden = true
+        //chosenNameField.allowsEditingTextAttributes = false
+        //confirmedName.becomeFirstResponder()
+        chosenNameField.isUserInteractionEnabled = false
     }
     
 
