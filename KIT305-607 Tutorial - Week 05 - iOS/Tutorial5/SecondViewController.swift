@@ -2,7 +2,7 @@
 //  SecondViewController.swift
 //  Tutorial5
 //
-//  Created by Fiona Colbert on 25/4/20.
+//  Created by Will Colbert on 25/4/20.
 //  Copyright © 2020 Lindsay Wells. All rights reserved.
 //
 

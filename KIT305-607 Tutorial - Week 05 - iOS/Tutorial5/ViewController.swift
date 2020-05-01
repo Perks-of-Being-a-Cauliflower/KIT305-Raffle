@@ -10,49 +10,122 @@ import UIKit
 
 class ViewController: UIViewController, UIPickerViewDelegate
 {
-    
+
     // a handle to the database itself
     // you can switch databases or create new blank ones by changing databaseName
     var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabasesdfg")
     
+    @IBOutlet weak var titleField: UILabel!
     
     @IBOutlet weak var confirmedName: UITextField!
+    @IBOutlet weak var desField: UITextField!
+    @IBOutlet weak var ticketPrice: UITextField!
+    @IBOutlet weak var endCon: UITextField!
     
+    
+    @IBOutlet weak var descriptInput: UITextView!
     @IBOutlet weak var chosenNameField: UITextField!
     @IBOutlet weak var popUpView: UIView!
-
+    
 
     
+
+    
+    
     @IBAction func showInputMenu(_ sender: UITextField) {
-        var temp: String? = chosenNameField.text
-        confirmedName.text = temp
         chosenNameField.isUserInteractionEnabled = false
-        confirmedName.isUserInteractionEnabled = true
-        confirmedName.becomeFirstResponder()
-        popUpView.isHidden = false
-        print("STOP YOU VIOLATED THE LAW!")
+        desField.isUserInteractionEnabled = false
+        ticketPrice.isUserInteractionEnabled = false
+        endCon.isUserInteractionEnabled = false
+        chosenNameField.resignFirstResponder()
+        desField.resignFirstResponder()
+        ticketPrice.resignFirstResponder()
+        endCon.resignFirstResponder()
+        if let opt = Options(tag: sender.tag) {
+            print (opt.options)
+            titleField.text = opt.options
+            if sender.tag == 1 {
+                confirmedName.isUserInteractionEnabled = true
+                confirmedName.isHidden = false
+                confirmedName.becomeFirstResponder()
+                let temp: String? = chosenNameField.text
+                confirmedName.text = temp
+            } else if sender.tag == 2 {
+                descriptInput.isUserInteractionEnabled = true
+                descriptInput.isHidden = false
+                descriptInput.becomeFirstResponder()
+                let temp: String? = desField.text
+                descriptInput.text = temp
+            } else if sender.tag == 3 {
+                confirmedName.keyboardType = UIKeyboardType.numberPad
+                confirmedName.isUserInteractionEnabled = true
+                confirmedName.isHidden = false
+                confirmedName.becomeFirstResponder()
+                let temp: String? = ticketPrice.text
+                confirmedName.text = temp
+            } else if sender.tag == 4 {
+                confirmedName.isUserInteractionEnabled = true
+                confirmedName.isHidden = false
+                confirmedName.becomeFirstResponder()
+                let temp: String? = endCon.text
+                confirmedName.text = temp
+                
+            }
+            popUpView.isHidden = false
+        }
+        
+       
     }
     
     @IBAction func confirmButton(_ sender: UIButton) {
-        //chosenNameField.resignFirstResponder()
-        //self.view.endEditing(true)
+        let returnField: String? = titleField.text
         confirmedName.isUserInteractionEnabled = false
-        var newName: String? = confirmedName.text
-        chosenNameField.text = newName
-        popUpView.isHidden = true
+        descriptInput.isUserInteractionEnabled = false
         chosenNameField.isUserInteractionEnabled = true
+        desField.isUserInteractionEnabled = true
+        ticketPrice.isUserInteractionEnabled = true
+        endCon.isUserInteractionEnabled = true
+        if returnField == "Name:" {
+            confirmedName.isHidden = true
+            let newName: String? = confirmedName.text
+            chosenNameField.text = newName
+        } else if returnField == "Description:" {
+            descriptInput.isHidden = true
+            let newName: String? = descriptInput.text
+            desField.text = newName
+        } else if returnField == "Price:" {
+            confirmedName.isHidden = true
+            let newName: String? = confirmedName.text
+            ticketPrice.text = newName
+            confirmedName.keyboardType = UIKeyboardType.default
+        } else if returnField == "Select End Condition:" {
+            confirmedName.isHidden = true
+            let newName: String? = confirmedName.text
+            endCon.text = newName
+        }
+        popUpView.isHidden = true
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
-        confirmedName.isUserInteractionEnabled = false
-        popUpView.isHidden = true
-        chosenNameField.isUserInteractionEnabled = true
+            confirmedName.keyboardType = UIKeyboardType.default
+            chosenNameField.isUserInteractionEnabled = true
+            desField.isUserInteractionEnabled = true
+            ticketPrice.isUserInteractionEnabled = true
+            endCon.isUserInteractionEnabled = true
+            confirmedName.isUserInteractionEnabled = false
+            descriptInput.isUserInteractionEnabled = false
+            descriptInput.isHidden = true
+            confirmedName.isHidden = true
+            popUpView.isHidden = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //popUpView.isHidden = true
         chosenNameField.allowsEditingTextAttributes = false
+        desField.allowsEditingTextAttributes = false
+        ticketPrice.allowsEditingTextAttributes = false
+        endCon.allowsEditingTextAttributes = false
         //confirmedName.becomeFirstResponder()
         //chosenNameField.isUserInteractionEnabled = false
     }
