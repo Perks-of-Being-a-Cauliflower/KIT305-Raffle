@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 4
+    private let DATABASE_VERSION = 8
     
     
     
@@ -70,10 +70,12 @@ class SQLiteDatabase
     {
         //INSERT YOUR createTable function calls here
         //e.g. createMovieTable()
+        createTicketTable()
     }
     private func dropTables()
     {
         //INSERT YOUR dropTable function calls here
+        dropTable(tableName:"Ticket")
         //e.g. dropTable(tableName:"Movie")
     }
     
@@ -290,7 +292,64 @@ class SQLiteDatabase
     /* --- ADD YOUR TABLES ETC HERE ---*/
     /* --------------------------------*/
     
-
+    //SQLite does not have boolean, if margin = 1 = true, ELSE margin = 0 = false 
+        //int to represent which color, since we control the swatches
+        //still need to figure out storing customers and end conditions.
+            //could do customers in a list and have them reference the ID of the ticket, idk.
+        //also need to store how many tickets have been sold / how many remain.
+        //could probably store char as a single letter, but unsure tbh
+    func createTicketTable()     {
+        let createTicketTableQuery = """
+        CREATE TABLE Ticket (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            Open INTEGER,
+            Name CHAR(255),
+            Desc CHAR(255),
+            Margin INTEGER,
+            Price DOUBLE,
+            IDLetter CHAR(255),
+            Colour INTEGER
+        );
+        """
+        createTableWithQuery(createTicketTableQuery, tableName: "Ticket")
+    }
+    
+    func insert(ticket:Ticket) {
+        let insertStatementQuery = "INSERT INTO Ticket (Open, Name, Desc, Margin, Price, IDLetter, Colour) VALUES (?, ?, ?, ?, ?, ?, ?);"
+        
+        insertWithQuery(insertStatementQuery, bindingFunction: { (insertStatement) in
+            sqlite3_bind_int(insertStatement, 1, ticket.open)
+            sqlite3_bind_text(insertStatement, 2, NSString(string:ticket.name).utf8String, -1, nil)
+            sqlite3_bind_text(insertStatement, 3, NSString(string:ticket.desc).utf8String, -1, nil)
+            sqlite3_bind_int(insertStatement, 4, ticket.margin)
+            sqlite3_bind_double(insertStatement, 5, ticket.price)
+            sqlite3_bind_text(insertStatement, 6, NSString(string:ticket.iDLetter).utf8String, -1, nil)
+            sqlite3_bind_int(insertStatement, 7, ticket.colour)
+        })
+    }
+    
+    func selectAllTickets() -> [Ticket]
+    {
+        var result = [Ticket]()
+        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour FROM Ticket"
+        
+        selectWithQuery(selectStatementQuery, eachRow: { (row) in
+            //create a movie object from each result
+            let ticket = Ticket(ID: sqlite3_column_int(row, 0),
+                                open: sqlite3_column_int(row, 1),
+                                name: String(cString:sqlite3_column_text(row, 2)),
+                                desc: String(cString:sqlite3_column_text(row, 3)),
+                                margin: sqlite3_column_int(row, 4),
+                                price: sqlite3_column_double(row, 5),
+                                iDLetter: String(cString:sqlite3_column_text(row, 6)),
+                                colour: sqlite3_column_int(row, 7)
+            )
+            //add it to the result array
+            result += [ticket]
+            
+        })
+        return result
+    }
     
     
     
