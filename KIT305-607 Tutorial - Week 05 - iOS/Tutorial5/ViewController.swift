@@ -128,8 +128,15 @@ class ViewController: UIViewController, UIPickerViewDelegate
         endCon.allowsEditingTextAttributes = false
         //confirmedName.becomeFirstResponder()
         //chosenNameField.isUserInteractionEnabled = false
+        
+        //createTicketTable()
+        
+        database.insert(ticket:Ticket(open:1, name:"Debug Joe's Big BBQ", desc:"Wow ! its time for a big BBQ with Debug Joe yeehaw YEEEHAW",margin:0,price:1.99,iDLetter:"B",colour:1))
+            
+        database.insert(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:2))
+
+        print(database.selectAllTickets())
     }
-    
 
 
 }
