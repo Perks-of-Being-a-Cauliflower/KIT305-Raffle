@@ -11,10 +11,10 @@
 		29EFFD2C245AB1AC003FFA87 /* CreateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EFFD2B245AB1AC003FFA87 /* CreateOptions.swift */; };
 		8F0D36A4245CEA3C00D619E6 /* Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36A3245CEA3C00D619E6 /* Ticket.swift */; };
 		8F0D36A8245CF85100D619E6 /* TicketUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36A7245CF85100D619E6 /* TicketUICollectionViewCell.swift */; };
-		8F0D36AA245CFEB200D619E6 /* TicketUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36A9245CFEB200D619E6 /* TicketUITableViewController.swift */; };
 		8F0D36AE245D02FB00D619E6 /* TicketUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36AD245D02FB00D619E6 /* TicketUICollectionViewController.swift */; };
 		8F62BDA82454FEAF0023E0D9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F62BDA72454FEAF0023E0D9 /* SettingsViewController.swift */; };
 		8F62BDAC245508BB0023E0D9 /* UITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F62BDAB245508BB0023E0D9 /* UITabBarController.swift */; };
+		8F68A0EC245E37F000026D5D /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F68A0EB245E37F000026D5D /* Customer.swift */; };
 		D3290754221FAC6800D31C68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3290753221FAC6800D31C68 /* AppDelegate.swift */; };
 		D3290756221FAC6800D31C68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3290755221FAC6800D31C68 /* ViewController.swift */; };
 		D3290759221FAC6800D31C68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3290757221FAC6800D31C68 /* Main.storyboard */; };
@@ -28,10 +28,10 @@
 		29EFFD2B245AB1AC003FFA87 /* CreateOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOptions.swift; sourceTree = "<group>"; };
 		8F0D36A3245CEA3C00D619E6 /* Ticket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticket.swift; sourceTree = "<group>"; };
 		8F0D36A7245CF85100D619E6 /* TicketUICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketUICollectionViewCell.swift; sourceTree = "<group>"; };
-		8F0D36A9245CFEB200D619E6 /* TicketUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketUITableViewController.swift; sourceTree = "<group>"; };
 		8F0D36AD245D02FB00D619E6 /* TicketUICollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketUICollectionViewController.swift; sourceTree = "<group>"; };
 		8F62BDA72454FEAF0023E0D9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8F62BDAB245508BB0023E0D9 /* UITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabBarController.swift; sourceTree = "<group>"; };
+		8F68A0EB245E37F000026D5D /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		D3290750221FAC6800D31C68 /* Tutorial5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tutorial5.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3290753221FAC6800D31C68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3290755221FAC6800D31C68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +75,7 @@
 				8F62BDAB245508BB0023E0D9 /* UITabBarController.swift */,
 				D3290765221FAC8500D31C68 /* SQLiteDatabase.swift */,
 				8F0D36A3245CEA3C00D619E6 /* Ticket.swift */,
+				8F68A0EB245E37F000026D5D /* Customer.swift */,
 				D3290753221FAC6800D31C68 /* AppDelegate.swift */,
 				D3290755221FAC6800D31C68 /* ViewController.swift */,
 				D3290757221FAC6800D31C68 /* Main.storyboard */,
@@ -85,7 +86,6 @@
 				D329075C221FAC6800D31C68 /* LaunchScreen.storyboard */,
 				D329075F221FAC6800D31C68 /* Info.plist */,
 				8F0D36A7245CF85100D619E6 /* TicketUICollectionViewCell.swift */,
-				8F0D36A9245CFEB200D619E6 /* TicketUITableViewController.swift */,
 				8F0D36AD245D02FB00D619E6 /* TicketUICollectionViewController.swift */,
 			);
 			path = Tutorial5;
@@ -168,9 +168,9 @@
 				8F0D36A8245CF85100D619E6 /* TicketUICollectionViewCell.swift in Sources */,
 				D3290756221FAC6800D31C68 /* ViewController.swift in Sources */,
 				8F0D36A4245CEA3C00D619E6 /* Ticket.swift in Sources */,
-				8F0D36AA245CFEB200D619E6 /* TicketUITableViewController.swift in Sources */,
 				29EFFD2C245AB1AC003FFA87 /* CreateOptions.swift in Sources */,
 				8F0D36AE245D02FB00D619E6 /* TicketUICollectionViewController.swift in Sources */,
+				8F68A0EC245E37F000026D5D /* Customer.swift in Sources */,
 				D3290754221FAC6800D31C68 /* AppDelegate.swift in Sources */,
 				8F62BDA82454FEAF0023E0D9 /* SettingsViewController.swift in Sources */,
 				D3290766221FAC8500D31C68 /* SQLiteDatabase.swift in Sources */,
