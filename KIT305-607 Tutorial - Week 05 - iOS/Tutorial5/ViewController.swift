@@ -131,11 +131,20 @@ class ViewController: UIViewController, UIPickerViewDelegate
         
         //createTicketTable()
         
-        database.insert(ticket:Ticket(open:1, name:"Debug Joe's Big BBQ", desc:"Wow ! its time for a big BBQ with Debug Joe yeehaw YEEEHAW",margin:0,price:1.99,iDLetter:"B",colour:1))
+        database.insertTicket(ticket:Ticket(open:1, name:"Debug Joe's Big BBQ", desc:"Wow ! its time for a big BBQ with Debug Joe yeehaw YEEEHAW",margin:0,price:1.99,iDLetter:"B",colour:1))
             
-        database.insert(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:2))
+        database.insertTicket(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:2))
 
-        print(database.selectAllTickets())
+        
+        let df = DateFormatter()
+        df.dateFormat = "hh:mm:ss dd-MM-yyyy "
+        let now = df.string(from: Date())
+        
+        database.insertCustomer(customer:Customer(ticketID: 0, ticketNum: 1, purchaseTime: now, refunded: 0, name: "Debug Joeseph", phone: 0456649912, email: "kennal@utas.edu.au"))
+        
+        database.insertCustomer(customer:Customer(ticketID: 1, ticketNum: 1, purchaseTime: now, refunded: 0, name: "Debug Moeseph", phone: 911, email: "notkennal@utas.edu.au"))
+        
+        print(database.selectAllCustomers()) 
     }
 
 

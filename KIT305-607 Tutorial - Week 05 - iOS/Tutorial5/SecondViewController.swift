@@ -10,9 +10,28 @@ import UIKit
 
 class SecondViewController: UIViewController {
 
+    var ticket: Ticket?
+    
+    @IBOutlet var ticketName: UILabel!
+    @IBOutlet var totalCost: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if(ticket == nil){
+            //throw error, there is no data here.
+            print("ticket nil")
+        }else{
+            //let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
+            print("ticket not nil")
+            
+            //var ticket = database.selectTicketBy(id:ticketID!)
+            ticketName.text = ticket?.name
+            ticketName.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+            
+            
+            //ticketName.text = self.name
+        }
+        
         // Do any additional setup after loading the view.
     }
     

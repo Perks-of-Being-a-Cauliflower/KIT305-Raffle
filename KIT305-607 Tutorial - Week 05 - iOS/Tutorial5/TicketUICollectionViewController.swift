@@ -19,9 +19,9 @@ class TicketUICollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
-        database.insert(ticket:Ticket(open:1, name:"Debug Joe's Big BBQ", desc:"Wow ! its time for a big BBQ with Debug Joe yeehaw YEEEHAW",margin:0,price:1.99,iDLetter:"B",colour:1))
+        database.insertTicket(ticket:Ticket(open:1, name:"Debug Joe's Big BBQ", desc:"Wow ! its time for a big BBQ with Debug Joe yeehaw YEEEHAW",margin:0,price:1.99,iDLetter:"B",colour:1))
             
-        database.insert(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:2))
+        database.insertTicket(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:2))
 
         tickets = database.selectAllTickets()
         
@@ -60,6 +60,8 @@ class TicketUICollectionViewController: UICollectionViewController {
         {
             ticketCell.name.text = ticket.name
             ticketCell.price.text = "$" + String(ticket.price)
+            //ticketCell.button.ticket = ticket
+            //ticketCell.button.setTitle((title: "help", String(ticket.ID))
             
         }
         
@@ -96,5 +98,45 @@ class TicketUICollectionViewController: UICollectionViewController {
     
     }
     */
+    /*@IBAction func SegueToSell() {
+        /*let vc = SecondViewController(nibName: "SecondViewController", bundle: nil)
+            //vc.text = "Next level blog photo booth, tousled authentic tote bag kogi"
 
+            navigationController?.pushViewController(vc, animated: true)*/
+        
+    }*/
+    @IBAction func segueToSell(_ sender: UIButton) {
+        print("pressed")
+        //self.performSegue(withIdentifier: "TransferTicketToSell", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepared")
+        
+        if(segue.identifier == "TransferTicketToSell"){
+            
+            //let displayVC = segue.destination as! SecondViewController
+            //displayVC.ticketID = 1
+            guard let detailViewController = segue.destination as? SecondViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let selectedTicketCell = sender as? TicketUICollectionViewCell else {
+                fatalError("Unexpected sender: \(String(describing:sender))")
+            }
+            
+            guard let indexPath = collectionView.indexPath(for:selectedTicketCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            //var indexPath = collectionView.indexPath(for:selectedTicketCell)
+            print("post prep")
+            let selectedTicket = tickets[indexPath.row]
+            print(selectedTicket.name + " is abotu to be transfered")
+            detailViewController.ticket = selectedTicket
+            
+            //let selectedMovie = tickets[indexPath.row]
+            //detailViewController.movie = selectedMovie
+             
+        }
+    }
 }

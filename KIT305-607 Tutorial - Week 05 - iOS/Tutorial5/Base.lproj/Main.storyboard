@@ -383,7 +383,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hTh-WT-YB9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1041" y="1738"/>
+            <point key="canvasLocation" x="1771" y="2609"/>
         </scene>
         <!--Library-->
         <scene sceneID="U03-4x-PhL">
@@ -442,6 +442,7 @@
                                 <connections>
                                     <outlet property="name" destination="80l-Kv-jHg" id="Of0-UK-LW2"/>
                                     <outlet property="price" destination="aCT-gm-2MT" id="Lti-FY-zhE"/>
+                                    <segue destination="aqs-Wn-0aU" kind="show" identifier="TransferTicketToSell" id="rhw-2y-tkf"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -454,7 +455,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AVC-JC-LNf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1040.625" y="2594.202898550725"/>
+            <point key="canvasLocation" x="1041" y="2610"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="UJe-D4-x9N">
@@ -602,7 +603,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aRL-yY-B73">
-                                        <rect key="frame" x="653" y="203" width="78" height="34"/>
+                                        <rect key="frame" x="653" y="203" width="135" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -615,7 +616,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wte-ds-hkt">
-                                        <rect key="frame" x="653" y="249" width="78" height="34"/>
+                                        <rect key="frame" x="653" y="249" width="135" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -628,7 +629,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qp6-1k-XeG">
-                                        <rect key="frame" x="653" y="159" width="78" height="34"/>
+                                        <rect key="frame" x="653" y="159" width="135" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -678,8 +679,8 @@
                                             <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                                         </accessibility>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ticket Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ca6-Ue-mnb">
-                                        <rect key="frame" x="447" y="146" width="135" height="39"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ticket Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ca6-Ue-mnb">
+                                        <rect key="frame" x="344" y="184" width="297" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -694,6 +695,10 @@
                         <viewLayoutGuide key="safeArea" id="TVb-KH-qtM"/>
                     </view>
                     <navigationItem key="navigationItem" title="Sell" id="aX6-eN-7Dc"/>
+                    <connections>
+                        <outlet property="ticketName" destination="Ca6-Ue-mnb" id="udR-ha-H31"/>
+                        <outlet property="totalCost" destination="uGs-eZ-xfT" id="Zjj-Sy-NJF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WqB-Sx-Tvf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -913,7 +918,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Q5T-Ub-iTT"/>
+        <segue reference="rhw-2y-tkf"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.circle.fill" catalog="system" width="128" height="121"/>

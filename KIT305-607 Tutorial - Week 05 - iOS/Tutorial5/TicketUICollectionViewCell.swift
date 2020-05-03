@@ -12,5 +12,7 @@ class TicketUICollectionViewCell: UICollectionViewCell {
         
     @IBOutlet var name: UILabel!
     @IBOutlet var price: UILabel!
+    //@IBOutlet var button: TicketUIButton!
+    var ticketID: Int32?
     
 }

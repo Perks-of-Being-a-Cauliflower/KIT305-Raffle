@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 8
+    private let DATABASE_VERSION = 10
     
     
     
@@ -71,11 +71,13 @@ class SQLiteDatabase
         //INSERT YOUR createTable function calls here
         //e.g. createMovieTable()
         createTicketTable()
+        createCustomerTable()
     }
     private func dropTables()
     {
         //INSERT YOUR dropTable function calls here
         dropTable(tableName:"Ticket")
+        dropTable(tableName:"Customer")
         //e.g. dropTable(tableName:"Movie")
     }
     
@@ -298,7 +300,7 @@ class SQLiteDatabase
             //could do customers in a list and have them reference the ID of the ticket, idk.
         //also need to store how many tickets have been sold / how many remain.
         //could probably store char as a single letter, but unsure tbh
-    func createTicketTable()     {
+    func createTicketTable() {
         let createTicketTableQuery = """
         CREATE TABLE Ticket (
             ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -314,7 +316,23 @@ class SQLiteDatabase
         createTableWithQuery(createTicketTableQuery, tableName: "Ticket")
     }
     
-    func insert(ticket:Ticket) {
+    func createCustomerTable() {
+        let createCustomerTableQuery = """
+        CREATE TABLE Customer (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            TicketID INTEGER,
+            TicketNum INTEGER,
+            PurchaseTime CHAR(255),
+            Refunded INTEGER,
+            Name CHAR(255),
+            Phone INTEGER,
+            Email CHAR(255)
+        );
+        """
+        createTableWithQuery(createCustomerTableQuery, tableName: "Customer")
+    }
+    
+    func insertTicket(ticket:Ticket) {
         let insertStatementQuery = "INSERT INTO Ticket (Open, Name, Desc, Margin, Price, IDLetter, Colour) VALUES (?, ?, ?, ?, ?, ?, ?);"
         
         insertWithQuery(insertStatementQuery, bindingFunction: { (insertStatement) in
@@ -325,6 +343,20 @@ class SQLiteDatabase
             sqlite3_bind_double(insertStatement, 5, ticket.price)
             sqlite3_bind_text(insertStatement, 6, NSString(string:ticket.iDLetter).utf8String, -1, nil)
             sqlite3_bind_int(insertStatement, 7, ticket.colour)
+        })
+    }
+    
+    func insertCustomer(customer:Customer) {
+        let insertStatementQuery = "INSERT INTO Customer (TicketID, TicketNum, PurchaseTime, Refunded, Name, Phone, Email) VALUES (?, ?, ?, ?, ?, ?, ?);"
+        
+        insertWithQuery(insertStatementQuery, bindingFunction: { (insertStatement) in
+            sqlite3_bind_int(insertStatement, 1, customer.ticketID)
+            sqlite3_bind_int(insertStatement, 2, customer.ticketNum)
+            sqlite3_bind_text(insertStatement, 3, NSString(string:customer.purchaseTime).utf8String, -1, nil)
+            sqlite3_bind_int(insertStatement, 4, customer.refunded)
+            sqlite3_bind_text(insertStatement, 5, NSString(string:customer.name).utf8String, -1, nil)
+            sqlite3_bind_int(insertStatement, 6, customer.phone)
+            sqlite3_bind_text(insertStatement, 7, NSString(string:customer.email).utf8String, -1, nil)
         })
     }
     
@@ -351,6 +383,61 @@ class SQLiteDatabase
         return result
     }
     
+    func selectAllCustomers() -> [Customer]
+    {
+        var result = [Customer]()
+        let selectStatementQuery = "SELECT id, ticketID, ticketNum, purchaseTime, refunded, name, phone, email FROM Customer"
+        
+        selectWithQuery(selectStatementQuery, eachRow: { (row) in
+            //create a movie object from each result
+            let customer = Customer(ID: sqlite3_column_int(row, 0),
+                                    ticketID: sqlite3_column_int(row, 1),
+                                    ticketNum: sqlite3_column_int(row, 2),
+                                    purchaseTime: String(cString:sqlite3_column_text(row, 3)),
+                                    refunded: sqlite3_column_int(row, 4),
+                                    name: String(cString:sqlite3_column_text(row, 5)),
+                                    phone: sqlite3_column_int(row, 6),
+                                    email: String(cString:sqlite3_column_text(row, 7))
+            )
+            //add it to the result array
+            result += [customer]
+            
+        })
+        return result
+    }
+    
+    func selectTicketBy(id:Int32) -> Ticket?
+    {
+        var result : Ticket?
+        
+        var potential = [Ticket]()
+        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour FROM Ticket"
+        
+        selectWithQuery(selectStatementQuery, eachRow: { (row) in
+        
+            let ticket = Ticket(
+            ID: sqlite3_column_int(row, 0),
+            open: sqlite3_column_int(row, 1),
+            name: String(cString:sqlite3_column_text(row, 2)),
+            desc: String(cString:sqlite3_column_text(row, 3)),
+            margin: sqlite3_column_int(row, 4),
+            price: sqlite3_column_double(row, 5),
+            iDLetter: String(cString:sqlite3_column_text(row, 6)),
+            colour: sqlite3_column_int(row, 7)
+        )
+        potential += [ticket]
+        })
+        
+        for t in potential {
+            if(t.ID == id){
+                result = t
+                return t
+            }
+        }
+        
+        
+        return result
+    }
     
     
     
