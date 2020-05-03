@@ -11,4 +11,14 @@ import UIKit
 
 class UITabBarController : UIViewController{
     
+
+}
+
+class CustomUITabBar : UITabBar {
+    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+        super.sizeThatFits(size)
+        var sizeThatFits = super.sizeThatFits(size)
+        sizeThatFits.height = 71
+        return sizeThatFits
+    }
 }

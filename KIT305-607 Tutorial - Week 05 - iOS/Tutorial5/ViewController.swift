@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDelegate
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
 {
 
     // a handle to the database itself
@@ -16,6 +16,7 @@ class ViewController: UIViewController, UIPickerViewDelegate
     var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabasesdfg")
     
     @IBOutlet weak var titleField: UILabel!
+    @IBOutlet weak var raffleCID: UILabel!
     
     @IBOutlet weak var confirmedName: UITextField!
     @IBOutlet weak var desField: UITextField!
@@ -28,21 +29,86 @@ class ViewController: UIViewController, UIPickerViewDelegate
     @IBOutlet weak var popUpView: UIView!
     
 
-    
+    @IBOutlet weak var colourBar2: UIImageView!
+    @IBOutlet weak var colourBar1: UIImageView!
+    @IBOutlet weak var colourField: UITextField!
+    @IBOutlet weak var colourPicker: UIPickerView!
+    @IBOutlet weak var idfield: UITextField!
+    @IBOutlet weak var iDPicker: UIPickerView!
+
+let rColour = ["Red", "Blue", "Green", "Yellow", "Brown", "Pink", "Orange"]
+let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
 
     
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    /*
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView.tag == 5 {
+            print("tag is: ", pickerView.tag)
+            return rID[row]
+        } else {
+            print("tag is: ", pickerView.tag)
+            return rColour[row]
+        }
+
+    }
+    */
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        if pickerView.tag == 5 {
+            return NSAttributedString(string: rID[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        } else {
+            return NSAttributedString(string: rColour[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        }
+
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView.tag == 5 {
+            return rID.count
+        } else {
+            return rColour.count
+        }
+
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView.tag == 5 {
+            idfield.text = rID[row]
+             raffleCID.text = idfield.text! + " - " + colourField.text!
+            //print("tag is: ", pickerView.tag)
+        } else {
+            //print("tag is: ", pickerView.tag)
+            colourField.text = rColour[row]
+            let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
+            UIColor.orange, "Blue": UIColor.blue,"Green":
+            UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
+            "Pink": UIColor.systemPink]
+            colourBar1.backgroundColor = colors[colourField.text!]
+            colourBar2.backgroundColor = colors[colourField.text!]
+            raffleCID.text = idfield.text! + " - " + colourField.text!
+        }
+        
+    }
     
     @IBAction func showInputMenu(_ sender: UITextField) {
+        colourField.isUserInteractionEnabled = false
+        idfield.isUserInteractionEnabled = false
         chosenNameField.isUserInteractionEnabled = false
         desField.isUserInteractionEnabled = false
         ticketPrice.isUserInteractionEnabled = false
         endCon.isUserInteractionEnabled = false
+        colourField.resignFirstResponder()
+        idfield.resignFirstResponder()
         chosenNameField.resignFirstResponder()
         desField.resignFirstResponder()
         ticketPrice.resignFirstResponder()
         endCon.resignFirstResponder()
         if let opt = Options(tag: sender.tag) {
-            print (opt.options)
+            //print (opt.options)
             titleField.text = opt.options
             if sender.tag == 1 {
                 confirmedName.isUserInteractionEnabled = true
@@ -64,12 +130,20 @@ class ViewController: UIViewController, UIPickerViewDelegate
                 let temp: String? = ticketPrice.text
                 confirmedName.text = temp
             } else if sender.tag == 4 {
+                confirmedName.keyboardType = UIKeyboardType.numberPad
                 confirmedName.isUserInteractionEnabled = true
                 confirmedName.isHidden = false
                 confirmedName.becomeFirstResponder()
                 let temp: String? = endCon.text
                 confirmedName.text = temp
-                
+            } else if sender.tag == 5 {
+                iDPicker.isHidden = false
+                iDPicker.becomeFirstResponder()
+                //let temp: String? = endCon.text
+                //confirmedName.text = temp
+            } else if sender.tag == 6 {
+                colourPicker.isHidden = false
+                colourPicker.becomeFirstResponder()
             }
             popUpView.isHidden = false
         }
@@ -85,6 +159,8 @@ class ViewController: UIViewController, UIPickerViewDelegate
         desField.isUserInteractionEnabled = true
         ticketPrice.isUserInteractionEnabled = true
         endCon.isUserInteractionEnabled = true
+        idfield.isUserInteractionEnabled = true
+        colourField.isUserInteractionEnabled = true
         if returnField == "Name:" {
             confirmedName.isHidden = true
             let newName: String? = confirmedName.text
@@ -98,10 +174,14 @@ class ViewController: UIViewController, UIPickerViewDelegate
             let newName: String? = confirmedName.text
             ticketPrice.text = newName
             confirmedName.keyboardType = UIKeyboardType.default
-        } else if returnField == "Select End Condition:" {
+        } else if returnField == "Enter Ticket Sell Limit:" {
             confirmedName.isHidden = true
             let newName: String? = confirmedName.text
             endCon.text = newName
+        } else if returnField == "Raffle ID:" {
+            iDPicker.isHidden = true
+        } else if returnField == "Raffle Colour:" {
+            colourPicker.isHidden = true
         }
         popUpView.isHidden = true
     }
@@ -112,22 +192,28 @@ class ViewController: UIViewController, UIPickerViewDelegate
             desField.isUserInteractionEnabled = true
             ticketPrice.isUserInteractionEnabled = true
             endCon.isUserInteractionEnabled = true
+            idfield.isUserInteractionEnabled = true
+            colourField.isUserInteractionEnabled = true
             confirmedName.isUserInteractionEnabled = false
             descriptInput.isUserInteractionEnabled = false
             descriptInput.isHidden = true
             confirmedName.isHidden = true
+            iDPicker.isHidden = true
+            colourPicker.isHidden = true
             popUpView.isHidden = true
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //popUpView.isHidden = true
-        chosenNameField.allowsEditingTextAttributes = false
-        desField.allowsEditingTextAttributes = false
-        ticketPrice.allowsEditingTextAttributes = false
-        endCon.allowsEditingTextAttributes = false
-        //confirmedName.becomeFirstResponder()
-        //chosenNameField.isUserInteractionEnabled = false
+        
+        raffleCID.text = idfield.text! + " - " + colourField.text!
+        let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
+        UIColor.orange, "Blue": UIColor.blue,"Green":
+        UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
+        "Pink": UIColor.systemPink]
+        colourBar1.backgroundColor = colors[colourField.text!]
+        colourBar2.backgroundColor = colors[colourField.text!]
         
         //createTicketTable()
         
