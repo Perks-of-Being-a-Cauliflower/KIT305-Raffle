@@ -15,6 +15,8 @@ case name
 case desField
 case price
 case endCon
+case idPicker
+case colourPicker
     
 
 
@@ -28,6 +30,10 @@ init?(tag: Int) {
     self = .price
   case 4:
     self = .endCon
+  case 5:
+    self = .idPicker
+  case 6:
+    self = .colourPicker
   default:
     return nil
   }
@@ -41,7 +47,11 @@ init?(tag: Int) {
       case .price:
         return "Price:"
       case .endCon:
-        return "Select End Condition:"
+        return "Enter Ticket Sell Limit:"
+      case .idPicker:
+        return "Raffle ID:"
+      case .colourPicker:
+        return "Raffle Colour:"
       }
     }
 }
