@@ -16,6 +16,6 @@ public struct Ticket {
     var margin:Int32
     var price:Double
     var iDLetter:String
-    var colour:Int32
+    var colour:String
 }
 

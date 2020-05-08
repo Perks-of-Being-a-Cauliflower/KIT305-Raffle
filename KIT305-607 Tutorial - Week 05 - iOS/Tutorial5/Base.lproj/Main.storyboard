@@ -105,7 +105,7 @@
                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
-                                    <segue destination="aqs-Wn-0aU" kind="show" id="Q5T-Ub-iTT"/>
+                                    <segue destination="aqs-Wn-0aU" kind="show" identifier="CreateRaffleSegue" id="Q5T-Ub-iTT"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5uT-NO-kLT">
@@ -143,6 +143,9 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oy5-mU-ldt">
                                 <rect key="frame" x="193" y="141" width="79" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="toggleMarginRaffle:" destination="BYZ-38-t0r" eventType="valueChanged" id="ckU-dK-FC1"/>
+                                </connections>
                             </switch>
                             <textField opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Red" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cod-fr-e5T">
                                 <rect key="frame" x="616" y="133" width="182" height="34"/>
@@ -327,6 +330,7 @@
                         <outlet property="endCon" destination="Y5y-kn-Bad" id="1jc-WR-B7h"/>
                         <outlet property="iDPicker" destination="Vbr-YT-sme" id="zqv-HI-ZdG"/>
                         <outlet property="idfield" destination="R4F-84-Pdk" id="FfU-2E-UsX"/>
+                        <outlet property="marginSwitch" destination="Oy5-mU-ldt" id="wAV-kt-WCi"/>
                         <outlet property="popUpView" destination="c09-HA-27A" id="OAo-Ow-kvq"/>
                         <outlet property="raffleCID" destination="vwz-rX-Z7t" id="bK4-kl-DkN"/>
                         <outlet property="ticketPrice" destination="am7-Em-0aY" id="NPc-ST-dLO"/>
@@ -550,8 +554,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Duration:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="858-8i-8aE">
-                                        <rect key="frame" x="60" y="92" width="97" height="38"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tickets Goal:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="858-8i-8aE">
+                                        <rect key="frame" x="60" y="90" width="108" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -584,6 +588,9 @@
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oif-Al-Ney">
                                         <rect key="frame" x="198" y="92" width="159" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                                        </accessibility>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -723,12 +730,13 @@
                                             <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                                         </accessibility>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ticket Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ca6-Ue-mnb">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ticket Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ca6-Ue-mnb">
                                         <rect key="frame" x="344" y="184" width="297" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -740,6 +748,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Sell" id="aX6-eN-7Dc"/>
                     <connections>
+                        <outlet property="colourBarOne" destination="wpD-zt-p4D" id="a6K-w9-Zyr"/>
+                        <outlet property="colourBarTwo" destination="xIH-wq-aft" id="wns-fO-5FP"/>
+                        <outlet property="ticketGoal" destination="oif-Al-Ney" id="sl3-9s-UBY"/>
                         <outlet property="customerEmail" destination="wte-ds-hkt" id="S9K-VK-hQU"/>
                         <outlet property="customerName" destination="qp6-1k-XeG" id="kGE-CC-baz"/>
                         <outlet property="customerPhone" destination="aRL-yY-B73" id="4Hm-ys-Xaq"/>

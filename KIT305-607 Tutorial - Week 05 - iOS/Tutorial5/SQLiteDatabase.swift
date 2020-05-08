@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 11
+    private let DATABASE_VERSION = 13
     
     
     
@@ -310,7 +310,7 @@ class SQLiteDatabase
             Margin INTEGER,
             Price DOUBLE,
             IDLetter CHAR(255),
-            Colour INTEGER
+            Colour CHAR(255)
         );
         """
         createTableWithQuery(createTicketTableQuery, tableName: "Ticket")
@@ -342,7 +342,7 @@ class SQLiteDatabase
             sqlite3_bind_int(insertStatement, 4, ticket.margin)
             sqlite3_bind_double(insertStatement, 5, ticket.price)
             sqlite3_bind_text(insertStatement, 6, NSString(string:ticket.iDLetter).utf8String, -1, nil)
-            sqlite3_bind_int(insertStatement, 7, ticket.colour)
+            sqlite3_bind_text(insertStatement, 7, NSString(string:ticket.colour).utf8String, -1, nil)
         })
     }
     
@@ -374,7 +374,7 @@ class SQLiteDatabase
                                 margin: sqlite3_column_int(row, 4),
                                 price: sqlite3_column_double(row, 5),
                                 iDLetter: String(cString:sqlite3_column_text(row, 6)),
-                                colour: sqlite3_column_int(row, 7)
+                                colour: String(cString:sqlite3_column_text(row, 7))
             )
             //add it to the result array
             result += [ticket]
@@ -423,13 +423,49 @@ class SQLiteDatabase
             margin: sqlite3_column_int(row, 4),
             price: sqlite3_column_double(row, 5),
             iDLetter: String(cString:sqlite3_column_text(row, 6)),
-            colour: sqlite3_column_int(row, 7)
+            colour: String(cString:sqlite3_column_text(row, 7))
         )
         potential += [ticket]
         })
         
         for t in potential {
             if(t.ID == id){
+                result = t
+                return t
+            }
+        }
+        
+        
+        return result
+    }
+    
+    func selectTicketName(name:String) -> Ticket?
+    {
+        var result : Ticket?
+        
+        var potential = [Ticket]()
+        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour FROM Ticket"
+        
+        selectWithQuery(selectStatementQuery, eachRow: { (row) in
+        
+            let ticket = Ticket(
+            ID: sqlite3_column_int(row, 0),
+            open: sqlite3_column_int(row, 1),
+            name: String(cString:sqlite3_column_text(row, 2)),
+            desc: String(cString:sqlite3_column_text(row, 3)),
+            margin: sqlite3_column_int(row, 4),
+            price: sqlite3_column_double(row, 5),
+            iDLetter: String(cString:sqlite3_column_text(row, 6)),
+            colour: String(cString:sqlite3_column_text(row, 7))
+        )
+        potential += [ticket]
+        })
+        
+        for t in potential {
+            //print("the name is: ", t.name)
+            //print("check against: ", name)
+            //print("t is equal to: ", t)
+            if(t.name == name){
                 result = t
                 return t
             }

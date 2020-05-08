@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SQLite3
 
 class SecondViewController: UIViewController {
 
@@ -14,8 +15,16 @@ class SecondViewController: UIViewController {
     
     var ticket: Ticket?
     
+
+    @IBOutlet weak var ticketGoal: UITextField!
+    @IBOutlet weak var colourBarTwo: UIImageView!
+    @IBOutlet weak var colourBarOne: UIImageView!
     @IBOutlet var ticketName: UILabel!
     @IBOutlet var totalCost: UILabel!
+    var nameFromPreviousView: String?
+    var colourFromPreviousView: UIColor? = UIColor.red
+    var databaseFromPreviousView: SQLiteDatabase?
+    //var cTicket = Ticket?()
     
     @IBOutlet var customerName: UITextField!
     @IBOutlet var customerPhone: UITextField!
@@ -23,6 +32,11 @@ class SecondViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //print(ticket?.name)
+        let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+        //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
+        let ticket = database.selectTicketName(name: nameFromPreviousView!)
+        //print("database data is: ", database.selectTicketName(name: nameFromPreviousView!))
         if(ticket == nil){
             //throw error, there is no data here.
             print("ticket nil")
@@ -33,7 +47,18 @@ class SecondViewController: UIViewController {
             //var ticket = database.selectTicketBy(id:ticketID!)
             ticketName.text = ticket?.name
             ticketName.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
-            
+            let totePrice:String = String(format:"$ %.1f", ticket!.price)
+            //let goal:String = String(format:"%.1f", ticket!.)
+            totalCost.text = totePrice
+            //ticketGoal.text = goal
+            let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
+            UIColor.orange, "Blue": UIColor.blue,"Green":
+            UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
+            "Pink": UIColor.systemPink]
+            //print("colour is: ", colors[ticket!.colour] as Any)
+            //print("sees colour as: ", ticket?.colour as Any)
+            colourBarOne.backgroundColor = colors[ticket!.colour]
+            colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
             
             //ticketName.text = self.name
         }

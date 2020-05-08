@@ -13,7 +13,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     // a handle to the database itself
     // you can switch databases or create new blank ones by changing databaseName
-    var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabasesdfg")
+    var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
     
     @IBOutlet weak var titleField: UILabel!
     @IBOutlet weak var raffleCID: UILabel!
@@ -23,6 +23,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var ticketPrice: UITextField!
     @IBOutlet weak var endCon: UITextField!
     
+    @IBOutlet weak var marginSwitch: UISwitch!
     
     @IBOutlet weak var descriptInput: UITextView!
     @IBOutlet weak var chosenNameField: UITextField!
@@ -93,6 +94,11 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         }
         
     }
+    
+    @IBAction func toggleMarginRaffle(_ sender: Any) {
+        
+    }
+    
     
     @IBAction func showInputMenu(_ sender: UITextField) {
         colourField.isUserInteractionEnabled = false
@@ -173,6 +179,14 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
             confirmedName.isHidden = true
             let newName: String? = confirmedName.text
             ticketPrice.text = newName
+            if let ticketCost = Double(newName!) {
+                print("The user entered a value price of \(ticketCost)")
+                
+            } else {
+                print("Not a valid number: \(newName!)")
+                ticketPrice.text = ""
+            }
+            print(ticketPrice.text!)
             confirmedName.keyboardType = UIKeyboardType.default
         } else if returnField == "Enter Ticket Sell Limit:" {
             confirmedName.isHidden = true
@@ -203,10 +217,41 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
             popUpView.isHidden = true
     }
     
+    func switchState(for marginSwitch: UISwitch) -> Int {
+        if marginSwitch.isOn {
+            return 1
+        } else {
+            return 0
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+    if segue.identifier == "CreateRaffleSegue"
+    {
+        //createTicketTable()
+        print(chosenNameField.text!)
+        print(desField.text!)
+        print(ticketPrice.text!)
+        print(endCon.text!)
+        print(idfield.text!)
+        print(colourField.text!)
+        let nextScreen = segue.destination as! SecondViewController
+        nextScreen.nameFromPreviousView = chosenNameField.text
+        nextScreen.databaseFromPreviousView = database
+        if let ticketCost = Double(ticketPrice.text!) {
+            database.insertTicket(ticket:Ticket(open:1, name: chosenNameField.text!, desc:desField.text!,margin:Int32(switchState(for: marginSwitch!)),price:ticketCost,iDLetter:idfield.text!,colour:colourField.text!))
+        } else {
+            print("\nnot submitting: \(ticketPrice.text!)")
+            ticketPrice.text = ""
+        }
+        //let nextScreen = segue.destination as! SecondViewController
+        //nextScreen.nameFromPreviousView = confirmedName.text
+        //nextScreen.colourFromPreviousView = colourBar1.backgroundColor ?? UIColor.white
+        
+    } }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         raffleCID.text = idfield.text! + " - " + colourField.text!
         let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
         UIColor.orange, "Blue": UIColor.blue,"Green":
@@ -215,12 +260,12 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         colourBar1.backgroundColor = colors[colourField.text!]
         colourBar2.backgroundColor = colors[colourField.text!]
         
-        //createTicketTable()
-        
-        database.insertTicket(ticket:Ticket(open:1, name:"Debug Joe's Big BBQ", desc:"Wow ! its time for a big BBQ with Debug Joe yeehaw YEEEHAW",margin:0,price:1.99,iDLetter:"B",colour:1))
-            
-        database.insertTicket(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:2))
 
+        
+        
+        /*
+        database.insertTicket(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:"green"))
+        */
         
         let df = DateFormatter()
         df.dateFormat = "hh:mm:ss dd-MM-yyyy "
