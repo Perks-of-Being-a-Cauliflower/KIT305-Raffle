@@ -12,6 +12,7 @@ private let reuseIdentifier = "Cell"
 
 class TicketUICollectionViewController: UICollectionViewController {
 
+
     var tickets = [Ticket]()
     
     override func viewDidLoad()
@@ -26,6 +27,14 @@ class TicketUICollectionViewController: UICollectionViewController {
         */
         tickets = database.selectAllTickets()
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
+
+        tickets = database.selectAllTickets()
+        
+        self.collectionView.reloadData()
+        print("wowowow")
     }
 
     /*
