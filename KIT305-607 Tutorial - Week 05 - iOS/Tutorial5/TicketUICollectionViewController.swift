@@ -19,10 +19,11 @@ class TicketUICollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
-        database.insertTicket(ticket:Ticket(open:1, name:"Debug Joe's Big BBQ", desc:"Wow ! its time for a big BBQ with Debug Joe yeehaw YEEEHAW",margin:0,price:1.99,iDLetter:"B",colour:1))
+        /*
+        database.insertTicket(ticket:Ticket(open:1, name:"Debug Joe's Big BBQ", desc:"Wow ! its time for a big BBQ with Debug Joe yeehaw YEEEHAW",margin:0,price:1.99,iDLetter:"B",colour:"green"))
             
-        database.insertTicket(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:2))
-
+        database.insertTicket(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:"green"))
+        */
         tickets = database.selectAllTickets()
         
     }
@@ -131,6 +132,8 @@ class TicketUICollectionViewController: UICollectionViewController {
             //var indexPath = collectionView.indexPath(for:selectedTicketCell)
             print("post prep")
             let selectedTicket = tickets[indexPath.row]
+            let nextScreen = segue.destination as! SecondViewController
+            nextScreen.nameFromPreviousView = selectedTicket.name
             print(selectedTicket.name + " is abotu to be transfered")
             detailViewController.ticket = selectedTicket
             
