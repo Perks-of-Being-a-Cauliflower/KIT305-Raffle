@@ -750,10 +750,10 @@
                     <connections>
                         <outlet property="colourBarOne" destination="wpD-zt-p4D" id="a6K-w9-Zyr"/>
                         <outlet property="colourBarTwo" destination="xIH-wq-aft" id="wns-fO-5FP"/>
-                        <outlet property="ticketGoal" destination="oif-Al-Ney" id="sl3-9s-UBY"/>
                         <outlet property="customerEmail" destination="wte-ds-hkt" id="S9K-VK-hQU"/>
                         <outlet property="customerName" destination="qp6-1k-XeG" id="kGE-CC-baz"/>
                         <outlet property="customerPhone" destination="aRL-yY-B73" id="4Hm-ys-Xaq"/>
+                        <outlet property="ticketGoal" destination="oif-Al-Ney" id="sl3-9s-UBY"/>
                         <outlet property="ticketName" destination="Ca6-Ue-mnb" id="udR-ha-H31"/>
                         <outlet property="totalCost" destination="uGs-eZ-xfT" id="Zjj-Sy-NJF"/>
                     </connections>
@@ -967,7 +967,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="gjE-LX-Xng" kind="relationship" relationship="rootViewController" id="ZEY-c9-xk0"/>
+                        <segue destination="gjE-LX-Xng" kind="relationship" relationship="rootViewController" destinationCreationSelector="ConnectingViaUITabBar:" id="ZEY-c9-xk0"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mrf-hp-fE0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -976,7 +976,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="mho-XX-efv"/>
+        <segue reference="rhw-2y-tkf"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.circle.fill" catalog="system" width="128" height="121"/>
