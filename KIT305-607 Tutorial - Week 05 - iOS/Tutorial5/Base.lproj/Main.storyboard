@@ -687,10 +687,13 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Contact Winner">
+                                        <state key="normal" title="Sell Ticket">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="AddCustomer:" destination="aqs-Wn-0aU" eventType="touchUpInside" id="lka-3I-YeR"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSn-cL-GYk">
                                         <rect key="frame" x="566" y="290" width="97" height="38"/>
@@ -748,6 +751,9 @@
                         <outlet property="colourBarOne" destination="wpD-zt-p4D" id="a6K-w9-Zyr"/>
                         <outlet property="colourBarTwo" destination="xIH-wq-aft" id="wns-fO-5FP"/>
                         <outlet property="ticketGoal" destination="oif-Al-Ney" id="sl3-9s-UBY"/>
+                        <outlet property="customerEmail" destination="wte-ds-hkt" id="S9K-VK-hQU"/>
+                        <outlet property="customerName" destination="qp6-1k-XeG" id="kGE-CC-baz"/>
+                        <outlet property="customerPhone" destination="aRL-yY-B73" id="4Hm-ys-Xaq"/>
                         <outlet property="ticketName" destination="Ca6-Ue-mnb" id="udR-ha-H31"/>
                         <outlet property="totalCost" destination="uGs-eZ-xfT" id="Zjj-Sy-NJF"/>
                     </connections>
@@ -970,7 +976,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rhw-2y-tkf"/>
+        <segue reference="mho-XX-efv"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.circle.fill" catalog="system" width="128" height="121"/>

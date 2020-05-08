@@ -11,6 +11,8 @@ import SQLite3
 
 class SecondViewController: UIViewController {
 
+    
+    
     var ticket: Ticket?
     
 
@@ -23,6 +25,10 @@ class SecondViewController: UIViewController {
     var colourFromPreviousView: UIColor? = UIColor.red
     var databaseFromPreviousView: SQLiteDatabase?
     //var cTicket = Ticket?()
+    
+    @IBOutlet var customerName: UITextField!
+    @IBOutlet var customerPhone: UITextField!
+    @IBOutlet var customerEmail: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +64,30 @@ class SecondViewController: UIViewController {
         }
         
         // Do any additional setup after loading the view.
+    }
+    @IBAction func AddCustomer(_ sender: Any) {
+        let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabasesdfg")
+        
+        let df = DateFormatter()
+        df.dateFormat = "hh:mm:ss dd-MM-yyyy "
+        let now = df.string(from: Date())
+        
+        
+        //impliment a way to increase and track ticket numbers. via ticket SQL
+            //also need to impliment a way to sell multiple tickets via a stepper. 
+        database.insertCustomer(customer:Customer(ticketID: ticket?.ID ?? -1,
+                                                  ticketNum: 1,
+                                                  purchaseTime: now,
+                                                  refunded: 0,
+                                                  name: customerName.text!,
+                                                  phone: Int32(customerPhone.text ?? "") ?? -1,
+                                                  email: customerEmail.text ?? ""))
+        
+        print("added Customer")
+        customerName.text = ""
+        customerPhone.text = ""
+        customerEmail.text = ""
+        print(database.selectAllCustomers())
     }
     
 
