@@ -13,7 +13,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
     
     
-    var ticket: Ticket?
+    var ticketData: Ticket?
     
 
     @IBOutlet weak var ticketGoal: UITextField!
@@ -59,7 +59,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         numberToPurchaseField.text = tPicker[row]
-        let basePrice = Double(ticket!.price)
+        let basePrice = Double(ticketData!.price)
         let nOfTickets = Double(numberToPurchaseField.text!)!
         let newCost = basePrice*nOfTickets
         let totePrice:String = String(format:"$ %.1f", newCost)
@@ -72,6 +72,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
         //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
         let ticket = database.selectTicketName(name: nameFromPreviousView!)
+        ticketData = ticket
         //print("database data is: ", database.selectTicketName(name: nameFromPreviousView!))
         if(ticket == nil){
             //throw error, there is no data here.
@@ -195,9 +196,9 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBAction func AddCustomer(_ sender: Any) {
         let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
         
-        if(ticket == nil){
+        if(ticketData == nil){
             print("found lost name")
-            ticket = database.selectTicketName(name: nameFromPreviousView!)
+            ticketData = database.selectTicketName(name: nameFromPreviousView!)
         }
         
         let df = DateFormatter()
@@ -205,13 +206,13 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let now = df.string(from: Date())
         
         //currently just works with selling one ticket, need to make it look for the lowest unallocated value, as well as the ability to sell multiple tickets.
-        print(ticket!.name)
-        ticket!.soldTickets = ticket!.soldTickets + 1
-        let num = ticket!.soldTickets
-        database.updateSoldTickets(ticketID: ticket!.ID, newNum: num)
+        print(ticketData!.name)
+        ticketData!.soldTickets = ticketData!.soldTickets + 1
+        let num = ticketData!.soldTickets
+        database.updateSoldTickets(ticketID: ticketData!.ID, newNum: num)
         //impliment a way to increase and track ticket numbers. via ticket SQL
             //also need to impliment a way to sell multiple tickets via a stepper. 
-        database.insertCustomer(customer:Customer(ticketID: ticket?.ID ?? -1,
+        database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
                                                   ticketNum: num,
                                                   purchaseTime: now,
                                                   refunded: 0,
