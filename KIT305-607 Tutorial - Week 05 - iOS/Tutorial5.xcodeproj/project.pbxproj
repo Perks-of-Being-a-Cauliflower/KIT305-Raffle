@@ -12,6 +12,8 @@
 		8F0D36A4245CEA3C00D619E6 /* Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36A3245CEA3C00D619E6 /* Ticket.swift */; };
 		8F0D36A8245CF85100D619E6 /* TicketUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36A7245CF85100D619E6 /* TicketUICollectionViewCell.swift */; };
 		8F0D36AE245D02FB00D619E6 /* TicketUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36AD245D02FB00D619E6 /* TicketUICollectionViewController.swift */; };
+		8F611F362466530300D0CC5E /* CustomerUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F611F342466530300D0CC5E /* CustomerUITableViewController.swift */; };
+		8F611F372466530300D0CC5E /* CustomerUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F611F352466530300D0CC5E /* CustomerUITableViewCell.swift */; };
 		8F62BDA82454FEAF0023E0D9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F62BDA72454FEAF0023E0D9 /* SettingsViewController.swift */; };
 		8F62BDAC245508BB0023E0D9 /* UITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F62BDAB245508BB0023E0D9 /* UITabBarController.swift */; };
 		8F68A0EC245E37F000026D5D /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F68A0EB245E37F000026D5D /* Customer.swift */; };
@@ -29,6 +31,8 @@
 		8F0D36A3245CEA3C00D619E6 /* Ticket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticket.swift; sourceTree = "<group>"; };
 		8F0D36A7245CF85100D619E6 /* TicketUICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketUICollectionViewCell.swift; sourceTree = "<group>"; };
 		8F0D36AD245D02FB00D619E6 /* TicketUICollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketUICollectionViewController.swift; sourceTree = "<group>"; };
+		8F611F342466530300D0CC5E /* CustomerUITableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerUITableViewController.swift; sourceTree = "<group>"; };
+		8F611F352466530300D0CC5E /* CustomerUITableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerUITableViewCell.swift; sourceTree = "<group>"; };
 		8F62BDA72454FEAF0023E0D9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8F62BDAB245508BB0023E0D9 /* UITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabBarController.swift; sourceTree = "<group>"; };
 		8F68A0EB245E37F000026D5D /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
@@ -85,6 +89,8 @@
 				D329075A221FAC6800D31C68 /* Assets.xcassets */,
 				D329075C221FAC6800D31C68 /* LaunchScreen.storyboard */,
 				D329075F221FAC6800D31C68 /* Info.plist */,
+				8F611F352466530300D0CC5E /* CustomerUITableViewCell.swift */,
+				8F611F342466530300D0CC5E /* CustomerUITableViewController.swift */,
 				8F0D36A7245CF85100D619E6 /* TicketUICollectionViewCell.swift */,
 				8F0D36AD245D02FB00D619E6 /* TicketUICollectionViewController.swift */,
 			);
@@ -165,9 +171,11 @@
 			files = (
 				296C52DA2453D7C80012CADE /* SecondViewController.swift in Sources */,
 				8F62BDAC245508BB0023E0D9 /* UITabBarController.swift in Sources */,
+				8F611F372466530300D0CC5E /* CustomerUITableViewCell.swift in Sources */,
 				8F0D36A8245CF85100D619E6 /* TicketUICollectionViewCell.swift in Sources */,
 				D3290756221FAC6800D31C68 /* ViewController.swift in Sources */,
 				8F0D36A4245CEA3C00D619E6 /* Ticket.swift in Sources */,
+				8F611F362466530300D0CC5E /* CustomerUITableViewController.swift in Sources */,
 				29EFFD2C245AB1AC003FFA87 /* CreateOptions.swift in Sources */,
 				8F0D36AE245D02FB00D619E6 /* TicketUICollectionViewController.swift in Sources */,
 				8F68A0EC245E37F000026D5D /* Customer.swift in Sources */,
