@@ -17,5 +17,8 @@ public struct Ticket {
     var price:Double
     var iDLetter:String
     var colour:String
+    
+    var maxTickets:Int32
+    var soldTickets:Int32 = 0
 }
 

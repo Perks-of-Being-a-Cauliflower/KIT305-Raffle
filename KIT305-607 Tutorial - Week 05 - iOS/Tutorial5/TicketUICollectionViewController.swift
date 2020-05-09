@@ -69,6 +69,8 @@ class TicketUICollectionViewController: UICollectionViewController {
         if let  ticketCell = cell as? TicketUICollectionViewCell
         {
             ticketCell.name.text = ticket.name
+
+            
             ticketCell.price.text = "$" + String(ticket.price)
             //ticketCell.button.ticket = ticket
             //ticketCell.button.setTitle((title: "help", String(ticket.ID))

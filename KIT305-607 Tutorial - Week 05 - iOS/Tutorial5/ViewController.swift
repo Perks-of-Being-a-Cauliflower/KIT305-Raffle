@@ -239,7 +239,16 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         nextScreen.nameFromPreviousView = chosenNameField.text
         nextScreen.databaseFromPreviousView = database
         if let ticketCost = Double(ticketPrice.text!) {
-            database.insertTicket(ticket:Ticket(open:1, name: chosenNameField.text!, desc:desField.text!,margin:Int32(switchState(for: marginSwitch!)),price:ticketCost,iDLetter:idfield.text!,colour:colourField.text!))
+            database.insertTicket(ticket:Ticket(open:1,
+                                                name: chosenNameField.text!,
+                                                desc:desField.text!,
+                                                margin:Int32(switchState(for: marginSwitch!)),
+                                                price:ticketCost,
+                                                iDLetter:idfield.text!,
+                                                colour:colourField.text!,
+                                                maxTickets:Int32(endCon.text!)!,
+                                                soldTickets:0
+            ))
         } else {
             print("\nnot submitting: \(ticketPrice.text!)")
             ticketPrice.text = ""
@@ -267,7 +276,7 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         database.insertTicket(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:"green"))
         */
         
-        let df = DateFormatter()
+        /*let df = DateFormatter()
         df.dateFormat = "hh:mm:ss dd-MM-yyyy "
         let now = df.string(from: Date())
         
@@ -275,7 +284,7 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         
         database.insertCustomer(customer:Customer(ticketID: 1, ticketNum: 1, purchaseTime: now, refunded: 0, name: "Debug Moeseph", phone: 911, email: "notkennal@utas.edu.au"))
         
-        print(database.selectAllCustomers()) 
+        print(database.selectAllCustomers()) */
     }
 
 

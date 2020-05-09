@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 13
+    private let DATABASE_VERSION = 16
     
     
     
@@ -310,7 +310,9 @@ class SQLiteDatabase
             Margin INTEGER,
             Price DOUBLE,
             IDLetter CHAR(255),
-            Colour CHAR(255)
+            Colour CHAR(255),
+            MaxTickets INTEGER,
+            soldTickets INTEGER
         );
         """
         createTableWithQuery(createTicketTableQuery, tableName: "Ticket")
@@ -343,6 +345,8 @@ class SQLiteDatabase
             sqlite3_bind_double(insertStatement, 5, ticket.price)
             sqlite3_bind_text(insertStatement, 6, NSString(string:ticket.iDLetter).utf8String, -1, nil)
             sqlite3_bind_text(insertStatement, 7, NSString(string:ticket.colour).utf8String, -1, nil)
+            sqlite3_bind_int(insertStatement, 8, ticket.maxTickets)
+            sqlite3_bind_int(insertStatement, 9, ticket.soldTickets)
         })
     }
     
@@ -363,7 +367,7 @@ class SQLiteDatabase
     func selectAllTickets() -> [Ticket]
     {
         var result = [Ticket]()
-        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour FROM Ticket"
+        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets FROM Ticket"
         
         selectWithQuery(selectStatementQuery, eachRow: { (row) in
             //create a movie object from each result
@@ -374,7 +378,9 @@ class SQLiteDatabase
                                 margin: sqlite3_column_int(row, 4),
                                 price: sqlite3_column_double(row, 5),
                                 iDLetter: String(cString:sqlite3_column_text(row, 6)),
-                                colour: String(cString:sqlite3_column_text(row, 7))
+                                colour: String(cString:sqlite3_column_text(row, 7)),
+                                maxTickets: sqlite3_column_int(row, 8),
+                                soldTickets: sqlite3_column_int(row, 9)
             )
             //add it to the result array
             result += [ticket]
@@ -406,12 +412,41 @@ class SQLiteDatabase
         return result
     }
     
+    func selectAllCustomersFromRaffle(id:Int32) -> [Customer]
+    {
+        var result = [Customer]()
+        let selectStatementQuery = "SELECT id, ticketID, ticketNum, purchaseTime, refunded, name, phone, email FROM Customer"
+        
+        selectWithQuery(selectStatementQuery, eachRow: { (row) in
+            //create a movie object from each result
+            let customer = Customer(ID: sqlite3_column_int(row, 0),
+                                    ticketID: sqlite3_column_int(row, 1),
+                                    ticketNum: sqlite3_column_int(row, 2),
+                                    purchaseTime: String(cString:sqlite3_column_text(row, 3)),
+                                    refunded: sqlite3_column_int(row, 4),
+                                    name: String(cString:sqlite3_column_text(row, 5)),
+                                    phone: sqlite3_column_int(row, 6),
+                                    email: String(cString:sqlite3_column_text(row, 7))
+            )
+            //add it to the result array
+            if(customer.ticketID == id){
+                print("even steven")
+                result += [customer]
+            }else{
+                print(String(customer.ticketID) + " is different from " + String(id))
+            }
+            
+            
+        })
+        return result
+    }
+    
     func selectTicketBy(id:Int32) -> Ticket?
     {
         var result : Ticket?
         
         var potential = [Ticket]()
-        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour FROM Ticket"
+        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets FROM Ticket"
         
         selectWithQuery(selectStatementQuery, eachRow: { (row) in
         
@@ -423,7 +458,9 @@ class SQLiteDatabase
             margin: sqlite3_column_int(row, 4),
             price: sqlite3_column_double(row, 5),
             iDLetter: String(cString:sqlite3_column_text(row, 6)),
-            colour: String(cString:sqlite3_column_text(row, 7))
+            colour: String(cString:sqlite3_column_text(row, 7)),
+            maxTickets: sqlite3_column_int(row, 8),
+            soldTickets: sqlite3_column_int(row, 9)
         )
         potential += [ticket]
         })
@@ -444,7 +481,7 @@ class SQLiteDatabase
         var result : Ticket?
         
         var potential = [Ticket]()
-        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour FROM Ticket"
+        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets FROM Ticket"
         
         selectWithQuery(selectStatementQuery, eachRow: { (row) in
         
@@ -456,7 +493,9 @@ class SQLiteDatabase
             margin: sqlite3_column_int(row, 4),
             price: sqlite3_column_double(row, 5),
             iDLetter: String(cString:sqlite3_column_text(row, 6)),
-            colour: String(cString:sqlite3_column_text(row, 7))
+            colour: String(cString:sqlite3_column_text(row, 7)),
+            maxTickets: sqlite3_column_int(row, 8),
+            soldTickets: sqlite3_column_int(row, 9)
         )
         potential += [ticket]
         })
@@ -477,7 +516,15 @@ class SQLiteDatabase
     
     
     
-    
+    func updateSoldTickets(ticketID:Int32, newNum:Int32){
+        //let updateStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets FROM Ticket"
+        let updateStatementQuery = "UPDATE Ticket SET soldTickets = " + String(newNum) + " WHERE id = " + String(ticketID) + ";"
+        updateWithQuery(updateStatementQuery,
+                        bindingFunction: { (updateStatement) in                            
+                            sqlite3_bind_int(updateStatement, 9, newNum)
+                        })
+                        
+    }
     
     
     

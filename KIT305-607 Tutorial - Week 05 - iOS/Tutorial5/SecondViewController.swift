@@ -193,17 +193,26 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     
     @IBAction func AddCustomer(_ sender: Any) {
-        let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabasesdfg")
+        let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+        
+        if(ticket == nil){
+            print("found lost name")
+            ticket = database.selectTicketName(name: nameFromPreviousView!)
+        }
         
         let df = DateFormatter()
         df.dateFormat = "hh:mm:ss dd-MM-yyyy "
         let now = df.string(from: Date())
         
-        
+        //currently just works with selling one ticket, need to make it look for the lowest unallocated value, as well as the ability to sell multiple tickets.
+        print(ticket!.name)
+        ticket!.soldTickets = ticket!.soldTickets + 1
+        let num = ticket!.soldTickets
+        database.updateSoldTickets(ticketID: ticket!.ID, newNum: num)
         //impliment a way to increase and track ticket numbers. via ticket SQL
             //also need to impliment a way to sell multiple tickets via a stepper. 
         database.insertCustomer(customer:Customer(ticketID: ticket?.ID ?? -1,
-                                                  ticketNum: 1,
+                                                  ticketNum: num,
                                                   purchaseTime: now,
                                                   refunded: 0,
                                                   name: customerName.text!,
@@ -218,14 +227,32 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
 
-    /*
-    // MARK: - Navigation
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+       {
+           if segue.identifier == "TransferToTicketEdit"
+           {
+               //createTicketTable()
+                print("zong!")
+               
+                let nextScreen = segue.destination as! SettingsViewController
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+                nextScreen.nameFromPreviousView = nameFromPreviousView
+                /*
+               nextScreen.databaseFromPreviousView = database
+               if let ticketCost = Double(ticketPrice.text!) {
+                   database.insertTicket(ticket:Ticket(open:1, name: chosenNameField.text!, desc:desField.text!,margin:Int32(switchState(for: marginSwitch!)),price:ticketCost,iDLetter:idfield.text!,colour:colourField.text!))
+               } else {
+                   print("\nnot submitting: \(ticketPrice.text!)")
+                   ticketPrice.text = ""
+               }
+        */
+               
+               //let nextScreen = segue.destination as! SecondViewController
+               //nextScreen.nameFromPreviousView = confirmedName.text
+               //nextScreen.colourFromPreviousView = colourBar1.backgroundColor ?? UIColor.white
+               
+           }
+           
+       }
 
 }
