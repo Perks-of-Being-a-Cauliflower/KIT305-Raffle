@@ -728,7 +728,7 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="42" scale="large"/>
                                         </state>
                                         <connections>
-                                            <segue destination="KTz-9x-PBM" kind="show" id="AaU-b7-Htf"/>
+                                            <segue destination="KTz-9x-PBM" kind="show" identifier="TransferToTicketEdit" id="AaU-b7-Htf"/>
                                         </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xIH-wq-aft">
@@ -840,10 +840,86 @@
             </objects>
             <point key="canvasLocation" x="988.39285714285711" y="100.00000000000001"/>
         </scene>
+        <!--CustomerUI Table View Controller-->
+        <scene sceneID="adg-7X-bjg">
+            <objects>
+                <tableViewController id="35S-zG-ngi" customClass="CustomerUITableViewController" customModule="Tutorial5" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="K0s-Z6-M3S">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomerUITableViewCell" rowHeight="90" id="Gkx-2L-pdq" customClass="CustomerUITableViewCell" customModule="Tutorial5" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="896" height="90"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gkx-2L-pdq" id="Y15-y0-yO9">
+                                    <rect key="frame" x="44" y="0.0" width="808" height="90"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="erD-5a-z54">
+                                            <rect key="frame" x="-143" y="-19" width="240" height="128"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WJj-aO-cF0">
+                                            <rect key="frame" x="664" y="25" width="144" height="41"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                            <state key="normal" title="Refund Ticket"/>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="#" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DEB-dn-VFn">
+                                            <rect key="frame" x="8" y="19" width="82" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$99.99" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DH3-Dn-3go">
+                                            <rect key="frame" x="121" y="31" width="86" height="29"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Customer Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kuY-qe-oTr">
+                                            <rect key="frame" x="232" y="11" width="345" height="29"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OK4-Th-lMv">
+                                            <rect key="frame" x="232" y="48" width="345" height="29"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="name" destination="kuY-qe-oTr" id="hw3-G5-Fek"/>
+                                    <outlet property="purchaseTime" destination="OK4-Th-lMv" id="WJ2-wp-l1D"/>
+                                    <outlet property="ticketCost" destination="DH3-Dn-3go" id="Xgq-n3-ykP"/>
+                                    <outlet property="ticketNum" destination="DEB-dn-VFn" id="hkx-FS-mJx"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="35S-zG-ngi" id="gyk-Yc-vrr"/>
+                            <outlet property="delegate" destination="35S-zG-ngi" id="se7-tW-r4J"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="RdD-N7-yMs"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZI4-i4-viN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2534.5982142857142" y="1102.8985507246377"/>
+        </scene>
         <!--Ticket Settings-->
         <scene sceneID="6iY-o3-ldP">
             <objects>
-                <viewController id="KTz-9x-PBM" customClass="SettingsViewController" sceneMemberID="viewController">
+                <viewController id="KTz-9x-PBM" customClass="SettingsViewController" customModule="Tutorial5" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="egu-HT-Y1c">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -918,6 +994,9 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="35S-zG-ngi" kind="show" identifier="TransferTicketArchive" destinationCreationSelector="TransferTicketArchive:" id="IRL-Tr-MdL"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kDq-4Q-bI4">
                                         <rect key="frame" x="220" y="92" width="205" height="34"/>
@@ -998,6 +1077,14 @@
                                         <rect key="frame" x="554" y="151" width="240" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ticket Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YsH-2w-Kpk">
+                                        <rect key="frame" x="344" y="188" width="297" height="39"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <viewLayoutGuide key="safeArea" id="Nx7-Io-LOa"/>
@@ -1009,10 +1096,13 @@
                     <navigationItem key="navigationItem" title="Ticket Settings" id="hu8-BF-jdK">
                         <barButtonItem key="backBarButtonItem" title="Confirm" id="Y6j-iB-0C2"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="ticketTitle" destination="YsH-2w-Kpk" id="pBr-LY-3YZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jAd-A1-3pZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1731.0267857142856" y="1102.8985507246377"/>
+            <point key="canvasLocation" x="1728" y="1103"/>
         </scene>
         <!--Create-->
         <scene sceneID="R7C-OM-9pS">
@@ -1054,7 +1144,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rhw-2y-tkf"/>
+        <segue reference="Q5T-Ub-iTT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.circle.fill" catalog="system" width="128" height="121"/>
