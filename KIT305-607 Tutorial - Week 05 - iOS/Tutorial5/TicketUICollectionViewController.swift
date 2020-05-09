@@ -146,7 +146,7 @@ class TicketUICollectionViewController: UICollectionViewController {
             let nextScreen = segue.destination as! SecondViewController
             nextScreen.nameFromPreviousView = selectedTicket.name
             print(selectedTicket.name + " is abotu to be transfered")
-            detailViewController.ticket = selectedTicket
+            detailViewController.ticketData = selectedTicket
             
             //let selectedMovie = tickets[indexPath.row]
             //detailViewController.movie = selectedMovie
