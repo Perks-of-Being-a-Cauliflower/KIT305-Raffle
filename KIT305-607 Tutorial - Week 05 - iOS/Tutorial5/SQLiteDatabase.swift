@@ -526,6 +526,36 @@ class SQLiteDatabase
                         
     }
     
+    func updateTicketInfo(ticket:Ticket){
+        //let updateStatementQuery = "UPDATE Ticket SET soldTickets = " + String(newNum) + " WHERE id = " + String(ticketID) + ";"
+        
+        //let updateStatementQuery = "UPDATE Ticket SET open = " + ticket.open + ", name = " + ticket.name + ", desc = " + ticket.desc + ", margin = " + ticket.margin + ", price = " + ticket.price + ", iDLetter = " + ticket.iDLetter + ", colour = " + ticket.colour + ", maxTickets = " + ticket.maxTickets + ", soldTickets = " + ticket.soldTickets + " WHERE id = " + ticket.ID + ";"
+        
+        //let updateStatementQuery = "UPDATE Ticket SET open = " + ticket.open + ", name = " + ticket.name + ", desc = " + ticket.desc + ", margin = " + ticket.margin + ", price = " + ticket.price + ", iDLetter = " + ticket.iDLetter + ", colour = " + ticket.colour + ", maxTickets = " + ticket.maxTickets + " WHERE id = " + ticket.ID + ";"
+        
+        /*let updateStatementQuery = "UPDATE Ticket SET open = " + ticket.open + ", name = " + ticket.name + ", desc = " + ticket.desc
+            
+            updateStatementQuery += ", margin = " + ticket.margin + ", price = " + ticket.price + ", iDLetter = " + ticket.iDLetter
+        
+            updateStatementQuery += ", colour = " + ticket.colour + ", maxTickets = " + ticket.maxTickets + ", soldTickets = " + ticket.soldTickets + " WHERE id = " + ticket.ID + ";"
+        */
+        
+        let updateStatementQuery = "UPDATE Ticket SET open = \(ticket.open), name = '\(ticket.name)', desc = '\(ticket.desc)', margin = \(ticket.margin), price = \(ticket.price), iDLetter = '\(ticket.iDLetter)', colour = '\(ticket.colour)', maxTickets = \(ticket.maxTickets) WHERE id = \(ticket.ID);"
+        
+        updateWithQuery(updateStatementQuery,
+                        bindingFunction: { (updateStatement) in   //eachRow: { (row) in
+                            sqlite3_bind_int(updateStatement, 1, ticket.open)
+                            sqlite3_bind_text(updateStatement, 2, NSString(string:ticket.name).utf8String, -1, nil)
+                            sqlite3_bind_text(updateStatement, 3, NSString(string:ticket.desc).utf8String, -1, nil)
+                            sqlite3_bind_int(updateStatement, 4, ticket.margin)
+                            sqlite3_bind_double(updateStatement, 5, ticket.price)
+                            sqlite3_bind_text(updateStatement, 6, NSString(string:ticket.iDLetter).utf8String, -1, nil)
+                            sqlite3_bind_text(updateStatement, 7, NSString(string:ticket.colour).utf8String, -1, nil)
+                            sqlite3_bind_int(updateStatement, 8, ticket.maxTickets)
+                            //sqlite3_bind_int(updateStatement, 9, ticket.soldTickets)
+                        })
+    }
+    
     
     
 }
