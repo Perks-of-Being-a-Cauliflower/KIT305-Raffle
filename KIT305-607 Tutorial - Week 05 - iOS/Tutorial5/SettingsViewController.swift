@@ -12,6 +12,11 @@ class SettingsViewController: UIViewController {
 
     @IBOutlet var ticketTitle: UILabel!
     var nameFromPreviousView: String?
+    var ticket: Ticket?
+    
+    @IBOutlet var ticketName: UITextField!
+    @IBOutlet var ticketDescription: UITextField!
+    @IBOutlet var endCondition: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,32 +27,53 @@ class SettingsViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-    if segue.identifier == "TransferTicketArchive"
-    {
-        //createTicketTable()
-        print("zing!")
-        
-        let nextScreen = segue.destination as! CustomerUITableViewController
-        
-        nextScreen.nameFromPreviousView = nameFromPreviousView
-        
-
-        
-        /*nextScreen.nameFromPreviousView = chosenNameField.text
-        nextScreen.databaseFromPreviousView = database
-        if let ticketCost = Double(ticketPrice.text!) {
-            database.insertTicket(ticket:Ticket(open:1, name: chosenNameField.text!, desc:desField.text!,margin:Int32(switchState(for: marginSwitch!)),price:ticketCost,iDLetter:idfield.text!,colour:colourField.text!))
-        } else {
-            print("\nnot submitting: \(ticketPrice.text!)")
-            ticketPrice.text = ""
+        if segue.identifier == "TransferTicketArchive"
+        {
+            //createTicketTable()
+            print("zing!")
+            
+            let nextScreen = segue.destination as! CustomerUITableViewController
+            
+            nextScreen.nameFromPreviousView = nameFromPreviousView
+            
         }
- */
+        else if segue.identifier == "SaveAndExit"
+        {
+            print("zip!")
+            let nextScreen = segue.destination as! SecondViewController
+            let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+            
+            ticket = database.selectTicketName(name: nameFromPreviousView!)
+            
+            if(ticketName.text != ""){
+                ticket?.name = ticketName.text!
+            }
+            if(ticketDescription.text != ""){
+                ticket?.desc = ticketDescription.text!
+            }
+            if(endCondition.text != ""){
+                ticket?.maxTickets = Int32(endCondition.text!)!
+            }
+            //@IBOutlet var ticketName: UITextField!
+            //@IBOutlet var ticketDescription: UITextField!
+            //@IBOutlet var endCondition: UITextField!
+            
+            database.updateTicketInfo(ticket: ticket!)
+            
+            nextScreen.nameFromPreviousView = ticket?.name
+            /*
+            let updateStatementQuery = "UPDATE Ticket SET soldTickets = " + String(newNum) + " WHERE id = " + String(ticketID) + ";"
+            
+            updateWithQuery(updateStatementQuery,
+            bindingFunction: { (updateStatement) in
+                sqlite3_bind_int(updateStatement, 9, newNum)
+            })*/
+            
+            //need to do the update shit
+            
+            //nextScreen.nameFromPreviousView = nameFromPreviousView
+        }
         
-        //let nextScreen = segue.destination as! SecondViewController
-        //nextScreen.nameFromPreviousView = confirmedName.text
-        //nextScreen.colourFromPreviousView = colourBar1.backgroundColor ?? UIColor.white
-        
-    }
         
     }
     

@@ -1031,7 +1031,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Set end Condition" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mGu-mC-m4b">
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mGu-mC-m4b">
                                         <rect key="frame" x="220" y="141" width="205" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1047,7 +1047,7 @@
                                             <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <connections>
-                                            <segue destination="aqs-Wn-0aU" kind="show" id="mho-XX-efv"/>
+                                            <segue destination="aqs-Wn-0aU" kind="show" identifier="SaveAndExit" id="2Sc-Sh-C6u"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Colour" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dnQ-OT-6o9">
@@ -1097,6 +1097,9 @@
                         <barButtonItem key="backBarButtonItem" title="Confirm" id="Y6j-iB-0C2"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="endCondition" destination="mGu-mC-m4b" id="zZT-ac-aQj"/>
+                        <outlet property="ticketDescription" destination="kDq-4Q-bI4" id="LwI-R0-Ez6"/>
+                        <outlet property="ticketName" destination="psE-Tc-OtK" id="1VY-yr-Er7"/>
                         <outlet property="ticketTitle" destination="YsH-2w-Kpk" id="pBr-LY-3YZ"/>
                     </connections>
                 </viewController>
@@ -1121,7 +1124,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N5N-dQ-d8R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="324.77678571428572" y="913.04347826086962"/>
+            <point key="canvasLocation" x="325" y="906"/>
         </scene>
         <!--Library-->
         <scene sceneID="uNH-9Z-Xge">
@@ -1144,7 +1147,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Q5T-Ub-iTT"/>
+        <segue reference="2Sc-Sh-C6u"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.circle.fill" catalog="system" width="128" height="121"/>
