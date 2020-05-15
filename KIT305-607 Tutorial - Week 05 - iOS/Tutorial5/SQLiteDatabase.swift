@@ -537,6 +537,7 @@ class SQLiteDatabase
                             sqlite3_bind_int(updateStatement, 2, ticketID)
                             
         })
+    }
     func updateTicketInfo(ticket:Ticket){
         //let updateStatementQuery = "UPDATE Ticket SET soldTickets = " + String(newNum) + " WHERE id = " + String(ticketID) + ";"
         
