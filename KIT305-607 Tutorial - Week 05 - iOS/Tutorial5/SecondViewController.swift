@@ -73,6 +73,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
         let ticket = database.selectTicketName(name: nameFromPreviousView!)
         ticketData = ticket
+        print(ticket!)
         //print("database data is: ", database.selectTicketName(name: nameFromPreviousView!))
         if(ticket == nil){
             //throw error, there is no data here.
@@ -224,7 +225,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         customerName.text = ""
         customerPhone.text = ""
         customerEmail.text = ""
-        print(database.selectAllCustomers())
+        //print(database.selectAllCustomers())
     }
     
 
@@ -233,7 +234,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
            if segue.identifier == "TransferToTicketEdit"
            {
                //createTicketTable()
-                print("zong!")
+                //print("zong!")
                
                 let nextScreen = segue.destination as! SettingsViewController
 
