@@ -518,14 +518,25 @@ class SQLiteDatabase
     
     func updateSoldTickets(ticketID:Int32, newNum:Int32){
         //let updateStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets FROM Ticket"
-        let updateStatementQuery = "UPDATE Ticket SET soldTickets = " + String(newNum) + " WHERE id = " + String(ticketID) + ";"
+        let updateStatementQuery = "UPDATE Ticket SET soldTickets = ? WHERE id = ?;"
         updateWithQuery(updateStatementQuery,
                         bindingFunction: { (updateStatement) in                            
-                            sqlite3_bind_int(updateStatement, 9, newNum)
+                            sqlite3_bind_int(updateStatement, 1, newNum)
+                            sqlite3_bind_int(updateStatement, 2, ticketID)
                         })
                         
     }
     
+    func updateTicketName(ticketID:Int32, newName:String){
+        print(newName)
+        let updateStatementQuery = "UPDATE Ticket SET Name = ? WHERE ID = ?;"
+        //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
+        updateWithQuery(updateStatementQuery,
+                        bindingFunction: { (updateStatement) in
+                            sqlite3_bind_text(updateStatement, 1, newName, -1, nil)
+                            sqlite3_bind_int(updateStatement, 2, ticketID)
+                            
+        })
     func updateTicketInfo(ticket:Ticket){
         //let updateStatementQuery = "UPDATE Ticket SET soldTickets = " + String(newNum) + " WHERE id = " + String(ticketID) + ";"
         

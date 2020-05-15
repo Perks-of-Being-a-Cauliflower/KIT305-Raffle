@@ -229,12 +229,12 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
     if segue.identifier == "CreateRaffleSegue"
     {
         //createTicketTable()
-        print(chosenNameField.text!)
-        print(desField.text!)
-        print(ticketPrice.text!)
-        print(endCon.text!)
-        print(idfield.text!)
-        print(colourField.text!)
+        //print(chosenNameField.text!)
+        //print(desField.text!)
+        //print(ticketPrice.text!)
+        print(Int32(endCon.text!)!)
+        //print(idfield.text!)
+        //print(colourField.text!)
         let nextScreen = segue.destination as! SecondViewController
         nextScreen.nameFromPreviousView = chosenNameField.text
         nextScreen.databaseFromPreviousView = database
