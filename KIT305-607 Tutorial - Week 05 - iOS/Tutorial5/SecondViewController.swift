@@ -209,9 +209,26 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         //currently just works with selling one ticket, need to make it look for the lowest unallocated value, as well as the ability to sell multiple tickets.
         print(ticketData!.name)
-        ticketData!.soldTickets = ticketData!.soldTickets + 1
-        let num = ticketData!.soldTickets
-        database.updateSoldTickets(ticketID: ticketData!.ID, newNum: num)
+        let num = Int32(numberToPurchaseField.text!)
+        let curr = ticketData!.soldTickets
+        
+        for i in stride(from: 1, to: (num! + 1), by: 1) {
+            print(i+1)
+            
+            
+            database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
+                                                    ticketNum: curr + i,
+                                                    purchaseTime: now,
+                                                    refunded: 0,
+                                                    name: customerName.text!,
+                                                    phone: Int32(customerPhone.text ?? "") ?? -1,
+                                                    email: customerEmail.text ?? ""))
+        }
+        
+        ticketData!.soldTickets = curr + num!
+        database.updateSoldTickets(ticketID: ticketData!.ID, newNum: ticketData!.soldTickets)
+        /*
+                database.updateSoldTickets(ticketID: ticketData!.ID, newNum: num)
         //impliment a way to increase and track ticket numbers. via ticket SQL
             //also need to impliment a way to sell multiple tickets via a stepper. 
         database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
@@ -221,7 +238,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                                                   name: customerName.text!,
                                                   phone: Int32(customerPhone.text ?? "") ?? -1,
                                                   email: customerEmail.text ?? ""))
-        
+        */
         print("added Customer")
         customerName.text = ""
         customerPhone.text = ""

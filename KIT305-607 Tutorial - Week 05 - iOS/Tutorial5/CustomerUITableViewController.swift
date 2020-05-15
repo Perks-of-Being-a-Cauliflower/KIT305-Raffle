@@ -54,6 +54,7 @@ class CustomerUITableViewController: UITableViewController {
             customerCell.name.text = customer.name
             customerCell.ticketNum.text = String(customer.ticketNum)
             customerCell.purchaseTime.text = String(customer.purchaseTime)
+            customerCell.customer = customer
             
         }
         

@@ -15,6 +15,13 @@ class CustomerUITableViewCell: UITableViewCell {
     @IBOutlet var ticketCost: UILabel!
     @IBOutlet var purchaseTime: UILabel!
     
+    var customer:Customer?
+    
+    @IBAction func refundTicket(_ sender: UIButton) {
+        name.text = "poo"
+        
+        //customer.ticketID
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

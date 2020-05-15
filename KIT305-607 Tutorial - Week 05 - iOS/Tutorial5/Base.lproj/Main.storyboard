@@ -866,6 +866,9 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                             <state key="normal" title="Refund Ticket"/>
+                                            <connections>
+                                                <action selector="refundTicket:" destination="Gkx-2L-pdq" eventType="touchUpInside" id="fnz-kd-rfo"/>
+                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="#" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DEB-dn-VFn">
                                             <rect key="frame" x="8" y="19" width="82" height="43"/>
@@ -1223,6 +1226,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="AaU-b7-Htf"/>
         <segue reference="2Sc-Sh-C6u"/>
     </inferredMetricsTieBreakers>
     <resources>
