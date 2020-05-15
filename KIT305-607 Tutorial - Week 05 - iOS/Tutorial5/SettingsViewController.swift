@@ -12,6 +12,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
     @IBOutlet var ticketTitle: UILabel!
     var nameFromPreviousView: String?
+    var idFromPreviousView: Int32 = 0
     var ticketData: Ticket?
     var ticketID: Int32 = 0
     var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
@@ -107,19 +108,22 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             editField.isHidden = true
             let newName: String? = editField.text
             changeNameField.text = newName
-            database.updateTicketName(ticketID: ticketID, newName: newName!)
+            database.updateTicketName(ticketID: ticketID, newString: newName!)
             ticketTitle.text = newName
         } else if returnField == "Edit Raffle Description: " {
             descEditField.isHidden = true
-            let newName: String? = editField.text
+            let newName: String? = descEditField.text
             descriptionField.text = newName
+            database.updateTicketDesc(ticketID: ticketID, newString: newName!)
         } else if returnField == "Edit Raffle Ticket Goal: " {
             editField.isHidden = true
             let newName: String? = editField.text
             endConField.text = newName
+            database.updateMaxTickets(ticketID: ticketID, newNum: Int32(newName!)!)
             editField.keyboardType = UIKeyboardType.default
         } else if returnField == "Edit Colour: " {
             colourPickerView.isHidden = true
+            database.updateTicketColour(ticketID: ticketID, newString: editColour.text!)
         }
         popUpView.isHidden = true
     }
@@ -142,12 +146,12 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         super.viewDidLoad()
         //let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
         //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
-        let ticket = database.selectTicketName(name: nameFromPreviousView!)
+        let ticket = database.selectTicketBy(id: idFromPreviousView)
         ticketID = ticket!.ID
         ticketData = ticket
         ticketID = ticket!.ID
-        ticketTitle.text = nameFromPreviousView!
-        changeNameField.text = nameFromPreviousView!
+        ticketTitle.text = ticket!.name
+        changeNameField.text = ticket!.name
         let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
         UIColor.orange, "Blue": UIColor.blue,"Green":
         UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
@@ -174,9 +178,10 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             
             let nextScreen = segue.destination as! CustomerUITableViewController
             
-            nextScreen.nameFromPreviousView = nameFromPreviousView
+            nextScreen.iDFromPreviousView = idFromPreviousView
             
         }
+            /*
         else if segue.identifier == "SaveAndExit"
         {
             print("zip!")
@@ -201,7 +206,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             database.updateTicketInfo(ticket: ticket!)
             
             nextScreen.nameFromPreviousView = ticket?.name
-            /*
+            
             let updateStatementQuery = "UPDATE Ticket SET soldTickets = " + String(newNum) + " WHERE id = " + String(ticketID) + ";"
             
             updateWithQuery(updateStatementQuery,
@@ -215,7 +220,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
         
         
-    }
     
     /*// MARK: - Navigation
 

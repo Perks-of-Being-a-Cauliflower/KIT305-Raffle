@@ -22,6 +22,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet var ticketName: UILabel!
     @IBOutlet var totalCost: UILabel!
     var nameFromPreviousView: String?
+    var idFromPreviousView: Int32 = 0
     var colourFromPreviousView: UIColor? = UIColor.red
     var databaseFromPreviousView: SQLiteDatabase?
     //var cTicket = Ticket?()
@@ -71,7 +72,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         //print(ticket?.name)
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
         //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
-        let ticket = database.selectTicketName(name: nameFromPreviousView!)
+        let ticket = database.selectTicketBy(id: idFromPreviousView) 
         ticketData = ticket
         print(ticket!)
         //print("database data is: ", database.selectTicketName(name: nameFromPreviousView!))
@@ -238,7 +239,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                
                 let nextScreen = segue.destination as! SettingsViewController
 
-                nextScreen.nameFromPreviousView = nameFromPreviousView
+                nextScreen.idFromPreviousView = idFromPreviousView
                 /*
                nextScreen.databaseFromPreviousView = database
                if let ticketCost = Double(ticketPrice.text!) {

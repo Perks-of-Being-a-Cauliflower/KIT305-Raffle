@@ -34,7 +34,7 @@ class TicketUICollectionViewController: UICollectionViewController {
         tickets = database.selectAllTickets()
         
         self.collectionView.reloadData()
-        print("wowowow")
+        //print("wowowow")
     }
 
     /*
@@ -144,7 +144,7 @@ class TicketUICollectionViewController: UICollectionViewController {
             print("post prep")
             let selectedTicket = tickets[indexPath.row]
             let nextScreen = segue.destination as! SecondViewController
-            nextScreen.nameFromPreviousView = selectedTicket.name
+            nextScreen.idFromPreviousView = selectedTicket.ID
             print(selectedTicket.name + " is abotu to be transfered")
             detailViewController.ticketData = selectedTicket
             

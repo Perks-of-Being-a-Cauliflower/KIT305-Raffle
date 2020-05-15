@@ -249,6 +249,8 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
                                                 maxTickets:Int32(endCon.text!)!,
                                                 soldTickets:0
             ))
+            let currentTicket = database.selectTicketName(name: chosenNameField.text!)
+            nextScreen.idFromPreviousView = currentTicket?.ID as! Int32
         } else {
             print("\nnot submitting: \(ticketPrice.text!)")
             ticketPrice.text = ""

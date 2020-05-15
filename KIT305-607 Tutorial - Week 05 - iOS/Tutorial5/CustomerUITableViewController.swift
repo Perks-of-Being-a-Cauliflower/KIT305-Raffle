@@ -11,13 +11,14 @@ import UIKit
 class CustomerUITableViewController: UITableViewController {
     var customers = [Customer]()
     var nameFromPreviousView: String?
+    var iDFromPreviousView: Int32 = 0
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
         
-        let ticket = database.selectTicketName(name: nameFromPreviousView!)
+        let ticket = database.selectTicketBy(id: iDFromPreviousView)
         
         customers = database.selectAllCustomersFromRaffle(id: ticket!.ID)
         print("LOAD WITH: " + ticket!.name + " | " + String(ticket!.ID))
@@ -27,7 +28,7 @@ class CustomerUITableViewController: UITableViewController {
         super.viewDidLoad()
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
         
-        let ticket = database.selectTicketName(name: nameFromPreviousView!)
+        let ticket = database.selectTicketBy(id: iDFromPreviousView)
         
         customers = database.selectAllCustomersFromRaffle(id: ticket!.ID)
         print("LOAD WITH: " + ticket!.name + " | " + String(ticket!.ID))
