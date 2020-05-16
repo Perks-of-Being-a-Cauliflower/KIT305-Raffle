@@ -235,7 +235,7 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         //print(colourField.text!)
         let nextScreen = segue.destination as! SecondViewController
         nextScreen.nameFromPreviousView = chosenNameField.text
-        nextScreen.databaseFromPreviousView = database
+        //nextScreen.databaseFromPreviousView = database
         if let ticketCost = Double(ticketPrice.text!) {
             database.insertTicket(ticket:Ticket(open:1,
                                                 name: chosenNameField.text!,
