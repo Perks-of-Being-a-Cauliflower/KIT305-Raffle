@@ -14,6 +14,7 @@ class CustomerUITableViewCell: UITableViewCell {
     @IBOutlet var ticketNum: UILabel!
     @IBOutlet var ticketCost: UILabel!
     @IBOutlet var purchaseTime: UILabel!
+    @IBOutlet var ticketColour: UIImageView!
     
     var specificTicketID: Int32!
     var specificCustomerTicketID: Int32!

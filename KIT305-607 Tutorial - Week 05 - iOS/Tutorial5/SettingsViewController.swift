@@ -136,9 +136,24 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         if returnField == "Edit Raffle Name: " {
             editField.isHidden = true
             let newName: String? = editField.text
-            changeNameField.text = newName
-            database.updateTicketName(ticketID: ticketID, newString: newName!)
-            ticketTitle.text = newName
+            
+            
+            if(database.selectTicketName(name: newName!) == nil){
+                print("name does not exist")
+                database.updateTicketName(ticketID: ticketID, newString: newName!)
+                ticketTitle.text = newName
+                changeNameField.text = newName
+            }else{
+                print("name does exist")
+                let alert = UIAlertController(title: "Error:", message: "The name \"\(newName ?? " ")\" already exists in the database, please select another name", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true)
+            }
+            
+            
+            
         } else if returnField == "Edit Raffle Description: " {
             descEditField.isHidden = true
             let newName: String? = descEditField.text

@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 16
+    private let DATABASE_VERSION = 17
     
     
     
@@ -343,7 +343,7 @@ class SQLiteDatabase
             IDLetter CHAR(255),
             Colour CHAR(255),
             MaxTickets INTEGER,
-            soldTickets INTEGER
+            SoldTickets INTEGER
         );
         """
         createTableWithQuery(createTicketTableQuery, tableName: "Ticket")
@@ -366,7 +366,7 @@ class SQLiteDatabase
     }
     
     func insertTicket(ticket:Ticket) {
-        let insertStatementQuery = "INSERT INTO Ticket (Open, Name, Desc, Margin, Price, IDLetter, Colour) VALUES (?, ?, ?, ?, ?, ?, ?);"
+        let insertStatementQuery = "INSERT INTO Ticket (Open, Name, Desc, Margin, Price, IDLetter, Colour, MaxTickets, SoldTickets) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
         
         insertWithQuery(insertStatementQuery, bindingFunction: { (insertStatement) in
             sqlite3_bind_int(insertStatement, 1, ticket.open)
@@ -570,6 +570,10 @@ class SQLiteDatabase
     }
     
     func updateTicketName(ticketID:Int32, newString:String){
+        //check for other tickets with name.
+        
+        
+        
         let updateStatementQuery = "UPDATE Ticket SET Name = ? WHERE ID = ?;"
         //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
         updateWithQuery(updateStatementQuery,
