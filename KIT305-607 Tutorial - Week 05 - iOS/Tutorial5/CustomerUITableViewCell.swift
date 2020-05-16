@@ -26,8 +26,6 @@ class CustomerUITableViewCell: UITableViewCell {
 
    
     @IBAction func refundTicket(_ sender: UIButton) {
-        //name.text = "poo"
-        print("poo")
         let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
         
         database.deleteCustomer(id: specificCustomerTicketID)

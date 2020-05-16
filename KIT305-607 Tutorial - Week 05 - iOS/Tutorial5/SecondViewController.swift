@@ -24,7 +24,10 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var nameFromPreviousView: String?
     var idFromPreviousView: Int32 = 0
     var colourFromPreviousView: UIColor? = UIColor.red
-    var databaseFromPreviousView: SQLiteDatabase?
+    var  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+    var winner: Customer?
+    var allTickets: [Customer] = []
+    //var databaseFromPreviousView: SQLiteDatabase?
     //var cTicket = Ticket?()
     
     @IBOutlet weak var ticketLabel: UILabel!
@@ -35,6 +38,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var ticketIdentifier: UILabel!
     @IBOutlet weak var ticketsSoldCounter: UILabel!
     
+    @IBOutlet weak var winnerField: UITextField!
     
     
     
@@ -76,6 +80,64 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         totalCost.text = totePrice
     }
     
+    @IBAction func drawWinner(_ sender: Any) {
+        allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
+        winner = allTickets.randomElement()
+        //print(winner!.name)
+        winnerField.text = winner?.name
+    }
+    
+    @IBAction func winnerdetails(_ sender: Any) {
+        winnerField.isUserInteractionEnabled = false
+        if winnerField.text! != "" {
+        let alert = UIAlertController(
+            title: "Winner is " + winnerField.text! + "!",
+            message: "Phone:  \(winner!.phone) \n Email: \(winner!.email)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(
+            title: "Remove Ticket From Pool",
+            style: .default,
+            handler: { action in
+                self.database.deleteCustomer(id: self.winner!.ID)
+                let curr = self.winner?.ticketNum
+                for customer in self.allTickets{
+                    if(customer.ticketNum > curr!){
+                        self.database.updateCustomerTicketNumber(ticketID: customer.ID, ticketNumber: customer.ticketNum-1)
+                        print("bumped down by 1")
+                    }
+                }
+                self.ticketData?.soldTickets-=1
+                self.database.updateSoldTickets(ticketID: self.ticketData!.ID, newNum: self.ticketData!.soldTickets)
+                let newString: String? = String(self.ticketData!.soldTickets)
+                let intCompare: Int = Int(self.ticketData!.soldTickets)
+                
+                if intCompare == 0 {
+                    self.ticketsSoldCounter.text = "000"
+                } else if intCompare <= 9 {
+                    self.ticketsSoldCounter.text = "00" + newString!
+                } else if intCompare >= 10 && intCompare <= 99 {
+                    self.ticketsSoldCounter.text = "0" + newString!
+                    } else {
+                    self.ticketsSoldCounter.text = newString!
+                }
+                self.winnerField.text = ""
+        }))
+        alert.addAction(UIAlertAction(
+            title: "Contact Winner",
+            style: .default,
+            handler: { action in
+                
+        }))
+        alert.addAction(UIAlertAction(
+            title: "Return",
+            style: .default,
+            handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        }
+        winnerField.isUserInteractionEnabled = true
+    }
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
         //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
@@ -115,7 +177,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
         //print(ticket?.name)
-        let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+        
         //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
         let ticket = database.selectTicketBy(id: idFromPreviousView) 
         ticketData = ticket
