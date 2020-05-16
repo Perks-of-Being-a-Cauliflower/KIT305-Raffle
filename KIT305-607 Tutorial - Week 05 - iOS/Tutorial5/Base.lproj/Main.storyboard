@@ -513,6 +513,11 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="selectedIndex">
+                            <integer key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="ZDk-Pi-jcO" kind="relationship" relationship="viewControllers" id="rvw-3v-aHJ"/>
                         <segue destination="uHH-NZ-IY4" kind="relationship" relationship="viewControllers" id="MWF-Vu-uPh"/>
@@ -1237,7 +1242,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Q5T-Ub-iTT"/>
+        <segue reference="2Sc-Sh-C6u"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.circle.fill" catalog="system" width="128" height="121"/>

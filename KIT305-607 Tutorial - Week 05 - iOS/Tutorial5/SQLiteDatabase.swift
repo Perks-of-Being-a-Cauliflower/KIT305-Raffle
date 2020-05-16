@@ -256,6 +256,37 @@ class SQLiteDatabase
         //clean up
         sqlite3_finalize(selectStatement)
     }
+    //LIAMS IN PROGRESS BIT
+    private func deleteWithQuery(
+        _ deleteStatementQuery : String,
+        bindingFunction: ((_ rowHandle: OpaquePointer?)->()))
+    {
+        //prepare the statement
+        var deleteStatement: OpaquePointer? = nil
+        if sqlite3_prepare_v2(db, deleteStatementQuery, -1, &deleteStatement, nil) == SQLITE_OK
+        {
+            //do bindings
+            bindingFunction(deleteStatement)
+            
+            //execute
+            if sqlite3_step(deleteStatement) == SQLITE_DONE
+            {
+                print("Successfully deleted row.")
+            }
+            else
+            {
+                print("Could not delete row.")
+                printCurrentSQLErrorMessage(db)
+            }
+        }
+        else
+        {
+            print("DELETE statement could not be prepared.")
+            printCurrentSQLErrorMessage(db)
+        }
+        //clean up
+        sqlite3_finalize(deleteStatement)
+    }
     
     //helper function to run update statements.
     //Provide it with a binding function for replacing the "?"'s in the WHERE clause
@@ -430,10 +461,10 @@ class SQLiteDatabase
             )
             //add it to the result array
             if(customer.ticketID == id){
-                print("even steven")
+                //print("even steven")
                 result += [customer]
             }else{
-                print(String(customer.ticketID) + " is different from " + String(id))
+                //print(String(customer.ticketID) + " is different from " + String(id))
             }
             
             
@@ -601,5 +632,30 @@ class SQLiteDatabase
                         })
     }
     
+    func deleteCustomer(id:Int32)
+    {
+        //var result = [Customer]()
+        print("p1 " + String(id))
+        let deleteStatementQuery = "DELETE FROM Customer WHERE id = ?;"
+        
+        deleteWithQuery(deleteStatementQuery,
+                        bindingFunction: { (deleteStatement) in   //eachRow: { (row) in
+                            sqlite3_bind_int(deleteStatement, 1, id)
+                        })
+        print("p2")
+        
+    }
+    
+    func updateCustomerTicketNumber(ticketID:Int32, ticketNumber:Int32){
+        //SELECT id, ticketID, ticketNum, purchaseTime, refunded, name, phone, email FROM Customer"
+        let updateStatementQuery = "UPDATE Customer SET ticketNum = ? WHERE id = ?;"
+        //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
+        updateWithQuery(updateStatementQuery,
+                        bindingFunction: { (updateStatement) in
+                            sqlite3_bind_int(updateStatement, 1, ticketNumber)
+                            sqlite3_bind_int(updateStatement, 2, ticketID)
+                            
+        })
+    }
     
 }

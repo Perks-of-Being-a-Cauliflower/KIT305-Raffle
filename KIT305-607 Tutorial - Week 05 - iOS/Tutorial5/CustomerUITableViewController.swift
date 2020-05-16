@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomerUITableViewController: UITableViewController {
+class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
     var customers = [Customer]()
     var nameFromPreviousView: String?
     var iDFromPreviousView: Int32 = 0
@@ -26,13 +26,22 @@ class CustomerUITableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidLoad()
-        let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
+        updateTableView()
+        //super.viewDidLoad()
+        /*let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
         
         let ticket = database.selectTicketBy(id: iDFromPreviousView)
         
         customers = database.selectAllCustomersFromRaffle(id: ticket!.ID)
-        print("LOAD WITH: " + ticket!.name + " | " + String(ticket!.ID))
+        print("LOAD WITH: " + ticket!.name + " | " + String(ticket!.ID))*/
+    }
+    
+    func updateTableView() {
+        print("yyyxxx")
+        let database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
+        let ticket = database.selectTicketBy(id: iDFromPreviousView)
+        customers = database.selectAllCustomersFromRaffle(id: ticket!.ID)
+        self.tableView.reloadData()
     }
     // MARK: - Table view data source
 
@@ -47,7 +56,7 @@ class CustomerUITableViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerUITableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerUITableViewCell", for: indexPath) as! CustomerUITableViewCell
         
         let customer = customers[(customers.count-1) - indexPath.row] //displays most recently added ticket at top.
         if let  customerCell = cell as? CustomerUITableViewCell
@@ -57,8 +66,10 @@ class CustomerUITableViewController: UITableViewController {
             customerCell.purchaseTime.text = String(customer.purchaseTime)
             customerCell.customer = customer
             
+            customerCell.specificTicketID = customer.ticketID
+            customerCell.specificCustomerTicketID = customer.ID
         }
-        
+        cell.delegate = self
         return cell
         
     }
