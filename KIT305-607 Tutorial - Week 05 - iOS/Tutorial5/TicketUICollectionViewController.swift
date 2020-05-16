@@ -65,13 +65,37 @@ class TicketUICollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TicketUICollectionViewCell", for: indexPath)
     
         // Configure the cell
-        let ticket = tickets[indexPath.row]
+        //let ticket = tickets[indexPath.row]
+        let ticket = tickets[(tickets.count-1) - indexPath.row]
         if let  ticketCell = cell as? TicketUICollectionViewCell
         {
             ticketCell.name.text = ticket.name
 
             
             ticketCell.price.text = "$" + String(ticket.price)
+            
+            let newString: String? = String(ticket.soldTickets)
+            let intCompare: Int = Int(ticket.soldTickets)
+            
+            if intCompare == 0 {
+                ticketCell.ticketCounter.text = "000"
+            } else if intCompare <= 9 {
+                ticketCell.ticketCounter.text = "00" + newString!
+            } else if intCompare >= 10 && intCompare <= 99 {
+                ticketCell.ticketCounter.text = "0" + newString!
+                } else {
+                ticketCell.ticketCounter.text = newString!
+            }
+            
+            let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
+            UIColor.orange, "Blue": UIColor.blue,"Green":
+            UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
+            "Pink": UIColor.systemPink]
+            
+            ticketCell.topColour.backgroundColor = colors[ticket.colour]
+            ticketCell.bottomColour.backgroundColor = colors[ticket.colour]
+            
+            ticketCell.iDLetter.text = ticket.iDLetter
             //ticketCell.button.ticket = ticket
             //ticketCell.button.setTitle((title: "help", String(ticket.ID))
             
@@ -142,7 +166,8 @@ class TicketUICollectionViewController: UICollectionViewController {
             }
             //var indexPath = collectionView.indexPath(for:selectedTicketCell)
             print("post prep")
-            let selectedTicket = tickets[indexPath.row]
+            //let selectedTicket = tickets[indexPath.row]
+            let selectedTicket = tickets[(tickets.count-1) - indexPath.row]
             let nextScreen = segue.destination as! SecondViewController
             nextScreen.idFromPreviousView = selectedTicket.ID
             print(selectedTicket.name + " is abotu to be transfered")
