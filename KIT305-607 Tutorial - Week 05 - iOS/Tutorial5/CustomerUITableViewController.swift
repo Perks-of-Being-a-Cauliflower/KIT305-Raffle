@@ -58,16 +58,28 @@ class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerUITableViewCell", for: indexPath) as! CustomerUITableViewCell
         
+        let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
+        let ticket = database.selectTicketBy(id: iDFromPreviousView)
+        let ticketCost = ticket!.price
+        
         let customer = customers[(customers.count-1) - indexPath.row] //displays most recently added ticket at top.
         if let  customerCell = cell as? CustomerUITableViewCell
         {
             customerCell.name.text = customer.name
             customerCell.ticketNum.text = String(customer.ticketNum)
             customerCell.purchaseTime.text = String(customer.purchaseTime)
+            customerCell.ticketCost.text = "$" + String(ticketCost)
             customerCell.customer = customer
             
             customerCell.specificTicketID = customer.ticketID
             customerCell.specificCustomerTicketID = customer.ID
+            
+            let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
+            UIColor.orange, "Blue": UIColor.blue,"Green":
+            UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
+            "Pink": UIColor.systemPink]
+            
+            customerCell.ticketColour.backgroundColor = colors[ticket!.colour]
         }
         cell.delegate = self
         return cell

@@ -168,7 +168,22 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         if returnField == "Name:" {
             confirmedName.isHidden = true
             let newName: String? = confirmedName.text
-            chosenNameField.text = newName
+            
+            
+            if(database.selectTicketName(name: newName!) == nil){
+                print("name does not exist")
+                chosenNameField.text = newName
+            }else{
+                print("name does exist")
+                let alert = UIAlertController(title: "Error:", message: "The name \"\(newName!)\" already exists in the database, please select another name", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true)
+                
+                chosenNameField.text = ""
+            }
+            
         } else if returnField == "Description:" {
             descriptInput.isHidden = true
             let newName: String? = descriptInput.text
@@ -230,9 +245,11 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         //print(chosenNameField.text!)
         //print(desField.text!)
         //print(ticketPrice.text!)
-        print(Int32(endCon.text!)!)
+        print("NUM 4 TICKET: \(Int32(endCon.text!)!)")
         //print(idfield.text!)
         //print(colourField.text!)
+        
+        
         let nextScreen = segue.destination as! SecondViewController
         nextScreen.nameFromPreviousView = chosenNameField.text
         //nextScreen.databaseFromPreviousView = database
