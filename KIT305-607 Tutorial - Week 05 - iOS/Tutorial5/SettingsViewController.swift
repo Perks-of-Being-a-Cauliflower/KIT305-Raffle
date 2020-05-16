@@ -50,9 +50,37 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
             return cPicker.count
     }
+    /*
+    func selectRow(_ row: Int, inComponent component: Int, animated: Bool) {
+        _ = false
+        for strings in cPicker {
+            if strings == ticketData?.colour {
+                colourPickerView.selectedRow(inComponent: index(ofAccessibilityElement: strings))
+                return
+            } else {
+                colourPickerView.selectedRow(inComponent: 0)
+                return
+            }
+        }
+    }
+    */
+    func rowSelecter() {
+        print("Hi")
+        let finder = cPicker.firstIndex(of: editColour.text!)
+            print(finder!)
+            colourPickerView.selectRow(finder!, inComponent: 0, animated: false)
+            return
+    }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         editColour.text = cPicker[row]
+        let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
+        UIColor.orange, "Blue": UIColor.blue,"Green":
+        UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
+        "Pink": UIColor.systemPink]
+        firstColourBar.backgroundColor = colors[editColour.text!]
+        secondColourBar.backgroundColor = colors[editColour.text!]
+        settingsID.text = ticketData!.iDLetter + " - " + editColour.text!
         
     }
     
@@ -91,6 +119,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             } else if sender.tag == 4 {
                 colourPickerView.isHidden = false
                 colourPickerView.becomeFirstResponder()
+                rowSelecter()
                 popUpTitle.text = "Edit Colour: "
             }
             popUpView.isHidden = false
@@ -123,7 +152,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             editField.keyboardType = UIKeyboardType.default
         } else if returnField == "Edit Colour: " {
             colourPickerView.isHidden = true
-            database.updateTicketColour(ticketID: ticketID, newString: editColour.text!)
         }
         popUpView.isHidden = true
     }
@@ -142,6 +170,8 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             popUpView.isHidden = true
     }
     
+    
+    // MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         //let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
@@ -159,6 +189,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         firstColourBar.backgroundColor = colors[ticket!.colour]
         secondColourBar.backgroundColor = colors[ticket!.colour]
         print(ticket!.maxTickets)
+        editColour.text = ticket?.colour
         descriptionField.text = ticket!.desc
         endConField.text = String(ticket!.maxTickets)
         settingsID.text = ticket!.iDLetter + " - " + ticket!.colour

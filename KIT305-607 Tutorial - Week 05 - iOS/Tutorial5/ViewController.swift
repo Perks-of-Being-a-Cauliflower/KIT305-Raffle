@@ -44,18 +44,14 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    /*
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView.tag == 5 {
-            print("tag is: ", pickerView.tag)
-            return rID[row]
-        } else {
-            print("tag is: ", pickerView.tag)
-            return rColour[row]
-        }
-
+    
+    func rowSelecter(targetField: UITextField, array: [String], targetPicker: UIPickerView) {
+        print("Hi")
+        let finder = array.firstIndex(of: targetField.text!)
+            print(finder!)
+            targetPicker.selectRow(finder ?? 0, inComponent: 0, animated: false)
+            return
     }
-    */
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         if pickerView.tag == 5 {
@@ -145,11 +141,13 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
             } else if sender.tag == 5 {
                 iDPicker.isHidden = false
                 iDPicker.becomeFirstResponder()
+                rowSelecter(targetField: idfield, array: rID, targetPicker: iDPicker)
                 //let temp: String? = endCon.text
                 //confirmedName.text = temp
             } else if sender.tag == 6 {
                 colourPicker.isHidden = false
                 colourPicker.becomeFirstResponder()
+                rowSelecter(targetField: colourField, array: rColour, targetPicker: colourPicker)
             }
             popUpView.isHidden = false
         }
@@ -260,7 +258,7 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         //nextScreen.colourFromPreviousView = colourBar1.backgroundColor ?? UIColor.white
         
     } }
-    
+    // MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         raffleCID.text = idfield.text! + " - " + colourField.text!
