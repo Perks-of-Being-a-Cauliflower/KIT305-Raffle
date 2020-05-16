@@ -33,6 +33,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var numberToPurchaseField: UITextField!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var ticketIdentifier: UILabel!
+    @IBOutlet weak var ticketsSoldCounter: UILabel!
     
     
     
@@ -46,6 +47,14 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
+    }
+    
+    func rowSelecter() {
+        print("Hi")
+        let finder = tPicker.firstIndex(of: numberToPurchaseField.text!)
+            print(finder!)
+            pickerView.selectRow(finder!, inComponent: 0, animated: false)
+            return
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
@@ -67,6 +76,42 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         totalCost.text = totePrice
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+        //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
+        let ticket = database.selectTicketBy(id: idFromPreviousView)
+        ticketData = ticket
+        print(ticket!)
+        //print("database data is: ", database.selectTicketName(name: nameFromPreviousView!))
+        if(ticket == nil){
+            //throw error, there is no data here.
+            print("ticket nil")
+        }else{
+            //let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
+            print("ticket not nil")
+            
+            //var ticket = database.selectTicketBy(id:ticketID!)
+            ticketName.text = ticket?.name
+            ticketName.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+            let totePrice:String = String(format:"$ %.1f", ticket!.price)
+            //let goal:String = String(format:"%.1f", ticket!.)
+            totalCost.text = totePrice
+            //ticketGoal.text = goal
+            let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
+            UIColor.orange, "Blue": UIColor.blue,"Green":
+            UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
+            "Pink": UIColor.systemPink]
+            //print("colour is: ", colors[ticket!.colour] as Any)
+            //print("sees colour as: ", ticket?.colour as Any)
+            colourBarOne.backgroundColor = colors[ticket!.colour]
+            colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
+            ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
+            //ticketName.text = self.name
+    
+        }
+        
+    }
+    // MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         //print(ticket?.name)
@@ -100,6 +145,18 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
             ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
             //ticketName.text = self.name
+            let newString: String? = String(ticketData!.soldTickets)
+            let intCompare: Int = Int(ticketData!.soldTickets)
+            
+            if intCompare == 0 {
+                ticketsSoldCounter.text = "000"
+            } else if intCompare <= 9 {
+                ticketsSoldCounter.text = "00" + newString!
+            } else if intCompare >= 10 && intCompare <= 99 {
+                ticketsSoldCounter.text = "0" + newString!
+                } else {
+                ticketsSoldCounter.text = newString!
+            }
         }
         
         // Do any additional setup after loading the view.
@@ -143,6 +200,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             } else if sender.tag == 4 {
                 pickerView.isHidden = false
                 pickerView.becomeFirstResponder()
+                rowSelecter()
                 ticketLabel.text = "Tickets to Purchase: "
             }
             popUpMenu2.isHidden = false
@@ -227,6 +285,21 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         ticketData!.soldTickets = curr + num!
         database.updateSoldTickets(ticketID: ticketData!.ID, newNum: ticketData!.soldTickets)
+        
+        let newString: String? = String(ticketData!.soldTickets)
+        let intCompare: Int = Int(ticketData!.soldTickets)
+        
+        if intCompare == 0 {
+            ticketsSoldCounter.text = "000"
+        } else if intCompare <= 9 {
+            ticketsSoldCounter.text = "00" + newString!
+        } else if intCompare >= 10 && intCompare <= 99 {
+            ticketsSoldCounter.text = "0" + newString!
+            } else {
+            ticketsSoldCounter.text = newString!
+        }
+        
+
         /*
                 database.updateSoldTickets(ticketID: ticketData!.ID, newNum: num)
         //impliment a way to increase and track ticket numbers. via ticket SQL
@@ -239,7 +312,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                                                   phone: Int32(customerPhone.text ?? "") ?? -1,
                                                   email: customerEmail.text ?? ""))
         */
-        print("added Customer")
+        //print("added Customer")
         customerName.text = ""
         customerPhone.text = ""
         customerEmail.text = ""

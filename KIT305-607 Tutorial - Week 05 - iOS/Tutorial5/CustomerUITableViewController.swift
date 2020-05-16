@@ -13,8 +13,7 @@ class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
     var nameFromPreviousView: String?
     var iDFromPreviousView: Int32 = 0
     
-    
-
+    // MARK: - ViewDidLoad
     override func viewDidLoad()
     {
         super.viewDidLoad()
