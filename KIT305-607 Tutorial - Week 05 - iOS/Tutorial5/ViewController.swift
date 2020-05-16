@@ -265,7 +265,20 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
                                                 soldTickets:0
             ))
             let currentTicket = database.selectTicketName(name: chosenNameField.text!)
-            nextScreen.idFromPreviousView = currentTicket?.ID as! Int32
+            nextScreen.idFromPreviousView = currentTicket!.ID
+            chosenNameField.text = ""
+            desField.text = ""
+            ticketPrice.text = ""
+            idfield.text = "A"
+            colourField.text = "Red"
+            endCon.text = ""
+            raffleCID.text = idfield.text! + " - " + colourField.text!
+            let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
+            UIColor.orange, "Blue": UIColor.blue,"Green":
+            UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
+            "Pink": UIColor.systemPink]
+            colourBar1.backgroundColor = colors[colourField.text!]
+            colourBar2.backgroundColor = colors[colourField.text!]
         } else {
             print("\nnot submitting: \(ticketPrice.text!)")
             ticketPrice.text = ""
