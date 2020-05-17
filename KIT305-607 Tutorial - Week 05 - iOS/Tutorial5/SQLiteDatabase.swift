@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 17
+    private let DATABASE_VERSION = 18
     
     
     
@@ -343,7 +343,8 @@ class SQLiteDatabase
             IDLetter CHAR(255),
             Colour CHAR(255),
             MaxTickets INTEGER,
-            SoldTickets INTEGER
+            SoldTickets INTEGER,
+            Image CHAR(255)
         );
         """
         createTableWithQuery(createTicketTableQuery, tableName: "Ticket")
@@ -366,7 +367,7 @@ class SQLiteDatabase
     }
     
     func insertTicket(ticket:Ticket) {
-        let insertStatementQuery = "INSERT INTO Ticket (Open, Name, Desc, Margin, Price, IDLetter, Colour, MaxTickets, SoldTickets) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
+        let insertStatementQuery = "INSERT INTO Ticket (Open, Name, Desc, Margin, Price, IDLetter, Colour, MaxTickets, SoldTickets, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
         
         insertWithQuery(insertStatementQuery, bindingFunction: { (insertStatement) in
             sqlite3_bind_int(insertStatement, 1, ticket.open)
@@ -378,6 +379,7 @@ class SQLiteDatabase
             sqlite3_bind_text(insertStatement, 7, NSString(string:ticket.colour).utf8String, -1, nil)
             sqlite3_bind_int(insertStatement, 8, ticket.maxTickets)
             sqlite3_bind_int(insertStatement, 9, ticket.soldTickets)
+            sqlite3_bind_text(insertStatement, 10, NSString(string:ticket.image).utf8String, -1, nil)
         })
     }
     
@@ -398,7 +400,7 @@ class SQLiteDatabase
     func selectAllTickets() -> [Ticket]
     {
         var result = [Ticket]()
-        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets FROM Ticket"
+        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets, image FROM Ticket"
         
         selectWithQuery(selectStatementQuery, eachRow: { (row) in
             //create a movie object from each result
@@ -411,7 +413,8 @@ class SQLiteDatabase
                                 iDLetter: String(cString:sqlite3_column_text(row, 6)),
                                 colour: String(cString:sqlite3_column_text(row, 7)),
                                 maxTickets: sqlite3_column_int(row, 8),
-                                soldTickets: sqlite3_column_int(row, 9)
+                                soldTickets: sqlite3_column_int(row, 9),
+                                image: String(cString:sqlite3_column_text(row, 10))
             )
             //add it to the result array
             result += [ticket]
@@ -477,7 +480,7 @@ class SQLiteDatabase
         var result : Ticket?
         
         var potential = [Ticket]()
-        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets FROM Ticket"
+        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets, image FROM Ticket"
         
         selectWithQuery(selectStatementQuery, eachRow: { (row) in
         
@@ -491,7 +494,8 @@ class SQLiteDatabase
             iDLetter: String(cString:sqlite3_column_text(row, 6)),
             colour: String(cString:sqlite3_column_text(row, 7)),
             maxTickets: sqlite3_column_int(row, 8),
-            soldTickets: sqlite3_column_int(row, 9)
+            soldTickets: sqlite3_column_int(row, 9),
+            image: String(cString:sqlite3_column_text(row, 10))
         )
         potential += [ticket]
         })
@@ -512,7 +516,7 @@ class SQLiteDatabase
         var result : Ticket?
         
         var potential = [Ticket]()
-        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets FROM Ticket"
+        let selectStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets, image FROM Ticket"
         
         selectWithQuery(selectStatementQuery, eachRow: { (row) in
         
@@ -526,7 +530,8 @@ class SQLiteDatabase
             iDLetter: String(cString:sqlite3_column_text(row, 6)),
             colour: String(cString:sqlite3_column_text(row, 7)),
             maxTickets: sqlite3_column_int(row, 8),
-            soldTickets: sqlite3_column_int(row, 9)
+            soldTickets: sqlite3_column_int(row, 9),
+            image: String(cString:sqlite3_column_text(row, 10))
         )
         potential += [ticket]
         })

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
 
     // a handle to the database itself
@@ -30,25 +30,72 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var popUpView: UIView!
     
 
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var colourBar2: UIImageView!
     @IBOutlet weak var colourBar1: UIImageView!
     @IBOutlet weak var colourField: UITextField!
     @IBOutlet weak var colourPicker: UIPickerView!
     @IBOutlet weak var idfield: UITextField!
     @IBOutlet weak var iDPicker: UIPickerView!
+    
+    var imageSTR64: String?
 
 let rColour = ["Red", "Blue", "Green", "Yellow", "Brown", "Pink", "Orange"]
 let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
 
+    
+    
+    @IBAction func uploadPhoto(_ sender: Any) {
+        if
+        UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+        print("Library available")
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.allowsEditing = true
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+        print("No library available")
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+    didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
+    {
+        print("first")
+        if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage
+        {
+            //print("image is: ", image)
+            imageView.image = image
+            dismiss(animated: true, completion: nil)
+            
+            //let image : UIImage = imageView.image?.jpeg(UIImage.JPEGQuality(rawValue: 0)!)
+            
+            let image : UIImage = imageView.image!
+            //let imageData:NSData = image.pngData()! as NSData
+            let imageData = image.jpegData(compressionQuality: 0)
+            let imageBase64String = imageData!.base64EncodedString()
+            print(imageBase64String ?? "Could not encode image to Base64")
+            imageSTR64 = imageBase64String
+            //imageSTR64 = imageData.base64EncodedString(options: .lineLength64Characters)
+ 
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
+    {
+        dismiss(animated: true, completion: nil)
+    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func rowSelecter(targetField: UITextField, array: [String], targetPicker: UIPickerView) {
-        print("Hi")
+        //print("Hi")
         let finder = array.firstIndex(of: targetField.text!)
-            print(finder!)
+            //print(finder!)
             targetPicker.selectRow(finder ?? 0, inComponent: 0, animated: false)
             return
     }
@@ -199,7 +246,7 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
                 print("Not a valid number: \(newName!)")
                 ticketPrice.text = ""
             }
-            print(ticketPrice.text!)
+            //print(ticketPrice.text!)
             confirmedName.keyboardType = UIKeyboardType.default
         } else if returnField == "Enter Ticket Sell Limit:" {
             confirmedName.isHidden = true
@@ -245,7 +292,7 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
         //print(chosenNameField.text!)
         //print(desField.text!)
         //print(ticketPrice.text!)
-        print("NUM 4 TICKET: \(Int32(endCon.text!)!)")
+        //print("NUM 4 TICKET: \(Int32(endCon.text!)!)")
         //print(idfield.text!)
         //print(colourField.text!)
         
@@ -262,7 +309,8 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
                                                 iDLetter:idfield.text!,
                                                 colour:colourField.text!,
                                                 maxTickets:Int32(endCon.text!)!,
-                                                soldTickets:0
+                                                soldTickets:0,
+                                                image: imageSTR64!
             ))
             let currentTicket = database.selectTicketName(name: chosenNameField.text!)
             nextScreen.idFromPreviousView = currentTicket!.ID
@@ -320,3 +368,19 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
 
 }
 
+extension UIImage {
+    enum JPEGQuality: CGFloat {
+        case lowest  = 0
+        case low     = 0.25
+        case medium  = 0.5
+        case high    = 0.75
+        case highest = 1
+    }
+
+    /// Returns the data for the specified image in JPEG format.
+    /// If the image object’s underlying image data has been purged, calling this function forces that data to be reloaded into memory.
+    /// - returns: A data object containing the JPEG data, or nil if there was a problem generating the data. This function may return nil if the image has no data or if the underlying CGImageRef contains data in an unsupported bitmap format.
+    func jpeg(_ jpegQuality: JPEGQuality) -> Data? {
+        return jpegData(compressionQuality: jpegQuality.rawValue)
+    }
+}

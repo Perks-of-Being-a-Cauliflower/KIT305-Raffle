@@ -127,6 +127,9 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="uploadPhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XCv-18-1we"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zb-3h-JUS">
                                 <rect key="frame" x="201" y="247" width="93" height="41"/>
@@ -332,6 +335,7 @@
                         <outlet property="endCon" destination="Y5y-kn-Bad" id="1jc-WR-B7h"/>
                         <outlet property="iDPicker" destination="Vbr-YT-sme" id="zqv-HI-ZdG"/>
                         <outlet property="idfield" destination="R4F-84-Pdk" id="FfU-2E-UsX"/>
+                        <outlet property="imageView" destination="g6A-yX-wgp" id="A6U-4C-Abn"/>
                         <outlet property="marginSwitch" destination="Oy5-mU-ldt" id="wAV-kt-WCi"/>
                         <outlet property="popUpView" destination="c09-HA-27A" id="OAo-Ow-kvq"/>
                         <outlet property="raffleCID" destination="vwz-rX-Z7t" id="bK4-kl-DkN"/>
@@ -491,7 +495,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tickets Goal:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="858-8i-8aE">
-                                        <rect key="frame" x="60" y="100" width="108" height="42"/>
+                                        <rect key="frame" x="60" y="90" width="108" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -510,7 +514,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wwe-0W-3wk">
-                                        <rect key="frame" x="60" y="154" width="103" height="41"/>
+                                        <rect key="frame" x="60" y="133" width="103" height="41"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -523,7 +527,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oif-Al-Ney">
-                                        <rect key="frame" x="198" y="101" width="159" height="34"/>
+                                        <rect key="frame" x="198" y="94" width="159" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -538,7 +542,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ere-YP-0G2">
-                                        <rect key="frame" x="198" y="157" width="205" height="34"/>
+                                        <rect key="frame" x="198" y="136" width="205" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -666,7 +670,7 @@
                                             <action selector="showInputMenu:" destination="aqs-Wn-0aU" eventType="touchDown" id="x0e-mo-ria"/>
                                         </connections>
                                     </textField>
-                                    <view hidden="YES" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SPa-uZ-Ccg">
+                                    <view hidden="YES" alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SPa-uZ-Ccg">
                                         <rect key="frame" x="0.0" y="1" width="896" height="413"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
@@ -721,7 +725,7 @@
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccy-y4-fW6">
-                                        <rect key="frame" x="60" y="225" width="103" height="32"/>
+                                        <rect key="frame" x="60" y="187" width="103" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -730,6 +734,10 @@
                                             <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ScK-9L-YE1">
+                                        <rect key="frame" x="180" y="178" width="240" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -739,6 +747,11 @@
                                     <constraint firstItem="xKL-3D-TgW" firstAttribute="bottom" secondItem="Bw9-4R-gzV" secondAttribute="bottom" constant="20" id="udL-zY-VbY"/>
                                 </constraints>
                                 <viewLayoutGuide key="safeArea" id="xKL-3D-TgW"/>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="SPa-uZ-Ccg"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -751,6 +764,7 @@
                         <outlet property="customerEmail" destination="wte-ds-hkt" id="S9K-VK-hQU"/>
                         <outlet property="customerName" destination="qp6-1k-XeG" id="kGE-CC-baz"/>
                         <outlet property="customerPhone" destination="aRL-yY-B73" id="4Hm-ys-Xaq"/>
+                        <outlet property="imageField" destination="ScK-9L-YE1" id="ZyY-s8-cFJ"/>
                         <outlet property="numberToPurchaseField" destination="EW6-Tx-IU7" id="0IX-AN-P8s"/>
                         <outlet property="pickerView" destination="uXR-Hi-LVD" id="TwV-Za-DJs"/>
                         <outlet property="popUpMenu2" destination="SPa-uZ-Ccg" id="iaN-ZD-Yue"/>
