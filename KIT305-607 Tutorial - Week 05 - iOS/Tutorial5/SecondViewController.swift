@@ -258,6 +258,26 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
             ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
             //ticketName.text = self.name
+            
+            let newString: String? = String(ticketData!.soldTickets)
+            let intCompare: Int = Int(ticketData!.soldTickets)
+            
+            if intCompare == 0 {
+                ticketsSoldCounter.text = "000"
+                soldTicketCounterSmall.text = "000"
+            } else if intCompare <= 9 {
+                ticketsSoldCounter.text = "00" + newString!
+                soldTicketCounterSmall.text = "00" + newString!
+            } else if intCompare >= 10 && intCompare <= 99 {
+                ticketsSoldCounter.text = "0" + newString!
+                soldTicketCounterSmall.text = "0" + newString!
+                } else {
+                ticketsSoldCounter.text = newString!
+                soldTicketCounterSmall.text = newString!
+            }
+            
+            descriptionField.text = "Description:\n" + ticketData!.desc
+            ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
             if ticketData?.margin == 1 {
                 winnerField.text = "Please Enter Margin Value"
                 winnerField.textColor = UIColor.lightGray
@@ -344,6 +364,12 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             //print("new data is: ", newImageData)
             if let newImageData = newImageData {
                imageField.image = UIImage(data: newImageData)
+            if(ticketData!.image != "na"){
+                let newImageData = Data(base64Encoded: ticketData!.image)
+                //print("new data is: ", newImageData)
+                if let newImageData = newImageData {
+                   imageField.image = UIImage(data: newImageData)
+                }
             }
             }
             //imageField.image = decodedimage
