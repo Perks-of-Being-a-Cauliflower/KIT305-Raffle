@@ -321,7 +321,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
             //ticketName.text = self.name
             descriptionField.layer.borderWidth = 1.0
-            //descriptionField.layer.borderColor = ([[UIColor.lightGray], CGColor.self] as! CGColor)
+            //descriptionField.layer.borderColor = (UIColor.lightGray as! CGColor)
             
             //print("return image string is: ", ticketData!.image)
             /*
