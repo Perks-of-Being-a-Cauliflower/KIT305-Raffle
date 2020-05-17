@@ -541,12 +541,16 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             
             if intCompare == 0 {
                 ticketsSoldCounter.text = "000"
+                soldTicketCounterSmall.text = "000"
             } else if intCompare <= 9 {
                 ticketsSoldCounter.text = "00" + newString!
+                soldTicketCounterSmall.text = "00" + newString!
             } else if intCompare >= 10 && intCompare <= 99 {
                 ticketsSoldCounter.text = "0" + newString!
+                soldTicketCounterSmall.text = "0" + newString!
                 } else {
                 ticketsSoldCounter.text = newString!
+                soldTicketCounterSmall.text = newString!
             }
             
             ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
