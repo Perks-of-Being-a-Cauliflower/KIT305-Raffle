@@ -283,6 +283,26 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 winnerField.textColor = UIColor.lightGray
             }
     
+            
+            let newString: String? = String(ticketData!.soldTickets)
+            let intCompare: Int = Int(ticketData!.soldTickets)
+            
+            if intCompare == 0 {
+                ticketsSoldCounter.text = "000"
+                soldTicketCounterSmall.text = "000"
+            } else if intCompare <= 9 {
+                ticketsSoldCounter.text = "00" + newString!
+                soldTicketCounterSmall.text = "00" + newString!
+            } else if intCompare >= 10 && intCompare <= 99 {
+                ticketsSoldCounter.text = "0" + newString!
+                soldTicketCounterSmall.text = "0" + newString!
+                } else {
+                ticketsSoldCounter.text = newString!
+                soldTicketCounterSmall.text = newString!
+            }
+            
+            descriptionField.text = "Description:\n" + ticketData!.desc
+            ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
         }
         
     }
@@ -326,6 +346,12 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             let dataDecoded:NSData = NSData(base64Encoded: ticketData!.image, options: NSData.Base64DecodingOptions(rawValue: 0))!
             let decodedimage:UIImage = UIImage(data: dataDecoded as Data)!
             */
+            if(ticketData!.image != "na"){
+                let newImageData = Data(base64Encoded: ticketData!.image)
+                //print("new data is: ", newImageData)
+                if let newImageData = newImageData {
+                   imageField.image = UIImage(data: newImageData)
+                }
             if ticketData?.margin == 0 {
                 winnerField.text = "Please Enter Margin Value"
                 winnerField.textColor = UIColor.lightGray
