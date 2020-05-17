@@ -76,7 +76,7 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
             //let imageData:NSData = image.pngData()! as NSData
             let imageData = image.jpegData(compressionQuality: 0)
             let imageBase64String = imageData!.base64EncodedString()
-            print(imageBase64String ?? "Could not encode image to Base64")
+            //print(imageBase64String ?? "Could not encode image to Base64")
             imageSTR64 = imageBase64String
             //imageSTR64 = imageData.base64EncodedString(options: .lineLength64Characters)
  
@@ -139,7 +139,7 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
     }
     
     @IBAction func toggleMarginRaffle(_ sender: Any) {
-        
+        print(switchState(for: marginSwitch))
     }
     
     
