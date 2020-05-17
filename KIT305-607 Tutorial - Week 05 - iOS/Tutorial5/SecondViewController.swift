@@ -340,25 +340,28 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
             ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
             //ticketName.text = self.name
+            descriptionField.layer.borderWidth = 1.0
+            //descriptionField.layer.borderColor = ([[UIColor.lightGray], CGColor.self] as! CGColor)
             
             //print("return image string is: ", ticketData!.image)
             /*
             let dataDecoded:NSData = NSData(base64Encoded: ticketData!.image, options: NSData.Base64DecodingOptions(rawValue: 0))!
             let decodedimage:UIImage = UIImage(data: dataDecoded as Data)!
             */
-            if(ticketData!.image != "na"){
-                let newImageData = Data(base64Encoded: ticketData!.image)
-                //print("new data is: ", newImageData)
-                if let newImageData = newImageData {
-                   imageField.image = UIImage(data: newImageData)
-                }
             if ticketData?.margin == 0 {
                 winnerField.text = "Please Enter Margin Value"
                 winnerField.textColor = UIColor.lightGray
             }
+            if(ticketData!.image != "na"){
+                var newImageData = Data(base64Encoded: ticketData!.image)
+                //print("new data is: ", newImageData)
+                if let newImageData = newImageData {
+                   imageField.image = UIImage(data: newImageData)
+            }
             
-            let newImageData = Data(base64Encoded: ticketData!.image)
-            print("new data is: ", newImageData)
+            
+            newImageData = Data(base64Encoded: ticketData!.image)
+            //print("new data is: ", newImageData)
             if let newImageData = newImageData {
                imageField.image = UIImage(data: newImageData)
             if(ticketData!.image != "na"){
@@ -368,7 +371,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                    imageField.image = UIImage(data: newImageData)
                 }
             }
-            
+            }
             //imageField.image = decodedimage
              
             
@@ -564,12 +567,16 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             
             if intCompare == 0 {
                 ticketsSoldCounter.text = "000"
+                soldTicketCounterSmall.text = "000"
             } else if intCompare <= 9 {
                 ticketsSoldCounter.text = "00" + newString!
+                soldTicketCounterSmall.text = "00" + newString!
             } else if intCompare >= 10 && intCompare <= 99 {
                 ticketsSoldCounter.text = "0" + newString!
+                soldTicketCounterSmall.text = "0" + newString!
                 } else {
                 ticketsSoldCounter.text = newString!
+                soldTicketCounterSmall.text = newString!
             }
             
             ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
@@ -594,6 +601,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         
     }
+        
     
 
         override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -623,5 +631,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
            }
            
        }
+        
 
 }
