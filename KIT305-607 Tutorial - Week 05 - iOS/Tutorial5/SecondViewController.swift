@@ -41,6 +41,10 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var winnerField: UITextField!
     @IBOutlet weak var imageField: UIImageView!
     
+    @IBOutlet var ticketsField: UITextField!
+    @IBOutlet var descriptionField: UITextView!
+    
+    @IBOutlet var soldTicketCounterSmall: UILabel!
     
     
     @IBOutlet var customerName: UITextField!
@@ -82,13 +86,92 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     @IBAction func drawWinner(_ sender: Any) {
-        allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
-        winner = allTickets.randomElement()
-        //print(winner!.name)
-        winnerField.text = winner?.name
+        if ticketData?.margin == 1 {
+            if winnerField.text! != "" {
+                winner = nil
+                allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
+                let winningNum = Int32(winnerField.text!)
+                print("Winning num is: ", winningNum)
+                for ticketN in allTickets {
+                    print("current id: ", ticketN.ID)
+                    if ticketN.ID == winningNum {
+                        winner = ticketN
+                    }
+                }
+                if winner != nil {
+                    let alert = UIAlertController(
+                        title: "Winner is " + winner!.name + "!",
+                        message: "Phone:  \(winner!.phone) \n Email: \(winner!.email)", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(
+                        title: "Remove Ticket From Pool",
+                        style: .default,
+                        handler: { action in
+                            self.database.deleteCustomer(id: self.winner!.ID)
+                            let curr = self.winner?.ticketNum
+                            for customer in self.allTickets{
+                                if(customer.ticketNum > curr!){
+                                    self.database.updateCustomerTicketNumber(ticketID: customer.ID, ticketNumber: customer.ticketNum-1)
+                                    //print("bumped down by 1")
+                                }
+                            }
+                            self.ticketData?.soldTickets-=1
+                            self.database.updateSoldTickets(ticketID: self.ticketData!.ID, newNum: self.ticketData!.soldTickets)
+                            let newString: String? = String(self.ticketData!.soldTickets)
+                            let intCompare: Int = Int(self.ticketData!.soldTickets)
+                            
+                            if intCompare == 0 {
+                                self.ticketsSoldCounter.text = "000"
+                            } else if intCompare <= 9 {
+                                self.ticketsSoldCounter.text = "00" + newString!
+                            } else if intCompare >= 10 && intCompare <= 99 {
+                                self.ticketsSoldCounter.text = "0" + newString!
+                                } else {
+                                self.ticketsSoldCounter.text = newString!
+                            }
+                            self.winnerField.text = "Please Enter Margin Value"
+                            self.winnerField.textColor = UIColor.lightGray
+                            
+                    }))
+                    alert.addAction(UIAlertAction(
+                        title: "Contact Winner",
+                        style: .default,
+                        handler: { action in
+                            
+                    }))
+                    alert.addAction(UIAlertAction(
+                        title: "Return",
+                        style: .default,
+                        handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                } else {
+                    let alert = UIAlertController(
+                        title: "No Winner!",
+                        message: "No one had the Margin Value", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(
+                        title: "Return",
+                        style: .default,
+                        handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            
+            }
+        } else {
+            
+            allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
+            winner = allTickets.randomElement()
+            //print(winner!.name)
+            winnerField.text = winner?.name
+        }
     }
     
     @IBAction func winnerdetails(_ sender: Any) {
+        
+        if ticketData?.margin == 1 {
+            textViewDidBeginEditing(winnerField)
+            
+            
+        } else {
+        
         winnerField.isUserInteractionEnabled = false
         if winnerField.text! != "" {
         let alert = UIAlertController(
@@ -113,14 +196,18 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 
                 if intCompare == 0 {
                     self.ticketsSoldCounter.text = "000"
+                    self.soldTicketCounterSmall.text = "000"
                 } else if intCompare <= 9 {
                     self.ticketsSoldCounter.text = "00" + newString!
+                    self.soldTicketCounterSmall.text = "00" + newString!
                 } else if intCompare >= 10 && intCompare <= 99 {
                     self.ticketsSoldCounter.text = "0" + newString!
+                    self.soldTicketCounterSmall.text = "0" + newString!
                     } else {
                     self.ticketsSoldCounter.text = newString!
+                    self.soldTicketCounterSmall.text = newString!
                 }
-                self.winnerField.text = ""
+                self.winnerField.text = "Please Enter Margin Value"
         }))
         alert.addAction(UIAlertAction(
             title: "Contact Winner",
@@ -135,6 +222,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         self.present(alert, animated: true, completion: nil)
         }
         winnerField.isUserInteractionEnabled = true
+        }
     }
     
     
@@ -170,6 +258,30 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
             ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
             //ticketName.text = self.name
+            
+            let newString: String? = String(ticketData!.soldTickets)
+            let intCompare: Int = Int(ticketData!.soldTickets)
+            
+            if intCompare == 0 {
+                ticketsSoldCounter.text = "000"
+                soldTicketCounterSmall.text = "000"
+            } else if intCompare <= 9 {
+                ticketsSoldCounter.text = "00" + newString!
+                soldTicketCounterSmall.text = "00" + newString!
+            } else if intCompare >= 10 && intCompare <= 99 {
+                ticketsSoldCounter.text = "0" + newString!
+                soldTicketCounterSmall.text = "0" + newString!
+                } else {
+                ticketsSoldCounter.text = newString!
+                soldTicketCounterSmall.text = newString!
+            }
+            
+            descriptionField.text = "Description:\n" + ticketData!.desc
+            ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
+            if ticketData?.margin == 1 {
+                winnerField.text = "Please Enter Margin Value"
+                winnerField.textColor = UIColor.lightGray
+            }
     
         }
         
@@ -214,12 +326,23 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             let dataDecoded:NSData = NSData(base64Encoded: ticketData!.image, options: NSData.Base64DecodingOptions(rawValue: 0))!
             let decodedimage:UIImage = UIImage(data: dataDecoded as Data)!
             */
+            if ticketData?.margin == 0 {
+                winnerField.text = "Please Enter Margin Value"
+                winnerField.textColor = UIColor.lightGray
+            }
             
             let newImageData = Data(base64Encoded: ticketData!.image)
             print("new data is: ", newImageData)
             if let newImageData = newImageData {
                imageField.image = UIImage(data: newImageData)
+            if(ticketData!.image != "na"){
+                let newImageData = Data(base64Encoded: ticketData!.image)
+                //print("new data is: ", newImageData)
+                if let newImageData = newImageData {
+                   imageField.image = UIImage(data: newImageData)
+                }
             }
+            
             //imageField.image = decodedimage
              
             
@@ -237,10 +360,32 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         }
         
-        // Do any additional setup after loading the view.
+        descriptionField.text = "Description:\n" + ticketData!.desc
+        ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
     }
     
-    
+    func textViewDidBeginEditing(_ textView: UITextField) {
+        if textView.textColor == UIColor.lightGray {
+            //textView.text = ""
+            textInteractField.text = ""
+        } else {
+            let temp: String? = winnerField.text
+            textInteractField.text = temp
+        }
+            textView.isUserInteractionEnabled = false
+            textView.resignFirstResponder()
+            ticketLabel.text = "Enter Margin Value:"
+            textInteractField.isUserInteractionEnabled = true
+            textInteractField.isHidden = false
+            textInteractField.becomeFirstResponder()
+            textInteractField.keyboardType = UIKeyboardType.numberPad
+            
+            if winnerField.text == "Please Enter Margin Value" {
+                textInteractField.text = ""
+            }
+            popUpMenu2.isHidden = false
+            
+    }
     
     
     @IBAction func showInputMenu(_ sender: UITextField) {
@@ -290,6 +435,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         customerEmail.isUserInteractionEnabled = true
         customerPhone.isUserInteractionEnabled = true
         customerName.isUserInteractionEnabled = true
+        winnerField.isUserInteractionEnabled = true
         numberToPurchaseField.isUserInteractionEnabled = true
         if returnField == "Name: " {
             textInteractField.isHidden = true
@@ -314,16 +460,31 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             customerEmail.text = newName
         } else if returnField == "Tickets to Purchase: " {
             pickerView.isHidden = true
+        } else if returnField == "Enter Margin Value:" {
+            if textInteractField.text == "" {
+                winnerField.text = "Please Enter Margin Value"
+                winnerField.textColor = UIColor.lightGray
+            } else {
+                let newName: String? = textInteractField.text
+                winnerField.text = newName
+                textInteractField.keyboardType = UIKeyboardType.default
+                winnerField.textColor = UIColor.black
+                textInteractField.isHidden = true
+            }
         }
         popUpMenu2.isHidden = true
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
             textInteractField.keyboardType = UIKeyboardType.default
+            if winnerField.text == "Please Enter Margin Value" {
+                winnerField.textColor = UIColor.lightGray
+            }
             customerEmail.isUserInteractionEnabled = true
             customerPhone.isUserInteractionEnabled = true
             customerName.isUserInteractionEnabled = true
             numberToPurchaseField.isUserInteractionEnabled = true
+            winnerField.isUserInteractionEnabled = true
             textInteractField.isUserInteractionEnabled = false
             textInteractField.isHidden = true
             pickerView.isHidden = true
@@ -348,53 +509,64 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let num = Int32(numberToPurchaseField.text!)
         let curr = ticketData!.soldTickets
         
-        for i in stride(from: 1, to: (num! + 1), by: 1) {
-            //print(i+1)
+        if(num! + curr > ticketData!.maxTickets){
+            print("Exceed max tickets")
+            let alert = UIAlertController(title: "Max Tickets:", message: "This transaction would exceed the maximum ticket amount!", preferredStyle: .alert)
             
+            alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
             
-            database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
-                                                    ticketNum: curr + i,
-                                                    purchaseTime: now,
-                                                    refunded: 0,
-                                                    name: customerName.text!,
-                                                    phone: Int32(customerPhone.text ?? "") ?? -1,
-                                                    email: customerEmail.text ?? ""))
-        }
-        
-        ticketData!.soldTickets = curr + num!
-        database.updateSoldTickets(ticketID: ticketData!.ID, newNum: ticketData!.soldTickets)
-        
-        let newString: String? = String(ticketData!.soldTickets)
-        let intCompare: Int = Int(ticketData!.soldTickets)
-        
-        if intCompare == 0 {
-            ticketsSoldCounter.text = "000"
-        } else if intCompare <= 9 {
-            ticketsSoldCounter.text = "00" + newString!
-        } else if intCompare >= 10 && intCompare <= 99 {
-            ticketsSoldCounter.text = "0" + newString!
-            } else {
-            ticketsSoldCounter.text = newString!
-        }
-        
+            self.present(alert, animated: true)
+        }else{
+            for i in stride(from: 1, to: (num! + 1), by: 1) {
+                //print(i+1)
+                
+                
+                database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
+                                                        ticketNum: curr + i,
+                                                        purchaseTime: now,
+                                                        refunded: 0,
+                                                        name: customerName.text!,
+                                                        phone: Int32(customerPhone.text ?? "") ?? -1,
+                                                        email: customerEmail.text ?? ""))
+            }
+            
+            ticketData!.soldTickets = curr + num!
+            database.updateSoldTickets(ticketID: ticketData!.ID, newNum: ticketData!.soldTickets)
+            
+            let newString: String? = String(ticketData!.soldTickets)
+            let intCompare: Int = Int(ticketData!.soldTickets)
+            
+            if intCompare == 0 {
+                ticketsSoldCounter.text = "000"
+            } else if intCompare <= 9 {
+                ticketsSoldCounter.text = "00" + newString!
+            } else if intCompare >= 10 && intCompare <= 99 {
+                ticketsSoldCounter.text = "0" + newString!
+                } else {
+                ticketsSoldCounter.text = newString!
+            }
+            
+            ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
 
-        /*
-                database.updateSoldTickets(ticketID: ticketData!.ID, newNum: num)
-        //impliment a way to increase and track ticket numbers. via ticket SQL
-            //also need to impliment a way to sell multiple tickets via a stepper. 
-        database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
-                                                  ticketNum: num,
-                                                  purchaseTime: now,
-                                                  refunded: 0,
-                                                  name: customerName.text!,
-                                                  phone: Int32(customerPhone.text ?? "") ?? -1,
-                                                  email: customerEmail.text ?? ""))
-        */
-        //print("added Customer")
-        customerName.text = ""
-        customerPhone.text = ""
-        customerEmail.text = ""
-        //print(database.selectAllCustomers())
+            /*
+                    database.updateSoldTickets(ticketID: ticketData!.ID, newNum: num)
+            //impliment a way to increase and track ticket numbers. via ticket SQL
+                //also need to impliment a way to sell multiple tickets via a stepper.
+            database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
+                                                      ticketNum: num,
+                                                      purchaseTime: now,
+                                                      refunded: 0,
+                                                      name: customerName.text!,
+                                                      phone: Int32(customerPhone.text ?? "") ?? -1,
+                                                      email: customerEmail.text ?? ""))
+            */
+            //print("added Customer")
+            customerName.text = ""
+            customerPhone.text = ""
+            customerEmail.text = ""
+            //print(database.selectAllCustomers())
+        }
+        
     }
     
 
