@@ -40,8 +40,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     var imageSTR64: String?
 
-let rColour = ["Red", "Blue", "Green", "Yellow", "Brown", "Pink", "Orange"]
-let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
+    let rColour = ["Red", "Blue", "Green", "Yellow", "Brown", "Pink", "Orange"]
+    let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
 
     
     
@@ -64,10 +64,13 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
     didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
     {
         print("first")
-        if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage
+        if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.editedImage.rawValue)] as? UIImage
         {
             //print("image is: ", image)
+            imageView.contentMode = .scaleAspectFit
             imageView.image = image
+            
+            
             dismiss(animated: true, completion: nil)
             
             //let image : UIImage = imageView.image?.jpeg(UIImage.JPEGQuality(rawValue: 0)!)
@@ -76,7 +79,7 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
             //let imageData:NSData = image.pngData()! as NSData
             let imageData = image.jpegData(compressionQuality: 0)
             let imageBase64String = imageData!.base64EncodedString()
-            print(imageBase64String ?? "Could not encode image to Base64")
+            //print(imageBase64String ?? "Could not encode image to Base64")
             imageSTR64 = imageBase64String
             //imageSTR64 = imageData.base64EncodedString(options: .lineLength64Characters)
  
@@ -284,6 +287,49 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
             return 0
         }
     }
+    
+    @IBAction func startRaffle(_ sender: Any) {
+        if(chosenNameField.text == ""){
+            let alert = UIAlertController(title: "Whoops!", message: "Must Select a Raffle Name!", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true)
+            return
+        }
+        if(desField.text == ""){
+            let alert = UIAlertController(title: "Whoops!", message: "Must Select a Raffle Description!", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true)
+            return
+        }
+        if(ticketPrice.text == "" ){
+            let alert = UIAlertController(title: "Whoops!", message: "Must Select a Raffle Ticket Price!", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true)
+            return
+        }
+        if(endCon.text == "" ){
+            let alert = UIAlertController(title: "Whoops!", message: "Must Select a Maximum Number of Raffle Tickets!", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true)
+            return
+        }
+        /*if(imageSTR64 == nil ){
+            return
+        }*/
+
+        
+        
+        performSegue(withIdentifier: "CreateRaffleSegue", sender: self)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
     if segue.identifier == "CreateRaffleSegue"
@@ -310,7 +356,7 @@ let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
                                                 colour:colourField.text!,
                                                 maxTickets:Int32(endCon.text!)!,
                                                 soldTickets:0,
-                                                image: imageSTR64!
+                                                image: imageSTR64 ?? "na"
             ))
             let currentTicket = database.selectTicketName(name: chosenNameField.text!)
             nextScreen.idFromPreviousView = currentTicket!.ID

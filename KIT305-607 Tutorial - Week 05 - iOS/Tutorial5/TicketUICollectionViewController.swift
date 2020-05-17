@@ -13,6 +13,8 @@ private let reuseIdentifier = "Cell"
 class TicketUICollectionViewController: UICollectionViewController {
 
 
+    @IBOutlet var emptyLibraryWindow: UIView!
+    
     var tickets = [Ticket]()
     
     override func viewDidLoad()
@@ -26,6 +28,11 @@ class TicketUICollectionViewController: UICollectionViewController {
         database.insertTicket(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:"green"))
         */
         tickets = database.selectAllTickets()
+        if(tickets.count <= 0){
+            emptyLibraryWindow.isHidden = false
+        }else{
+            emptyLibraryWindow.isHidden = true
+        }
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -35,8 +42,16 @@ class TicketUICollectionViewController: UICollectionViewController {
         
         self.collectionView.reloadData()
         //print("wowowow")
+        if(tickets.count <= 0){
+            emptyLibraryWindow.isHidden = false
+        }else{
+            emptyLibraryWindow.isHidden = true
+        }
     }
 
+    @IBAction func moveToCreateRaffle(_ sender: Any) {
+        self.tabBarController!.selectedIndex = 0
+    }
     /*
     // MARK: - Navigation
 
@@ -94,6 +109,19 @@ class TicketUICollectionViewController: UICollectionViewController {
             
             ticketCell.topColour.backgroundColor = colors[ticket.colour]
             ticketCell.bottomColour.backgroundColor = colors[ticket.colour]
+            
+            if(ticket.image != "na"){
+                ticketCell.imageField.isHidden = false
+                let newImageData = Data(base64Encoded: ticket.image)
+                //print("new data is: ", newImageData)
+                if let newImageData = newImageData {
+                   ticketCell.imageField.image = UIImage(data: newImageData)
+                }                
+            }else{
+                print("ticket na")
+                ticketCell.imageField.isHidden = true
+            }
+            //ticketCell.imageField.image =
             
             ticketCell.iDLetter.text = ticket.iDLetter
             //ticketCell.button.ticket = ticket

@@ -18,6 +18,7 @@ class TicketUICollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var topColour: UIImageView!
     @IBOutlet var bottomColour: UIImageView!
+    @IBOutlet var imageField: UIImageView!
     
     //@IBOutlet var button: TicketUIButton!
     var ticketID: Int32?

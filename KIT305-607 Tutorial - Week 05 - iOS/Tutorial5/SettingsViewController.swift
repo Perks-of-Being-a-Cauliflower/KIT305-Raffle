@@ -33,6 +33,8 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var colourPickerView: UIPickerView!
     @IBOutlet weak var descEditField: UITextView!
     
+    @IBOutlet var soldTicketCounterSmall: UILabel!
+    @IBOutlet var soldTicketCounterBig: UILabel!
     
     private let cPicker = ["Red", "Blue", "Green", "Yellow", "Brown", "Pink", "Orange"]
 
@@ -211,6 +213,23 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         // Do any additional setup after loading the view.
         ticketTitle.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
         
+        let newString: String? = String(ticket!.soldTickets)
+        let intCompare: Int = Int(ticket!.soldTickets)
+        
+        if intCompare == 0 {
+            soldTicketCounterBig.text = "000"
+            soldTicketCounterSmall.text = "000"
+        } else if intCompare <= 9 {
+            soldTicketCounterBig.text = "00" + newString!
+            soldTicketCounterSmall.text = "00" + newString!
+        } else if intCompare >= 10 && intCompare <= 99 {
+            soldTicketCounterBig.text = "0" + newString!
+            soldTicketCounterSmall.text = "0" + newString!
+            } else {
+            soldTicketCounterBig.text = newString!
+            soldTicketCounterSmall.text = newString!
+        }
+
     }
     
     
