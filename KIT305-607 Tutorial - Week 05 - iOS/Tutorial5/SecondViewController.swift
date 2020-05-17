@@ -284,23 +284,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
     
             
-            let newString: String? = String(ticketData!.soldTickets)
-            let intCompare: Int = Int(ticketData!.soldTickets)
-            
-            if intCompare == 0 {
-                ticketsSoldCounter.text = "000"
-                soldTicketCounterSmall.text = "000"
-            } else if intCompare <= 9 {
-                ticketsSoldCounter.text = "00" + newString!
-                soldTicketCounterSmall.text = "00" + newString!
-            } else if intCompare >= 10 && intCompare <= 99 {
-                ticketsSoldCounter.text = "0" + newString!
-                soldTicketCounterSmall.text = "0" + newString!
-                } else {
-                ticketsSoldCounter.text = newString!
-                soldTicketCounterSmall.text = newString!
-            }
-            
             descriptionField.text = "Description:\n" + ticketData!.desc
             ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
         }
@@ -391,6 +374,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         descriptionField.text = "Description:\n" + ticketData!.desc
         ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
+    }
     }
     
     func textViewDidBeginEditing(_ textView: UITextField) {
