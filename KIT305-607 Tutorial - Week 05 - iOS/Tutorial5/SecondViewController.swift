@@ -39,6 +39,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var ticketsSoldCounter: UILabel!
     
     @IBOutlet weak var winnerField: UITextField!
+    @IBOutlet weak var imageField: UIImageView!
     
     
     
@@ -54,9 +55,9 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func rowSelecter() {
-        print("Hi")
+        //print("Hi")
         let finder = tPicker.firstIndex(of: numberToPurchaseField.text!)
-            print(finder!)
+            //print(finder!)
             pickerView.selectRow(finder!, inComponent: 0, animated: false)
             return
     }
@@ -102,7 +103,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 for customer in self.allTickets{
                     if(customer.ticketNum > curr!){
                         self.database.updateCustomerTicketNumber(ticketID: customer.ID, ticketNumber: customer.ticketNum-1)
-                        print("bumped down by 1")
+                        //print("bumped down by 1")
                     }
                 }
                 self.ticketData?.soldTickets-=1
@@ -143,7 +144,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
         let ticket = database.selectTicketBy(id: idFromPreviousView)
         ticketData = ticket
-        print(ticket!)
+        //print(ticket!)
         //print("database data is: ", database.selectTicketName(name: nameFromPreviousView!))
         if(ticket == nil){
             //throw error, there is no data here.
@@ -181,7 +182,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
         let ticket = database.selectTicketBy(id: idFromPreviousView) 
         ticketData = ticket
-        print(ticket!)
+        //print(ticket!)
         //print("database data is: ", database.selectTicketName(name: nameFromPreviousView!))
         if(ticket == nil){
             //throw error, there is no data here.
@@ -207,6 +208,21 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
             ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
             //ticketName.text = self.name
+            
+            //print("return image string is: ", ticketData!.image)
+            /*
+            let dataDecoded:NSData = NSData(base64Encoded: ticketData!.image, options: NSData.Base64DecodingOptions(rawValue: 0))!
+            let decodedimage:UIImage = UIImage(data: dataDecoded as Data)!
+            */
+            
+            let newImageData = Data(base64Encoded: ticketData!.image)
+            print("new data is: ", newImageData)
+            if let newImageData = newImageData {
+               imageField.image = UIImage(data: newImageData)
+            }
+            //imageField.image = decodedimage
+             
+            
             let newString: String? = String(ticketData!.soldTickets)
             let intCompare: Int = Int(ticketData!.soldTickets)
             
@@ -236,7 +252,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         customerPhone.resignFirstResponder()
         customerName.resignFirstResponder()
         numberToPurchaseField.resignFirstResponder()
-        print(sender.tag)
+        //print(sender.tag)
             if sender.tag == 1 {
                 ticketLabel.text = "Name: "
                 textInteractField.isUserInteractionEnabled = true
@@ -328,12 +344,12 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let now = df.string(from: Date())
         
         //currently just works with selling one ticket, need to make it look for the lowest unallocated value, as well as the ability to sell multiple tickets.
-        print(ticketData!.name)
+        //print(ticketData!.name)
         let num = Int32(numberToPurchaseField.text!)
         let curr = ticketData!.soldTickets
         
         for i in stride(from: 1, to: (num! + 1), by: 1) {
-            print(i+1)
+            //print(i+1)
             
             
             database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
