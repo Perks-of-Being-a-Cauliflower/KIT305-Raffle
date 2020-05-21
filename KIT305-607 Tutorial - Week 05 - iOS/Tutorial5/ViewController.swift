@@ -373,6 +373,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             "Pink": UIColor.systemPink]
             colourBar1.backgroundColor = colors[colourField.text!]
             colourBar2.backgroundColor = colors[colourField.text!]
+            
+            imageSTR64 = nil
+            imageView.image = nil
         } else {
             print("\nnot submitting: \(ticketPrice.text!)")
             ticketPrice.text = ""
