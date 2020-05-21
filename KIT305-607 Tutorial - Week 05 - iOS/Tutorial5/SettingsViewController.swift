@@ -8,8 +8,9 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet var imageView: UIImageView!
     @IBOutlet var ticketTitle: UILabel!
     var nameFromPreviousView: String?
     var idFromPreviousView: Int32 = 0
@@ -35,6 +36,8 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     @IBOutlet var soldTicketCounterSmall: UILabel!
     @IBOutlet var soldTicketCounterBig: UILabel!
+    
+    var imageSTR64: String?
     
     private let cPicker = ["Red", "Blue", "Green", "Yellow", "Brown", "Pink", "Orange"]
 
@@ -169,6 +172,9 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             editField.keyboardType = UIKeyboardType.default
         } else if returnField == "Edit Colour: " {
             colourPickerView.isHidden = true
+            let newColor: String? = editColour.text
+            //editColour.text = newColor
+            database.updateTicketColour(ticketID: ticketID, newString: newColor!)
         }
         popUpView.isHidden = true
     }
@@ -230,8 +236,102 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             soldTicketCounterSmall.text = newString!
         }
 
+
+        var newImageData = Data(base64Encoded: ticketData!.image)
+        //print("new data is: ", newImageData)
+        if let newImageData = newImageData {
+           imageView.image = UIImage(data: newImageData)
+        }
+        
+        /*
+        newImageData = Data(base64Encoded: ticketData!.image)
+        //print("new data is: ", newImageData)
+        if let newImageData = newImageData {
+           //imageField.image = UIImage(data: newImageData)
+            if(ticketData!.image != "na"){
+                let newImageData = Data(base64Encoded: ticketData!.image)
+                //print("new data is: ", newImageData)
+                if let newImageData = newImageData {
+                   //imageField.image = UIImage(data: newImageData)
+                }
+            }
+        }*/
+    }
+    //updates counter after refunding tickets.
+    override func viewWillAppear(_ animated: Bool) {
+        let ticket = database.selectTicketBy(id: idFromPreviousView)
+        ticketID = ticket!.ID
+        ticketData = ticket
+        ticketID = ticket!.ID
+        
+        let newString: String? = String(ticket!.soldTickets)
+        let intCompare: Int = Int(ticket!.soldTickets)
+        
+        if intCompare == 0 {
+            soldTicketCounterBig.text = "000"
+            soldTicketCounterSmall.text = "000"
+        } else if intCompare <= 9 {
+            soldTicketCounterBig.text = "00" + newString!
+            soldTicketCounterSmall.text = "00" + newString!
+        } else if intCompare >= 10 && intCompare <= 99 {
+            soldTicketCounterBig.text = "0" + newString!
+            soldTicketCounterSmall.text = "0" + newString!
+            } else {
+            soldTicketCounterBig.text = newString!
+            soldTicketCounterSmall.text = newString!
+        }
     }
     
+    func imagePickerController(_ picker: UIImagePickerController,
+       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
+       {
+           print("first")
+           if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.editedImage.rawValue)] as? UIImage
+           {
+               //print("image is: ", image)
+               imageView.contentMode = .scaleAspectFit
+               imageView.image = image
+               
+               
+               dismiss(animated: true, completion: nil)
+               
+               //let image : UIImage = imageView.image?.jpeg(UIImage.JPEGQuality(rawValue: 0)!)
+               
+               let image : UIImage = imageView.image!
+               //let imageData:NSData = image.pngData()! as NSData
+               let imageData = image.jpegData(compressionQuality: 0)
+               let imageBase64String = imageData!.base64EncodedString()
+               //print(imageBase64String ?? "Could not encode image to Base64")
+               imageSTR64 = imageBase64String
+            print("wew " + String(ticketID))
+            let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+                
+            database.updateTicketImage(ticketID: ticketID, newString: imageSTR64!)
+            
+               //imageSTR64 = imageData.base64EncodedString(options: .lineLength64Characters)
+    
+           }
+       }
+       
+       func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
+       {
+           dismiss(animated: true, completion: nil)
+       }
+    
+    @IBAction func changePhoto(_ sender: Any) {
+        if
+        UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+        print("Library available")
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.allowsEditing = true
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+        print("No library available")
+        }
+    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -299,3 +399,4 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     */
 
 }
+

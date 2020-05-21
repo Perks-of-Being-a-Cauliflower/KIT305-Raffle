@@ -39,7 +39,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var ticketsSoldCounter: UILabel!
     
     @IBOutlet weak var winnerField: UITextField!
-    @IBOutlet weak var imageField: UIImageView!
+    //@IBOutlet weak var imageField: UIImageView!
     
     @IBOutlet var ticketsField: UITextField!
     @IBOutlet var descriptionField: UITextView!
@@ -121,6 +121,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                             
                             if intCompare == 0 {
                                 self.ticketsSoldCounter.text = "000"
+                                
                             } else if intCompare <= 9 {
                                 self.ticketsSoldCounter.text = "00" + newString!
                             } else if intCompare >= 10 && intCompare <= 99 {
@@ -128,6 +129,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                                 } else {
                                 self.ticketsSoldCounter.text = newString!
                             }
+                            self.soldTicketCounterSmall.text = self.ticketsSoldCounter.text
                             self.winnerField.text = "Please Enter Margin Value"
                             self.winnerField.textColor = UIColor.lightGray
                             
@@ -335,26 +337,29 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 winnerField.text = "Please Enter Margin Value"
                 winnerField.textColor = UIColor.lightGray
             }
-            if(ticketData!.image != "na"){
-                var newImageData = Data(base64Encoded: ticketData!.image)
-                //print("new data is: ", newImageData)
-                if let newImageData = newImageData {
-                   imageField.image = UIImage(data: newImageData)
+            
+            
+        if(ticketData!.image != "na"){
+            //no longer have image on sell screen.
+            /*var newImageData = Data(base64Encoded: ticketData!.image)
+            //print("new data is: ", newImageData)
+            if let newImageData = newImageData {
+               //imageField.image = UIImage(data: newImageData)
             }
             
             
             newImageData = Data(base64Encoded: ticketData!.image)
             //print("new data is: ", newImageData)
             if let newImageData = newImageData {
-               imageField.image = UIImage(data: newImageData)
-            if(ticketData!.image != "na"){
-                let newImageData = Data(base64Encoded: ticketData!.image)
-                //print("new data is: ", newImageData)
-                if let newImageData = newImageData {
-                   imageField.image = UIImage(data: newImageData)
+               //imageField.image = UIImage(data: newImageData)
+                if(ticketData!.image != "na"){
+                    let newImageData = Data(base64Encoded: ticketData!.image)
+                    //print("new data is: ", newImageData)
+                    if let newImageData = newImageData {
+                       //imageField.image = UIImage(data: newImageData)
+                    }
                 }
-            }
-            }
+            }*/
             //imageField.image = decodedimage
              
             
@@ -504,8 +509,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             popUpMenu2.isHidden = true
     }
     
-    
-    @IBAction func AddCustomer(_ sender: Any) {
+    func AddCustomerConfirmed(){
         let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
         
         if(ticketData == nil){
@@ -522,67 +526,91 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let num = Int32(numberToPurchaseField.text!)
         let curr = ticketData!.soldTickets
         
+    
+        for i in stride(from: 1, to: (num! + 1), by: 1) {
+            database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
+                                                    ticketNum: curr + i,
+                                                    purchaseTime: now,
+                                                    refunded: 0,
+                                                    name: customerName.text!,
+                                                    phone: Int32(customerPhone.text ?? "") ?? -1,
+                                                    email: customerEmail.text ?? ""))
+        }
+        
+        ticketData!.soldTickets = curr + num!
+        database.updateSoldTickets(ticketID: ticketData!.ID, newNum: ticketData!.soldTickets)
+        
+        let newString: String? = String(ticketData!.soldTickets)
+        let intCompare: Int = Int(ticketData!.soldTickets)
+        
+        if intCompare == 0 {
+            ticketsSoldCounter.text = "000"
+            soldTicketCounterSmall.text = "000"
+        } else if intCompare <= 9 {
+            ticketsSoldCounter.text = "00" + newString!
+            soldTicketCounterSmall.text = "00" + newString!
+        } else if intCompare >= 10 && intCompare <= 99 {
+            ticketsSoldCounter.text = "0" + newString!
+            soldTicketCounterSmall.text = "0" + newString!
+            } else {
+            ticketsSoldCounter.text = newString!
+            soldTicketCounterSmall.text = newString!
+        }
+        
+        ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
+
+        /*
+                database.updateSoldTickets(ticketID: ticketData!.ID, newNum: num)
+        //impliment a way to increase and track ticket numbers. via ticket SQL
+            //also need to impliment a way to sell multiple tickets via a stepper.
+        database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
+                                                  ticketNum: num,
+                                                  purchaseTime: now,
+                                                  refunded: 0,
+                                                  name: customerName.text!,
+                                                  phone: Int32(customerPhone.text ?? "") ?? -1,
+                                                  email: customerEmail.text ?? ""))
+        */
+        //print("added Customer")
+        customerName.text = ""
+        customerPhone.text = ""
+        customerEmail.text = ""
+        //print(database.selectAllCustomers())
+        numberToPurchaseField.text = tPicker[0]
+    }
+    @IBAction func AddCustomer(_ sender: Any) {
+        let num = Int32(numberToPurchaseField.text!)
+        let curr = ticketData!.soldTickets
+        var max = false
+        
         if(num! + curr > ticketData!.maxTickets){
+            max = true
             print("Exceed max tickets")
             let alert = UIAlertController(title: "Max Tickets:", message: "This transaction would exceed the maximum ticket amount!", preferredStyle: .alert)
             
-            alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: { action in
+                //run your function here
+                return
+            }))
             
             self.present(alert, animated: true)
-        }else{
-            for i in stride(from: 1, to: (num! + 1), by: 1) {
-                //print(i+1)
-                
-                
-                database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
-                                                        ticketNum: curr + i,
-                                                        purchaseTime: now,
-                                                        refunded: 0,
-                                                        name: customerName.text!,
-                                                        phone: Int32(customerPhone.text ?? "") ?? -1,
-                                                        email: customerEmail.text ?? ""))
-            }
-            
-            ticketData!.soldTickets = curr + num!
-            database.updateSoldTickets(ticketID: ticketData!.ID, newNum: ticketData!.soldTickets)
-            
-            let newString: String? = String(ticketData!.soldTickets)
-            let intCompare: Int = Int(ticketData!.soldTickets)
-            
-            if intCompare == 0 {
-                ticketsSoldCounter.text = "000"
-                soldTicketCounterSmall.text = "000"
-            } else if intCompare <= 9 {
-                ticketsSoldCounter.text = "00" + newString!
-                soldTicketCounterSmall.text = "00" + newString!
-            } else if intCompare >= 10 && intCompare <= 99 {
-                ticketsSoldCounter.text = "0" + newString!
-                soldTicketCounterSmall.text = "0" + newString!
-                } else {
-                ticketsSoldCounter.text = newString!
-                soldTicketCounterSmall.text = newString!
-            }
-            
-            ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
-
-            /*
-                    database.updateSoldTickets(ticketID: ticketData!.ID, newNum: num)
-            //impliment a way to increase and track ticket numbers. via ticket SQL
-                //also need to impliment a way to sell multiple tickets via a stepper.
-            database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
-                                                      ticketNum: num,
-                                                      purchaseTime: now,
-                                                      refunded: 0,
-                                                      name: customerName.text!,
-                                                      phone: Int32(customerPhone.text ?? "") ?? -1,
-                                                      email: customerEmail.text ?? ""))
-            */
-            //print("added Customer")
-            customerName.text = ""
-            customerPhone.text = ""
-            customerEmail.text = ""
-            //print(database.selectAllCustomers())
         }
+        if(!max){
+            let alert = UIAlertController(title: "Confirm:", message: "Currently about to sell \(num!) tickets for \(String(describing: self.totalCost.text))", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Confirm!", style: .default, handler: { action in
+                //run your function here
+                self.AddCustomerConfirmed()
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                //run your function here
+                return
+            }))
+            
+            self.present(alert, animated: true)
+            
+        }
+        
         
     }
         

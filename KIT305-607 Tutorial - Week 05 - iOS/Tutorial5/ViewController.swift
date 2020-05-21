@@ -393,7 +393,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         colourBar1.backgroundColor = colors[colourField.text!]
         colourBar2.backgroundColor = colors[colourField.text!]
         
-
+        
         
         
         /*
@@ -427,6 +427,7 @@ extension UIImage {
     /// If the image object’s underlying image data has been purged, calling this function forces that data to be reloaded into memory.
     /// - returns: A data object containing the JPEG data, or nil if there was a problem generating the data. This function may return nil if the image has no data or if the underlying CGImageRef contains data in an unsupported bitmap format.
     func jpeg(_ jpegQuality: JPEGQuality) -> Data? {
+        print("conv jpeg quality")
         return jpegData(compressionQuality: jpegQuality.rawValue)
     }
 }
