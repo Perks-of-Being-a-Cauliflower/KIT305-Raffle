@@ -237,10 +237,12 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
 
 
-        var newImageData = Data(base64Encoded: ticketData!.image)
-        //print("new data is: ", newImageData)
-        if let newImageData = newImageData {
-           imageView.image = UIImage(data: newImageData)
+        if(ticketData!.image != "na"){
+            var newImageData = Data(base64Encoded: ticketData!.image)
+            //print("new data is: ", newImageData)
+            if let newImageData = newImageData {
+               imageView.image = UIImage(data: newImageData)
+            }
         }
         
         /*
