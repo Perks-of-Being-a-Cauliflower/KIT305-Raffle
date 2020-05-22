@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 23
+    private let DATABASE_VERSION = 26
     
     
     
@@ -593,7 +593,7 @@ class SQLiteDatabase
     func updateTicketImage(ticketID:Int32, newString:String){
         //check for other tickets with name.
         
-        print("wew 2 " + String(ticketID))
+        print("weew " + String(ticketID))
         
         let updateStatementQuery = "UPDATE Ticket SET Image = ? WHERE ID = ?;"
         //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
@@ -617,14 +617,14 @@ class SQLiteDatabase
     }
         
     func updateTicketColour(ticketID:Int32, newString:String){
-    let updateStatementQuery = "UPDATE Ticket SET Colour = ? WHERE ID = ?;"
-    //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
-    updateWithQuery(updateStatementQuery,
+        let updateStatementQuery = "UPDATE Ticket SET Colour = ? WHERE ID = ?;"
+        //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
+        updateWithQuery(updateStatementQuery,
                     bindingFunction: { (updateStatement) in
                         sqlite3_bind_text(updateStatement, 1, newString, -1, nil)
                         sqlite3_bind_int(updateStatement, 2, ticketID)
                         
-    })
+        })
     }
         
     func updateTicketInfo(ticket:Ticket){

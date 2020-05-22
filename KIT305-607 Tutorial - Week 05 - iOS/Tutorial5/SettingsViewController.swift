@@ -243,6 +243,8 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             if let newImageData = newImageData {
                imageView.image = UIImage(data: newImageData)
             }
+        }else{
+            imageView.image = nil
         }
         
         /*
@@ -282,6 +284,16 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             soldTicketCounterBig.text = newString!
             soldTicketCounterSmall.text = newString!
         }
+        
+        if(ticketData!.image != "na"){
+            var newImageData = Data(base64Encoded: ticketData!.image)
+            //print("new data is: ", newImageData)
+            if let newImageData = newImageData {
+               imageView.image = UIImage(data: newImageData)
+            }
+        }else{
+            imageView.image = nil
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController,
@@ -298,18 +310,18 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                dismiss(animated: true, completion: nil)
                
                //let image : UIImage = imageView.image?.jpeg(UIImage.JPEGQuality(rawValue: 0)!)
-               
-               let image : UIImage = imageView.image!
+            //trying to comment this out vv
+               //let image : UIImage = imageView.image!
                //let imageData:NSData = image.pngData()! as NSData
                let imageData = image.jpegData(compressionQuality: 0)
                let imageBase64String = imageData!.base64EncodedString()
                //print(imageBase64String ?? "Could not encode image to Base64")
-               imageSTR64 = imageBase64String
-            print("wew " + String(ticketID))
-            let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
-                
-            database.updateTicketImage(ticketID: ticketID, newString: imageSTR64!)
-            
+            //imageSTR64 = imageBase64String
+               print("wew " + String(ticketID))
+               let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+               database.updateTicketImage(ticketID: ticketID, newString: imageBase64String)
+            //database.updateTicketImage(ticketID: ticketID, newString: imageSTR64!)
+            print("weeew " + String(ticketID))
                //imageSTR64 = imageData.base64EncodedString(options: .lineLength64Characters)
     
            }
