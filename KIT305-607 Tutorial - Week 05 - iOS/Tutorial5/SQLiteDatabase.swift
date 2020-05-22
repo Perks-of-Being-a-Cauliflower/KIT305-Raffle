@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 24
+    private let DATABASE_VERSION = 29
     
     
     
@@ -633,7 +633,7 @@ class SQLiteDatabase
                         sqlite3_bind_text(updateStatement, 1, newString, -1, nil)
                         sqlite3_bind_int(updateStatement, 2, ticketID)
                         
-    })
+        })
     }
         
     func updateTicketInfo(ticket:Ticket){
