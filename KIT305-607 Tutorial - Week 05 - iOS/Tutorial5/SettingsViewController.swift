@@ -306,7 +306,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                //print(imageBase64String ?? "Could not encode image to Base64")
                imageSTR64 = imageBase64String
             print("wew " + String(ticketID))
-            let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+            //let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
                 
             database.updateTicketImage(ticketID: ticketID, newString: imageSTR64!)
             

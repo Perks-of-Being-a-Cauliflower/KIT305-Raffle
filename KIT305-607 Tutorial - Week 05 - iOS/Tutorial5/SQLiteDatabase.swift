@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 23
+    private let DATABASE_VERSION = 24
     
     
     
@@ -344,7 +344,7 @@ class SQLiteDatabase
             Colour CHAR(255),
             MaxTickets INTEGER,
             SoldTickets INTEGER,
-            Image CHAR(255)
+            Image TEXT
         );
         """
         createTableWithQuery(createTicketTableQuery, tableName: "Ticket")
@@ -554,6 +554,8 @@ class SQLiteDatabase
     
     
     func updateSoldTickets(ticketID:Int32, newNum:Int32){
+        
+        print("update ticket sold " + String(newNum))
         //let updateStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets FROM Ticket"
         let updateStatementQuery = "UPDATE Ticket SET soldTickets = ? WHERE id = ?;"
         updateWithQuery(updateStatementQuery,
@@ -565,6 +567,8 @@ class SQLiteDatabase
     }
     
     func updateMaxTickets(ticketID:Int32, newNum:Int32){
+        
+        print("update ticket max tick " + String(newNum))
         //let updateStatementQuery = "SELECT id, open, name, desc, margin, price, iDLetter, colour, maxTickets, soldTickets FROM Ticket"
         let updateStatementQuery = "UPDATE Ticket SET MaxTickets = ? WHERE id = ?;"
         updateWithQuery(updateStatementQuery,
@@ -579,6 +583,7 @@ class SQLiteDatabase
         //check for other tickets with name.
         
         
+        print("update name " + String(newString))
         
         let updateStatementQuery = "UPDATE Ticket SET Name = ? WHERE ID = ?;"
         //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
@@ -593,7 +598,8 @@ class SQLiteDatabase
     func updateTicketImage(ticketID:Int32, newString:String){
         //check for other tickets with name.
         
-        print("wew 2 " + String(ticketID))
+        //print("id is " + String(ticketID))
+        print("update ticket image " + String(newString))
         
         let updateStatementQuery = "UPDATE Ticket SET Image = ? WHERE ID = ?;"
         //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
@@ -606,6 +612,7 @@ class SQLiteDatabase
     }
         
      func updateTicketDesc(ticketID:Int32, newString:String){
+        print("update ticket desc " + String(newString))
         let updateStatementQuery = "UPDATE Ticket SET Desc = ? WHERE ID = ?;"
         //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
         updateWithQuery(updateStatementQuery,
@@ -617,6 +624,8 @@ class SQLiteDatabase
     }
         
     func updateTicketColour(ticketID:Int32, newString:String){
+        
+        print("update ticket colour " + String(newString))
     let updateStatementQuery = "UPDATE Ticket SET Colour = ? WHERE ID = ?;"
     //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
     updateWithQuery(updateStatementQuery,
@@ -628,6 +637,8 @@ class SQLiteDatabase
     }
         
     func updateTicketInfo(ticket:Ticket){
+        
+        print("update ticket not called ")
         //let updateStatementQuery = "UPDATE Ticket SET soldTickets = " + String(newNum) + " WHERE id = " + String(ticketID) + ";"
         
         //let updateStatementQuery = "UPDATE Ticket SET open = " + ticket.open + ", name = " + ticket.name + ", desc = " + ticket.desc + ", margin = " + ticket.margin + ", price = " + ticket.price + ", iDLetter = " + ticket.iDLetter + ", colour = " + ticket.colour + ", maxTickets = " + ticket.maxTickets + ", soldTickets = " + ticket.soldTickets + " WHERE id = " + ticket.ID + ";"
