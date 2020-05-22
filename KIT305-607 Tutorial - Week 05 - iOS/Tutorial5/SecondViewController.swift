@@ -29,6 +29,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var allTickets: [Customer] = []
     var ticketsToSell: Set<Int> = []
     var soldTick: Set<Int> = []
+    var newSet: Set<Int> = []
     //var databaseFromPreviousView: SQLiteDatabase?
     //var cTicket = Ticket?()
     
@@ -110,13 +111,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                         style: .default,
                         handler: { action in
                             self.database.deleteCustomer(id: self.winner!.ID)
-                            let curr = self.winner?.ticketNum
-                            for customer in self.allTickets{
-                                if(customer.ticketNum > curr!){
-                                    self.database.updateCustomerTicketNumber(ticketID: customer.ID, ticketNumber: customer.ticketNum-1)
-                                    //print("bumped down by 1")
-                                }
-                            }
+                            
                             self.ticketData?.soldTickets-=1
                             self.database.updateSoldTickets(ticketID: self.ticketData!.ID, newNum: self.ticketData!.soldTickets)
                             let newString: String? = String(self.ticketData!.soldTickets)
@@ -194,13 +189,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             style: .default,
             handler: { action in
                 self.database.deleteCustomer(id: self.winner!.ID)
-                let curr = self.winner?.ticketNum
-                for customer in self.allTickets{
-                    if(customer.ticketNum > curr!){
-                        self.database.updateCustomerTicketNumber(ticketID: customer.ID, ticketNumber: customer.ticketNum-1)
-                        //print("bumped down by 1")
-                    }
-                }
                 self.ticketData?.soldTickets-=1
                 self.database.updateSoldTickets(ticketID: self.ticketData!.ID, newNum: self.ticketData!.soldTickets)
                 let newString: String? = String(self.ticketData!.soldTickets)
@@ -545,8 +533,9 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
         for i in stride(from: 1, to: (num! + 1), by: 1) {
             if ticketData?.margin == 0 {
+                let emptySpace = Int32(ticketAdd())
             database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
-                                                    ticketNum: curr + i,
+                                                    ticketNum: emptySpace,
                                                     purchaseTime: now,
                                                     refunded: 0,
                                                     name: customerName.text!,
@@ -606,6 +595,30 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         //print(database.selectAllCustomers())
         numberToPurchaseField.text = tPicker[0]
     }
+    
+    func ticketAdd ()-> Int {
+           //let findnull = database.selectAllCustomers()
+           
+           allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
+           //print("ticket list: ", allTickets)
+            newSet.removeAll()
+           for setFill in allTickets {
+               newSet.insert(Int(setFill.ticketNum))
+           }
+           //print("max: ", Int(ticketData!.maxTickets))
+           for i in 1 ... Int(ticketData!.maxTickets) {
+               print("count: ", i)
+               
+               if newSet.contains(Int(i)) {
+                   print("still looking at: ", i)
+               } else {
+                   print("found at: ", i)
+                    return Int(i)
+               }
+           }
+    
+           return 0
+       }
     
     func marginRand ()-> Int {
         allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)

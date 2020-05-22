@@ -42,19 +42,20 @@ class CustomerUITableViewCell: UITableViewCell {
             
             database.deleteCustomer(id: self.specificCustomerTicketID)
             
-            let customers = database.selectAllCustomersFromRaffle(id: self.specificTicketID)
+            //let customers = database.selectAllCustomersFromRaffle(id: self.specificTicketID)
             
             let ticket = database.selectTicketBy(id: self.specificTicketID)
-            
+                  /*
             //var cap = (ticket?.soldTickets)!
             let curr = Int32(self.ticketNum.text!)
-            
+      
             for customer in customers{
                 if(customer.ticketNum > curr!){
                     database.updateCustomerTicketNumber(ticketID: customer.ID, ticketNumber: customer.ticketNum-1)
                     print("bumped down by 1")
                 }
             }
+ */
             /*for i in stride(from: curr!, to: (cap + 1), by: 1) {
                 print(i+1)
                 
