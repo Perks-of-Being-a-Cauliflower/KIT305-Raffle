@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 26
+    private let DATABASE_VERSION = 29
     
     
     
@@ -344,7 +344,7 @@ class SQLiteDatabase
             Colour CHAR(255),
             MaxTickets INTEGER,
             SoldTickets INTEGER,
-            Image CHAR(255)
+            Image TEXT
         );
         """
         createTableWithQuery(createTicketTableQuery, tableName: "Ticket")
