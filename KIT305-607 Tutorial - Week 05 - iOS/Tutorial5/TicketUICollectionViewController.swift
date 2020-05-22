@@ -121,6 +121,9 @@ class TicketUICollectionViewController: UICollectionViewController {
                 print("ticket na")
                 ticketCell.imageField.isHidden = true
             }
+            print("id is: ", ticket.ID)
+            //print("image is: ", ticket.image)
+
             //ticketCell.imageField.image =
             
             ticketCell.iDLetter.text = ticket.iDLetter
