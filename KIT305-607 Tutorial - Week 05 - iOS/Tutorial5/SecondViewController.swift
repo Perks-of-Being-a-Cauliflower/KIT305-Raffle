@@ -30,8 +30,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var ticketsToSell: Set<Int> = []
     var soldTick: Set<Int> = []
     var newSet: Set<Int> = []
-    //var databaseFromPreviousView: SQLiteDatabase?
-    //var cTicket = Ticket?()
     
     @IBOutlet weak var ticketLabel: UILabel!
     @IBOutlet weak var textInteractField: UITextField!
@@ -43,7 +41,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var userguide: UILabel!
     
     @IBOutlet weak var winnerField: UITextField!
-    //@IBOutlet weak var imageField: UIImageView!
     
     @IBOutlet var ticketsField: UITextField!
     @IBOutlet var descriptionField: UITextView!
@@ -65,9 +62,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func rowSelecter() {
-        //print("Hi")
         let finder = tPicker.firstIndex(of: numberToPurchaseField.text!)
-            //print(finder!)
             pickerView.selectRow(finder!, inComponent: 0, animated: false)
             return
     }
@@ -97,7 +92,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 winner = nil
                 allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
                 let winningNum = Int32(winnerField.text!)
-                print("Winning num is: ", winningNum)
+                print("Winning num is: ", winningNum!)
                 for ticketN in allTickets {
                     print("current id: ", ticketN.ticketNum)
                     if ticketN.ticketNum == winningNum {
@@ -234,44 +229,24 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     override func viewWillAppear(_ animated: Bool) {
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
-        //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
         let ticket = database.selectTicketBy(id: idFromPreviousView)
         ticketData = ticket
-        //print(ticket!)
-        //print("database data is: ", database.selectTicketName(name: nameFromPreviousView!))
         if(ticket == nil){
-            //throw error, there is no data here.
             print("ticket nil")
             self.performSegue(withIdentifier: "returnToCreatePageIfNoTicket", sender: self)
-            /*let alert = UIAlertController(title: "Warning:", message: "Cannot enter sell page for a deleted ticket", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: { action in
-                //run your function here
-                return
-            }))
-            
-            self.present(alert, animated: true)*/
         }else{
-            //let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
             print("ticket not nil")
-            
-            //var ticket = database.selectTicketBy(id:ticketID!)
             ticketName.text = ticket?.name
             ticketName.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
             let totePrice:String = String(format:"$ %.1f", ticket!.price)
-            //let goal:String = String(format:"%.1f", ticket!.)
             totalCost.text = totePrice
-            //ticketGoal.text = goal
             let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
             UIColor.orange, "Blue": UIColor.blue,"Green":
             UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
             "Pink": UIColor.systemPink]
-            //print("colour is: ", colors[ticket!.colour] as Any)
-            //print("sees colour as: ", ticket?.colour as Any)
             colourBarOne.backgroundColor = colors[ticket!.colour]
             colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
             ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
-            //ticketName.text = self.name
             
             let newString: String? = String(ticketData!.soldTickets)
             let intCompare: Int = Int(ticketData!.soldTickets)
@@ -306,46 +281,27 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     // MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print(ticket?.name)
         
-        //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
         let ticket = database.selectTicketBy(id: idFromPreviousView) 
         ticketData = ticket
-        //print(ticket!)
-        //print("database data is: ", database.selectTicketName(name: nameFromPreviousView!))
         if(ticket == nil){
-            //throw error, there is no data here.
             print("ticket nil")
         }else{
-            //let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
             print("ticket not nil")
-            
-            //var ticket = database.selectTicketBy(id:ticketID!)
             ticketName.text = ticket?.name
             ticketName.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
             let totePrice:String = String(format:"$ %.1f", ticket!.price)
-            //let goal:String = String(format:"%.1f", ticket!.)
             totalCost.text = totePrice
-            //ticketGoal.text = goal
             let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
             UIColor.orange, "Blue": UIColor.blue,"Green":
             UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
             "Pink": UIColor.systemPink]
-            //print("colour is: ", colors[ticket!.colour] as Any)
-            //print("sees colour as: ", ticket?.colour as Any)
             colourBarOne.backgroundColor = colors[ticket!.colour]
             colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
             ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
-            //ticketName.text = self.name
             descriptionField.layer.borderWidth = 1.0
             let descolour = UIColor.lightGray.cgColor
             descriptionField.layer.borderColor = descolour
-            
-            //print("return image string is: ", ticketData!.image)
-            /*
-            let dataDecoded:NSData = NSData(base64Encoded: ticketData!.image, options: NSData.Base64DecodingOptions(rawValue: 0))!
-            let decodedimage:UIImage = UIImage(data: dataDecoded as Data)!
-            */
             if ticketData?.margin == 1 {
                 winnerField.isUserInteractionEnabled = true
                 winnerField.text = "Please Enter Margin Value"
@@ -356,29 +312,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             
             
         if(ticketData!.image != "na"){
-            //no longer have image on sell screen.
-            /*var newImageData = Data(base64Encoded: ticketData!.image)
-            //print("new data is: ", newImageData)
-            if let newImageData = newImageData {
-               //imageField.image = UIImage(data: newImageData)
-            }
-            
-            
-            newImageData = Data(base64Encoded: ticketData!.image)
-            //print("new data is: ", newImageData)
-            if let newImageData = newImageData {
-               //imageField.image = UIImage(data: newImageData)
-                if(ticketData!.image != "na"){
-                    let newImageData = Data(base64Encoded: ticketData!.image)
-                    //print("new data is: ", newImageData)
-                    if let newImageData = newImageData {
-                       //imageField.image = UIImage(data: newImageData)
-                    }
-                }
-            }*/
-            //imageField.image = decodedimage
-             
-            
             let newString: String? = String(ticketData!.soldTickets)
             let intCompare: Int = Int(ticketData!.soldTickets)
             
@@ -400,7 +333,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func textViewDidBeginEditing(_ textView: UITextField) {
         if textView.textColor == UIColor.lightGray {
-            //textView.text = ""
             textInteractField.text = ""
         } else {
             let temp: String? = winnerField.text
@@ -431,7 +363,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         customerPhone.resignFirstResponder()
         customerName.resignFirstResponder()
         numberToPurchaseField.resignFirstResponder()
-        //print(sender.tag)
             if sender.tag == 1 {
                 ticketLabel.text = "Name: "
                 textInteractField.isUserInteractionEnabled = true
@@ -486,7 +417,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 print("Not a valid number: \(newName!)")
                 customerPhone.text = ""
             }
-            //print(customerPhone.text!)
             textInteractField.keyboardType = UIKeyboardType.default
         } else if returnField == "Email: " {
             textInteractField.isHidden = true
@@ -536,9 +466,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let df = DateFormatter()
         df.dateFormat = "hh:mm:ss dd-MM-yyyy "
         let now = df.string(from: Date())
-        
-        //currently just works with selling one ticket, need to make it look for the lowest unallocated value, as well as the ability to sell multiple tickets.
-        //print(ticketData!.name)
         let num = Int32(numberToPurchaseField.text!)
         let curr = ticketData!.soldTickets
         
@@ -587,37 +514,18 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         
         ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
-
-        /*
-                database.updateSoldTickets(ticketID: ticketData!.ID, newNum: num)
-        //impliment a way to increase and track ticket numbers. via ticket SQL
-            //also need to impliment a way to sell multiple tickets via a stepper.
-        database.insertCustomer(customer:Customer(ticketID: ticketData?.ID ?? -1,
-                                                  ticketNum: num,
-                                                  purchaseTime: now,
-                                                  refunded: 0,
-                                                  name: customerName.text!,
-                                                  phone: Int32(customerPhone.text ?? "") ?? -1,
-                                                  email: customerEmail.text ?? ""))
-        */
-        //print("added Customer")
         customerName.text = ""
         customerPhone.text = ""
         customerEmail.text = ""
-        //print(database.selectAllCustomers())
         numberToPurchaseField.text = tPicker[0]
     }
     
     func ticketAdd ()-> Int {
-           //let findnull = database.selectAllCustomers()
-           
            allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
-           //print("ticket list: ", allTickets)
             newSet.removeAll()
            for setFill in allTickets {
                newSet.insert(Int(setFill.ticketNum))
            }
-           //print("max: ", Int(ticketData!.maxTickets))
            for i in 1 ... Int(ticketData!.maxTickets) {
                print("count: ", i)
                
@@ -655,7 +563,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             let alert = UIAlertController(title: "Max Tickets:", message: "This transaction would exceed the maximum ticket amount!", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: { action in
-                //run your function here
                 return
             }))
             
@@ -665,11 +572,9 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             let alert = UIAlertController(title: "Confirm:", message: "Currently about to sell \(num ?? 0) tickets for \(String(self.totalCost.text ?? "$$"))", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Confirm!", style: .default, handler: { action in
-                //run your function here
                 self.AddCustomerConfirmed()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-                //run your function here
                 return
             }))
             
@@ -686,25 +591,9 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
        {
            if segue.identifier == "TransferToTicketEdit"
            {
-               //createTicketTable()
-                //print("zong!")
-               
                 let nextScreen = segue.destination as! SettingsViewController
 
                 nextScreen.idFromPreviousView = idFromPreviousView
-                /*
-               nextScreen.databaseFromPreviousView = database
-               if let ticketCost = Double(ticketPrice.text!) {
-                   database.insertTicket(ticket:Ticket(open:1, name: chosenNameField.text!, desc:desField.text!,margin:Int32(switchState(for: marginSwitch!)),price:ticketCost,iDLetter:idfield.text!,colour:colourField.text!))
-               } else {
-                   print("\nnot submitting: \(ticketPrice.text!)")
-                   ticketPrice.text = ""
-               }
-        */
-               
-               //let nextScreen = segue.destination as! SecondViewController
-               //nextScreen.nameFromPreviousView = confirmedName.text
-               //nextScreen.colourFromPreviousView = colourBar1.backgroundColor ?? UIColor.white
                
            }
            
@@ -715,10 +604,8 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         if(ticketData?.soldTickets == 0 || ableToClose == true){
             let alert = UIAlertController(title: "Warning:", message: "You are about to perminantly delete \(ticketData?.name ?? "the raffle")", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Continue", style: .destructive, handler: { action in
-                //run your function hered
-                
+
                 self.database.deleteRaffle(id: self.ticketData!.ID)
-                //self.tabBarController!.selectedIndex = 0
                 
                 self.performSegue(withIdentifier: "returnToLibraryPostDeletion", sender: self)
                 
@@ -727,7 +614,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 return
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-                //run your function here
                 return
             }))
             
@@ -736,7 +622,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             let alert = UIAlertController(title: "Warning:", message: "Cannot delete \(ticketData?.name ?? "the raffle") until a winner has been drawn", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-                //run your function here
                 return
             }))
             
@@ -744,24 +629,23 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     func contactWinner(ticket:Ticket, winner:Customer){
-        //margin raffle
         if(ticket.margin == 1){
             print("contact winner margin")
             let shareText = "The results are in! The winner of the \"\(ticket.name)\" margin raffle is *drum roll* \"\(winner.name)\" with a ticket number of \(winner.ticketNum)!"
             if let image = Data(base64Encoded: ticketData!.image){ //has image
                 let vc = UIActivityViewController(activityItems: [shareText, image], applicationActivities: [])
                 present(vc, animated:true)
-            }else{ //no image
+            }else{
                 let vc = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
                 present(vc, animated:true)
             }
-        }else{//class raffle
+        }else{
             print("contact winner classic")
             let shareText = "The results are in! The winner of the \"\(ticket.name)\" raffle is *drum roll* \"\(winner.name)\" with a ticket number of \(winner.ticketNum)!"
-            if let image = Data(base64Encoded: ticketData!.image){ //has image
+            if let image = Data(base64Encoded: ticketData!.image){ 
                 let vc = UIActivityViewController(activityItems: [shareText, image], applicationActivities: [])
                 present(vc, animated:true)
-            }else{ //no image
+            }else{
                 let vc = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
                 present(vc, animated:true)
             }

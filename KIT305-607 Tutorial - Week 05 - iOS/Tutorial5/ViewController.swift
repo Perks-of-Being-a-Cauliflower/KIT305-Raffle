@@ -73,15 +73,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             dismiss(animated: true, completion: nil)
             
-            //let image : UIImage = imageView.image?.jpeg(UIImage.JPEGQuality(rawValue: 0)!)
-            
             let image : UIImage = imageView.image!
-            //let imageData:NSData = image.pngData()! as NSData
             let imageData = image.jpegData(compressionQuality: 0)
             let imageBase64String = imageData!.base64EncodedString()
-            //print(imageBase64String ?? "Could not encode image to Base64")
             imageSTR64 = imageBase64String
-            //imageSTR64 = imageData.base64EncodedString(options: .lineLength64Characters)
  
         }
     }
@@ -96,9 +91,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func rowSelecter(targetField: UITextField, array: [String], targetPicker: UIPickerView) {
-        //print("Hi")
         let finder = array.firstIndex(of: targetField.text!)
-            //print(finder!)
             targetPicker.selectRow(finder ?? 0, inComponent: 0, animated: false)
             return
     }
@@ -126,9 +119,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if pickerView.tag == 5 {
             idfield.text = rID[row]
              raffleCID.text = idfield.text! + " - " + colourField.text!
-            //print("tag is: ", pickerView.tag)
         } else {
-            //print("tag is: ", pickerView.tag)
             colourField.text = rColour[row]
             let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
             UIColor.orange, "Blue": UIColor.blue,"Green":
@@ -192,8 +183,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 iDPicker.isHidden = false
                 iDPicker.becomeFirstResponder()
                 rowSelecter(targetField: idfield, array: rID, targetPicker: iDPicker)
-                //let temp: String? = endCon.text
-                //confirmedName.text = temp
             } else if sender.tag == 6 {
                 colourPicker.isHidden = false
                 colourPicker.becomeFirstResponder()
@@ -249,7 +238,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 print("Not a valid number: \(newName!)")
                 ticketPrice.text = ""
             }
-            //print(ticketPrice.text!)
             confirmedName.keyboardType = UIKeyboardType.default
         } else if returnField == "Enter Ticket Sell Limit:" {
             confirmedName.isHidden = true
@@ -321,11 +309,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.present(alert, animated: true)
             return
         }
-        /*if(imageSTR64 == nil ){
-            return
-        }*/
-
-        
         
         performSegue(withIdentifier: "CreateRaffleSegue", sender: self)
     }
@@ -334,18 +317,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     {
     if segue.identifier == "CreateRaffleSegue"
     {
-        //createTicketTable()
-        //print(chosenNameField.text!)
-        //print(desField.text!)
-        //print(ticketPrice.text!)
-        //print("NUM 4 TICKET: \(Int32(endCon.text!)!)")
-        //print(idfield.text!)
-        //print(colourField.text!)
         
         
         let nextScreen = segue.destination as! SecondViewController
         nextScreen.nameFromPreviousView = chosenNameField.text
-        //nextScreen.databaseFromPreviousView = database
         if let ticketCost = Double(ticketPrice.text!) {
             database.insertTicket(ticket:Ticket(open:1,
                                                 name: chosenNameField.text!,
@@ -380,9 +355,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             print("\nnot submitting: \(ticketPrice.text!)")
             ticketPrice.text = ""
         }
-        //let nextScreen = segue.destination as! SecondViewController
-        //nextScreen.nameFromPreviousView = confirmedName.text
-        //nextScreen.colourFromPreviousView = colourBar1.backgroundColor ?? UIColor.white
         
     } }
     // MARK: - ViewDidLoad
@@ -395,23 +367,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         "Pink": UIColor.systemPink]
         colourBar1.backgroundColor = colors[colourField.text!]
         colourBar2.backgroundColor = colors[colourField.text!]
-        
-        
-        
-        
-        /*
-        database.insertTicket(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:"green"))
-        */
-        
-        /*let df = DateFormatter()
-        df.dateFormat = "hh:mm:ss dd-MM-yyyy "
-        let now = df.string(from: Date())
-        
-        database.insertCustomer(customer:Customer(ticketID: 0, ticketNum: 1, purchaseTime: now, refunded: 0, name: "Debug Joeseph", phone: 0456649912, email: "kennal@utas.edu.au"))
-        
-        database.insertCustomer(customer:Customer(ticketID: 1, ticketNum: 1, purchaseTime: now, refunded: 0, name: "Debug Moeseph", phone: 911, email: "notkennal@utas.edu.au"))
-        
-        print(database.selectAllCustomers()) */
     }
 
 
@@ -426,9 +381,6 @@ extension UIImage {
         case highest = 1
     }
 
-    /// Returns the data for the specified image in JPEG format.
-    /// If the image object’s underlying image data has been purged, calling this function forces that data to be reloaded into memory.
-    /// - returns: A data object containing the JPEG data, or nil if there was a problem generating the data. This function may return nil if the image has no data or if the underlying CGImageRef contains data in an unsupported bitmap format.
     func jpeg(_ jpegQuality: JPEGQuality) -> Data? {
         print("conv jpeg quality")
         return jpegData(compressionQuality: jpegQuality.rawValue)
