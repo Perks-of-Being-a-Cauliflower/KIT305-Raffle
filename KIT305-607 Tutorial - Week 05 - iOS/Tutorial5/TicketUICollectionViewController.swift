@@ -22,11 +22,7 @@ class TicketUICollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
-        /*
-        database.insertTicket(ticket:Ticket(open:1, name:"Debug Joe's Big BBQ", desc:"Wow ! its time for a big BBQ with Debug Joe yeehaw YEEEHAW",margin:0,price:1.99,iDLetter:"B",colour:"green"))
-            
-        database.insertTicket(ticket:Ticket(open:1, name:"Debug Moe's Bigger BBQ", desc:"COME TO THE BIGGEST BBQ YET (WAY COOLER THAN JOES BBQ)",margin:1,price:4.99,iDLetter:"A",colour:"green"))
-        */
+
         tickets = database.selectAllTickets()
         if(tickets.count <= 0){
             emptyLibraryWindow.isHidden = false
@@ -41,7 +37,7 @@ class TicketUICollectionViewController: UICollectionViewController {
         tickets = database.selectAllTickets()
         
         self.collectionView.reloadData()
-        //print("wowowow")
+
         if(tickets.count <= 0){
             emptyLibraryWindow.isHidden = false
         }else{
@@ -53,15 +49,6 @@ class TicketUICollectionViewController: UICollectionViewController {
     @IBAction func moveToCreateRaffle(_ sender: Any) {
         self.tabBarController!.selectedIndex = 0
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -77,11 +64,9 @@ class TicketUICollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        //let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TicketUICollectionViewCell", for: indexPath)
     
         // Configure the cell
-        //let ticket = tickets[indexPath.row]
         let ticket = tickets[(tickets.count-1) - indexPath.row]
         if let  ticketCell = cell as? TicketUICollectionViewCell
         {
@@ -122,14 +107,9 @@ class TicketUICollectionViewController: UICollectionViewController {
                 print("ticket na")
                 ticketCell.imageField.isHidden = true
             }
-            print("id is: ", ticket.ID)
-            //print("image is: ", ticket.image)
-
-            //ticketCell.imageField.image =
+            //print("id is: ", ticket.ID)
             
             ticketCell.iDLetter.text = ticket.iDLetter
-            //ticketCell.button.ticket = ticket
-            //ticketCell.button.setTitle((title: "help", String(ticket.ID))
             
         }
         
@@ -138,53 +118,15 @@ class TicketUICollectionViewController: UICollectionViewController {
 
     // MARK: UICollectionViewDelegate
 
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-    /*@IBAction func SegueToSell() {
-        /*let vc = SecondViewController(nibName: "SecondViewController", bundle: nil)
-            //vc.text = "Next level blog photo booth, tousled authentic tote bag kogi"
-
-            navigationController?.pushViewController(vc, animated: true)*/
-        
-    }*/
     @IBAction func segueToSell(_ sender: UIButton) {
         print("pressed")
-        //self.performSegue(withIdentifier: "TransferTicketToSell", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("prepared")
         
         if(segue.identifier == "TransferTicketToSell"){
-            
-            //let displayVC = segue.destination as! SecondViewController
-            //displayVC.ticketID = 1
+
             guard let detailViewController = segue.destination as? SecondViewController else {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
@@ -196,18 +138,12 @@ class TicketUICollectionViewController: UICollectionViewController {
             guard let indexPath = collectionView.indexPath(for:selectedTicketCell) else {
                 fatalError("The selected cell is not being displayed by the table")
             }
-            //var indexPath = collectionView.indexPath(for:selectedTicketCell)
             print("post prep")
-            //let selectedTicket = tickets[indexPath.row]
             let selectedTicket = tickets[(tickets.count-1) - indexPath.row]
             let nextScreen = segue.destination as! SecondViewController
             nextScreen.idFromPreviousView = selectedTicket.ID
             print(selectedTicket.name + " is abotu to be transfered")
-            detailViewController.ticketData = selectedTicket
-            
-            //let selectedMovie = tickets[indexPath.row]
-            //detailViewController.movie = selectedMovie
-             
+            detailViewController.ticketData = selectedTicket             
         }
     }
 }
