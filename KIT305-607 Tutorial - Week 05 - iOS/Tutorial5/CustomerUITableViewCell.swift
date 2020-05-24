@@ -27,7 +27,7 @@ class CustomerUITableViewCell: UITableViewCell {
    
     @IBAction func refundTicket(_ sender: UIButton) {
         
-        let alert = UIAlertController(title: "Confirm:", message: "Refunding this purchase cannot be reversed!", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Confirm:", message: "Are you sure you would like to refund this ticket? (1 ticket for \(self.ticketCost.text ?? "n/a"))", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
             return
