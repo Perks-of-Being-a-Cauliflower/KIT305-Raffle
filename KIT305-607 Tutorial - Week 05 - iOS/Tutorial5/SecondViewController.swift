@@ -88,7 +88,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func drawWinner(_ sender: Any) {
         if ticketData?.margin == 1 {
-            if winnerField.text! != "" {
+            if winnerField.text! != "Please Enter Margin Value" {
                 winner = nil
                 allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
                 let winningNum = Int32(winnerField.text!)
