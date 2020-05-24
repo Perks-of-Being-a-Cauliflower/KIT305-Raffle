@@ -139,7 +139,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                         title: "Contact Winner",
                         style: .default,
                         handler: { action in
-                            
+                            self.contactWinner(ticket: self.ticketData!, winner: self.winner!)
                     }))
                     alert.addAction(UIAlertAction(
                         title: "Return",
@@ -218,7 +218,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             title: "Contact Winner",
             style: .default,
             handler: { action in
-                
+                self.contactWinner(ticket: self.ticketData!, winner: self.winner!)
         }))
         alert.addAction(UIAlertAction(
             title: "Return",
@@ -722,7 +722,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 
                 self.performSegue(withIdentifier: "returnToLibraryPostDeletion", sender: self)
                 
-                //self.tabBarController!.selectedIndex = 1
+                self.tabBarController!.selectedIndex = 1
                 
                 return
             }))
@@ -743,6 +743,29 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             self.present(alert, animated: true)
         }
     }
-    
+    func contactWinner(ticket:Ticket, winner:Customer){
+        //margin raffle
+        if(ticket.margin == 1){
+            print("contact winner margin")
+            let shareText = "The results are in! The winner of the \"\(ticket.name)\" margin draw is *drum roll* \(winner.name) with a ticket number of \(winner.ticketNum)!"
+            if let image = Data(base64Encoded: ticketData!.image){ //has image
+                let vc = UIActivityViewController(activityItems: [shareText, image], applicationActivities: [])
+                present(vc, animated:true)
+            }else{ //no image
+                let vc = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+                present(vc, animated:true)
+            }
+        }else{//class raffle
+            print("contact winner classic")
+            let shareText = "The results are in! The winner of the \"\(ticket.name)\" is *drum roll* \(winner.name) with a ticket number of \(winner.ticketNum)!"
+            if let image = Data(base64Encoded: ticketData!.image){ //has image
+                let vc = UIActivityViewController(activityItems: [shareText, image], applicationActivities: [])
+                present(vc, animated:true)
+            }else{ //no image
+                let vc = UIActivityViewController(activityItems: [shareText], applicationActivities: [])
+                present(vc, animated:true)
+            }
+        }
+    }
 
 }
