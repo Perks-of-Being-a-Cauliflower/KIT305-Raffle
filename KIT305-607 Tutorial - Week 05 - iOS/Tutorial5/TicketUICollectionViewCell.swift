@@ -20,7 +20,6 @@ class TicketUICollectionViewCell: UICollectionViewCell {
     @IBOutlet var bottomColour: UIImageView!
     @IBOutlet var imageField: UIImageView!
     
-    //@IBOutlet var button: TicketUIButton!
     var ticketID: Int32?
     
 }

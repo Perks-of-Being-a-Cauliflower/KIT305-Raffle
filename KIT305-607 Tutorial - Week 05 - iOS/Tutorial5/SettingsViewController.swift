@@ -48,27 +48,12 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
             return NSAttributedString(string: cPicker[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-    
     }
     
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
             return cPicker.count
     }
-    /*
-    func selectRow(_ row: Int, inComponent component: Int, animated: Bool) {
-        _ = false
-        for strings in cPicker {
-            if strings == ticketData?.colour {
-                colourPickerView.selectedRow(inComponent: index(ofAccessibilityElement: strings))
-                return
-            } else {
-                colourPickerView.selectedRow(inComponent: 0)
-                return
-            }
-        }
-    }
-    */
     func rowSelecter() {
         print("Hi")
         let finder = cPicker.firstIndex(of: editColour.text!)
@@ -86,7 +71,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         firstColourBar.backgroundColor = colors[editColour.text!]
         secondColourBar.backgroundColor = colors[editColour.text!]
         settingsID.text = ticketData!.iDLetter + " - " + editColour.text!
-        
     }
     
     @IBAction func showInputMenu(_ sender: UITextField) {
@@ -142,7 +126,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             editField.isHidden = true
             let newName: String? = editField.text
             
-            
             if(database.selectTicketName(name: newName!) == nil){
                 print("name does not exist")
                 database.updateTicketName(ticketID: ticketID, newString: newName!)
@@ -156,9 +139,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 
                 self.present(alert, animated: true)
             }
-            
-            
-            
         } else if returnField == "Edit Raffle Description: " {
             descEditField.isHidden = true
             let newName: String? = descEditField.text
@@ -193,12 +173,9 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             popUpView.isHidden = true
     }
     
-    
     // MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
-        //let ticket = databaseFromPreviousView!.selectTicketName(name: nameFromPreviousView!)
         let ticket = database.selectTicketBy(id: idFromPreviousView)
         ticketID = ticket!.ID
         ticketData = ticket
@@ -236,7 +213,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             soldTicketCounterSmall.text = newString!
         }
 
-
         if(ticketData!.image != "na"){
             var newImageData = Data(base64Encoded: ticketData!.image)
             //print("new data is: ", newImageData)
@@ -246,22 +222,8 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }else{
             imageView.image = nil
         }
-        
-        /*
-        newImageData = Data(base64Encoded: ticketData!.image)
-        //print("new data is: ", newImageData)
-        if let newImageData = newImageData {
-           //imageField.image = UIImage(data: newImageData)
-            if(ticketData!.image != "na"){
-                let newImageData = Data(base64Encoded: ticketData!.image)
-                //print("new data is: ", newImageData)
-                if let newImageData = newImageData {
-                   //imageField.image = UIImage(data: newImageData)
-                }
-            }
-        }*/
-        
     }
+    
     //updates counter after refunding tickets.
     override func viewWillAppear(_ animated: Bool) {
         let ticket = database.selectTicketBy(id: idFromPreviousView)
@@ -304,39 +266,27 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
            print("first")
            if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.editedImage.rawValue)] as? UIImage
            {
-               //print("image is: ", image)
-               imageView.contentMode = .scaleAspectFit
-               imageView.image = image
+                imageView.contentMode = .scaleAspectFit
+                imageView.image = image
                
+                dismiss(animated: true, completion: nil)
                
-               dismiss(animated: true, completion: nil)
-               
-               //let image : UIImage = imageView.image?.jpeg(UIImage.JPEGQuality(rawValue: 0)!)
-            //trying to comment this out vv
-               //let image : UIImage = imageView.image!
-               //let imageData:NSData = image.pngData()! as NSData
-               let imageData = image.jpegData(compressionQuality: 0)
-               let imageBase64String = imageData!.base64EncodedString()
-               //print(imageBase64String ?? "Could not encode image to Base64")
-            //imageSTR64 = imageBase64String
-               print("wew " + String(ticketID))
-               let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
-               database.updateTicketImage(ticketID: ticketID, newString: imageBase64String)
-            //database.updateTicketImage(ticketID: ticketID, newString: imageSTR64!)
-            print("weeew " + String(ticketID))
-               //imageSTR64 = imageData.base64EncodedString(options: .lineLength64Characters)
-    
+                let imageData = image.jpegData(compressionQuality: 0)
+                let imageBase64String = imageData!.base64EncodedString()
+                print("wew " + String(ticketID))
+                let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+                database.updateTicketImage(ticketID: ticketID, newString: imageBase64String)
+                print("weeew " + String(ticketID))
            }
        }
        
        func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
        {
            dismiss(animated: true, completion: nil)
-       }
+   }
     
     @IBAction func changePhoto(_ sender: Any) {
-        if
-        UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
         print("Library available")
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
@@ -354,7 +304,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     {
         if segue.identifier == "TransferTicketArchive"
         {
-            //createTicketTable()
             print("zing!")
             
             let nextScreen = segue.destination as! CustomerUITableViewController
@@ -362,18 +311,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             nextScreen.iDFromPreviousView = idFromPreviousView
             
         }
-        }
-        
-        
-    
-    /*// MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
-
 }
 
