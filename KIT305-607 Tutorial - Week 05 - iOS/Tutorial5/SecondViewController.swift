@@ -136,7 +136,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                             
                     }))
                     alert.addAction(UIAlertAction(
-                        title: "Contact Winner",
+                        title: "Share",
                         style: .default,
                         handler: { action in
                             self.contactWinner(ticket: self.ticketData!, winner: self.winner!)
@@ -215,7 +215,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 self.winnerField.isUserInteractionEnabled = false
         }))
         alert.addAction(UIAlertAction(
-            title: "Contact Winner",
+            title: "Share",
             style: .default,
             handler: { action in
                 self.contactWinner(ticket: self.ticketData!, winner: self.winner!)
@@ -243,14 +243,14 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             //throw error, there is no data here.
             print("ticket nil")
             self.performSegue(withIdentifier: "returnToCreatePageIfNoTicket", sender: self)
-            let alert = UIAlertController(title: "Warning:", message: "Cannot enter sell page for a deleted ticket", preferredStyle: .alert)
+            /*let alert = UIAlertController(title: "Warning:", message: "Cannot enter sell page for a deleted ticket", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: { action in
                 //run your function here
                 return
             }))
             
-            self.present(alert, animated: true)
+            self.present(alert, animated: true)*/
         }else{
             //let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
             print("ticket not nil")
@@ -747,7 +747,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         //margin raffle
         if(ticket.margin == 1){
             print("contact winner margin")
-            let shareText = "The results are in! The winner of the \"\(ticket.name)\" margin draw is *drum roll* \(winner.name) with a ticket number of \(winner.ticketNum)!"
+            let shareText = "The results are in! The winner of the \"\(ticket.name)\" margin raffle is *drum roll* \"\(winner.name)\" with a ticket number of \(winner.ticketNum)!"
             if let image = Data(base64Encoded: ticketData!.image){ //has image
                 let vc = UIActivityViewController(activityItems: [shareText, image], applicationActivities: [])
                 present(vc, animated:true)
@@ -757,7 +757,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         }else{//class raffle
             print("contact winner classic")
-            let shareText = "The results are in! The winner of the \"\(ticket.name)\" is *drum roll* \(winner.name) with a ticket number of \(winner.ticketNum)!"
+            let shareText = "The results are in! The winner of the \"\(ticket.name)\" raffle is *drum roll* \"\(winner.name)\" with a ticket number of \(winner.ticketNum)!"
             if let image = Data(base64Encoded: ticketData!.image){ //has image
                 let vc = UIActivityViewController(activityItems: [shareText, image], applicationActivities: [])
                 present(vc, animated:true)
