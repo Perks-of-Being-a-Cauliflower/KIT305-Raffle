@@ -243,14 +243,14 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             //throw error, there is no data here.
             print("ticket nil")
             self.performSegue(withIdentifier: "returnToCreatePageIfNoTicket", sender: self)
-            let alert = UIAlertController(title: "Warning:", message: "Cannot enter sell page for a deleted ticket", preferredStyle: .alert)
+            /*let alert = UIAlertController(title: "Warning:", message: "Cannot enter sell page for a deleted ticket", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: { action in
                 //run your function here
                 return
             }))
             
-            self.present(alert, animated: true)
+            self.present(alert, animated: true)*/
         }else{
             //let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
             print("ticket not nil")
