@@ -633,7 +633,7 @@ class SQLiteDatabase
                         sqlite3_bind_text(updateStatement, 1, newString, -1, nil)
                         sqlite3_bind_int(updateStatement, 2, ticketID)
                         
-    })
+        })
     }
         
     func updateTicketInfo(ticket:Ticket){
@@ -681,7 +681,19 @@ class SQLiteDatabase
         print("p2")
         
     }
-    
+    func deleteRaffle(id:Int32)
+    {
+        //var result = [Customer]()
+        //print("p1 " + String(id))
+        let deleteStatementQuery = "DELETE FROM Ticket WHERE id = ?;"
+        
+        deleteWithQuery(deleteStatementQuery,
+                        bindingFunction: { (deleteStatement) in   //eachRow: { (row) in
+                            sqlite3_bind_int(deleteStatement, 1, id)
+                        })
+        //print("p2")
+        
+    }
     func updateCustomerTicketNumber(ticketID:Int32, ticketNumber:Int32){
         //SELECT id, ticketID, ticketNum, purchaseTime, refunded, name, phone, email FROM Customer"
         let updateStatementQuery = "UPDATE Customer SET ticketNum = ? WHERE id = ?;"

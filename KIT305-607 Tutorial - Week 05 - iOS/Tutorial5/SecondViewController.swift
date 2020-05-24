@@ -55,6 +55,8 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet var customerPhone: UITextField!
     @IBOutlet var customerEmail: UITextField!
     
+    var ableToClose = false
+    
     private let tPicker = ["1", "2", "3", "4", "5", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
 
     
@@ -103,6 +105,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     }
                 }
                 if winner != nil {
+                    ableToClose = true
                     let alert = UIAlertController(
                         title: "Winner is " + winner!.name + "!",
                         message: "Phone:  \(winner!.phone) \n Email: \(winner!.email)", preferredStyle: .alert)
@@ -156,7 +159,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             
             }
         } else {
-            
+            ableToClose = true
             allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
             winner = allTickets.randomElement()
             //print(winner!.name)
@@ -239,6 +242,15 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         if(ticket == nil){
             //throw error, there is no data here.
             print("ticket nil")
+            self.performSegue(withIdentifier: "returnToCreatePageIfNoTicket", sender: self)
+            let alert = UIAlertController(title: "Warning:", message: "Cannot enter sell page for a deleted ticket", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: { action in
+                //run your function here
+                return
+            }))
+            
+            self.present(alert, animated: true)
         }else{
             //let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
             print("ticket not nil")
@@ -650,7 +662,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             self.present(alert, animated: true)
         }
         if(!max){
-            let alert = UIAlertController(title: "Confirm:", message: "Currently about to sell \(num!) tickets for \(String(describing: self.totalCost.text))", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Confirm:", message: "Currently about to sell \(num ?? 0) tickets for \(String(self.totalCost.text ?? "$$"))", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Confirm!", style: .default, handler: { action in
                 //run your function here
@@ -697,6 +709,40 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
            }
            
        }
+    @IBAction func closeRaffle(_ sender: Any) {
+        print("pressedClose")
         
+        if(ticketData?.soldTickets == 0 || ableToClose == true){
+            let alert = UIAlertController(title: "Warning:", message: "You are about to perminantly delete \(ticketData?.name ?? "the raffle")", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Continue", style: .destructive, handler: { action in
+                //run your function hered
+                
+                self.database.deleteRaffle(id: self.ticketData!.ID)
+                //self.tabBarController!.selectedIndex = 0
+                
+                self.performSegue(withIdentifier: "returnToLibraryPostDeletion", sender: self)
+                
+                //self.tabBarController!.selectedIndex = 1
+                
+                return
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                //run your function here
+                return
+            }))
+            
+            self.present(alert, animated: true)
+        }else{
+            let alert = UIAlertController(title: "Warning:", message: "Cannot delete \(ticketData?.name ?? "the raffle") until a winner has been drawn", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                //run your function here
+                return
+            }))
+            
+            self.present(alert, animated: true)
+        }
+    }
+    
 
 }

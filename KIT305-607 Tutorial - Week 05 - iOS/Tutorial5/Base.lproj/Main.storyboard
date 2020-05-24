@@ -82,13 +82,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkE-Jk-u3b">
-                                <rect key="frame" x="94" y="303.5" width="31" height="20.5"/>
+                                <rect key="frame" x="94" y="352.5" width="31" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Red - A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vwz-rX-Z7t">
-                                <rect key="frame" x="300" y="303.5" width="57.5" height="20.5"/>
+                                <rect key="frame" x="300" y="352.5" width="57.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -363,7 +363,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <view key="backgroundView" opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" id="w7k-Gu-soS">
-                            <rect key="frame" x="-44" y="-44" width="896" height="414"/>
+                            <rect key="frame" x="-44" y="0.0" width="896" height="414"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Library Empty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hSt-Kd-DV8">
@@ -400,7 +400,7 @@
                         </view>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TicketUICollectionViewCell" id="3qx-h5-J3A" customClass="TicketUICollectionViewCell" customModule="Tutorial5" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="38.5" width="131" height="223"/>
+                                <rect key="frame" x="0.0" y="95.5" width="131" height="223"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ko7-fV-TqD">
                                     <rect key="frame" x="0.0" y="0.0" width="131" height="223"/>
@@ -691,6 +691,9 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="closeRaffle:" destination="aqs-Wn-0aU" eventType="touchUpInside" id="DC2-IX-Pnh"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qX0-bk-DfH">
                                         <rect key="frame" x="60" y="96" width="343" height="106"/>
@@ -841,6 +844,8 @@
                         <outlet property="totalCost" destination="uGs-eZ-xfT" id="Zjj-Sy-NJF"/>
                         <outlet property="userguide" destination="PFJ-51-9oo" id="iA1-BZ-kD4"/>
                         <outlet property="winnerField" destination="Ere-YP-0G2" id="RKW-gE-rui"/>
+                        <segue destination="gjE-LX-Xng" kind="show" identifier="returnToLibraryPostDeletion" id="SOg-Cx-aNU"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="returnToCreatePageIfNoTicket" animates="NO" id="Aw6-Xc-NeD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WqB-Sx-Tvf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1217,11 +1222,15 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uHH-NZ-IY4" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Library" image="book.circle.fill" catalog="system" landscapeImage="book.circle.fill" id="A88-2o-Ikk"/>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="5MQ-hx-aIH"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JqI-hV-gd3">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MuX-fr-lML">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="gjE-LX-Xng" kind="relationship" relationship="rootViewController" destinationCreationSelector="ConnectingViaUITabBar:" id="ZEY-c9-xk0"/>
                     </connections>
@@ -1232,8 +1241,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="AaU-b7-Htf"/>
-        <segue reference="2Sc-Sh-C6u"/>
+        <segue reference="rhw-2y-tkf"/>
+        <segue reference="SOg-Cx-aNU"/>
+        <segue reference="Aw6-Xc-NeD"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.circle.fill" catalog="system" width="128" height="121"/>
