@@ -360,45 +360,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             nextScreen.iDFromPreviousView = idFromPreviousView
             
         }
-            /*
-        else if segue.identifier == "SaveAndExit"
-        {
-            print("zip!")
-            let nextScreen = segue.destination as! SecondViewController
-            let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
-            
-            ticketData = database.selectTicketName(name: nameFromPreviousView!)
-            
-            if(changeNameField.text != ""){
-                ticketData?.name = changeNameField.text!
-            }
-            if(descriptionField.text != ""){
-                ticketData?.desc = descriptionField.text!
-            }
-            if(endConField.text != ""){
-                ticketData?.maxTickets = Int32(endConField.text!)!
-            }
-            //@IBOutlet var ticketName: UITextField!
-            //@IBOutlet var ticketDescription: UITextField!
-            //@IBOutlet var endCondition: UITextField!
-            
-                //updated the other stuff, but commenting this out since we are going with wills
-                //database.updateTicketInfo(ticket: ticketData!)
-            
-                //nextScreen.nameFromPreviousView = ticketData?.name
-            
-            nextScreen.nameFromPreviousView = ticket?.name
-            
-            let updateStatementQuery = "UPDATE Ticket SET soldTickets = " + String(newNum) + " WHERE id = " + String(ticketID) + ";"
-            
-            updateWithQuery(updateStatementQuery,
-            bindingFunction: { (updateStatement) in
-                sqlite3_bind_int(updateStatement, 9, newNum)
-            })*/
-            
-            //need to do the update shit
-            
-            //nextScreen.nameFromPreviousView = nameFromPreviousView
         }
         
         

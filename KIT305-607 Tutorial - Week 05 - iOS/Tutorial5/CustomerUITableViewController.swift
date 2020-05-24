@@ -10,9 +10,11 @@ import UIKit
 
 class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
     var customers = [Customer]()
-    var orderCustomers = [Customer]()
+    var orderList = [Customer]()
     var nameFromPreviousView: String?
     var iDFromPreviousView: Int32 = 0
+    var ticket : Ticket?
+    var customer : Customer?
     
     // MARK: - ViewDidLoad
     override func viewDidLoad()
@@ -60,27 +62,29 @@ class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerUITableViewCell", for: indexPath) as! CustomerUITableViewCell
         
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
-        let ticket = database.selectTicketBy(id: iDFromPreviousView)
+        ticket = database.selectTicketBy(id: iDFromPreviousView)
         let ticketCost = ticket!.price
         
         
         
         
-        let orderList = customers.sorted(by: { $0.ticketNum > $1.ticketNum})
-        let customer = orderList[(orderList.count-1) - indexPath.row] //displays most recently added ticket at top.
+        orderList = customers.sorted(by: { $0.ticketNum > $1.ticketNum})
+        //print("ordered list: ", orderList)
+        customer = orderList[(orderList.count-1) - indexPath.row] //displays most recently added ticket at top.
+        //print("ordered list 2: ", customer!.ticketNum)
         
         if let  customerCell = cell as? CustomerUITableViewCell
         {
             
                 
-            customerCell.name.text = customer.name
-            customerCell.ticketNum.text = String(customer.ticketNum)
-            customerCell.purchaseTime.text = String(customer.purchaseTime)
+            customerCell.name.text = customer?.name
+            customerCell.ticketNum.text = String(customer!.ticketNum)
+            customerCell.purchaseTime.text = String(customer!.purchaseTime)
             customerCell.ticketCost.text = "$" + String(ticketCost)
             customerCell.customer = customer
             
-            customerCell.specificTicketID = customer.ticketID
-            customerCell.specificCustomerTicketID = customer.ID
+            customerCell.specificTicketID = customer?.ticketID
+            customerCell.specificCustomerTicketID = customer?.ID
             
             let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
             UIColor.orange, "Blue": UIColor.blue,"Green":
@@ -94,6 +98,33 @@ class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
         }
         
         return cell
+    }
+    
+    
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+    super.prepare(for: segue, sender: sender)
+    if segue.identifier == "EditTicket"
+    {
+        guard let detailViewController = segue.destination as? EditTicketController else
+    {
+        fatalError("Unexpected destination: \(segue.destination)") }
+        guard let selectedCustomerCell = sender as? CustomerUITableViewCell else
+    {
+        fatalError("Unexpected sender: \( String(describing: sender))") }
+        guard let indexPath = tableView.indexPath(for: selectedCustomerCell) else
+    {
+        fatalError("The selected cell is not being displayed by the table") }
+        let selectedCustomer = orderList[(orderList.count-1) - indexPath.row]
+        print("selected Cust: ", selectedCustomer)
+        print("index path: ", (orderList.count-1) - indexPath.row)
+        detailViewController.customer = selectedCustomer
+        detailViewController.curRaffle = ticket
+        
+        
+        }
     }
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

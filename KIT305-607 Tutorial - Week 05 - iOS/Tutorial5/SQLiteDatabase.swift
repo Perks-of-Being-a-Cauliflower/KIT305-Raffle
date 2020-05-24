@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 100
+    private let DATABASE_VERSION = 105
     
     
     
@@ -633,6 +633,39 @@ class SQLiteDatabase
                         sqlite3_bind_text(updateStatement, 1, newString, -1, nil)
                         sqlite3_bind_int(updateStatement, 2, ticketID)
                         
+        })
+    }
+    
+    func updateCustomerName(custID:Int32, newString:String){
+        let updateStatementQuery = "UPDATE Customer SET Name = ? WHERE ID = ?;"
+        //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
+        updateWithQuery(updateStatementQuery,
+                        bindingFunction: { (updateStatement) in
+                            sqlite3_bind_text(updateStatement, 1, newString, -1, nil)
+                            sqlite3_bind_int(updateStatement, 2, custID)
+                            
+        })
+    }
+    
+    func updateCustomerPhone(custID:Int32, newNum:Int32){
+        let updateStatementQuery = "UPDATE Customer SET Phone = ? WHERE ID = ?;"
+        //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
+        updateWithQuery(updateStatementQuery,
+                        bindingFunction: { (updateStatement) in
+                            sqlite3_bind_int(updateStatement, 1, newNum)
+                            sqlite3_bind_int(updateStatement, 2, custID)
+                            
+        })
+    }
+    
+    func updateCustomerEmail(custID:Int32, newString:String){
+        let updateStatementQuery = "UPDATE Customer SET Email = ? WHERE ID = ?;"
+        //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
+        updateWithQuery(updateStatementQuery,
+                        bindingFunction: { (updateStatement) in
+                            sqlite3_bind_text(updateStatement, 1, newString, -1, nil)
+                            sqlite3_bind_int(updateStatement, 2, custID)
+                            
         })
     }
         

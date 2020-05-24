@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		294DCDA8247A047F007D90D5 /* EditTicketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DCDA7247A047F007D90D5 /* EditTicketController.swift */; };
 		296C52DA2453D7C80012CADE /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296C52D92453D7C80012CADE /* SecondViewController.swift */; };
 		29EFFD2C245AB1AC003FFA87 /* CreateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EFFD2B245AB1AC003FFA87 /* CreateOptions.swift */; };
 		8F0D36A4245CEA3C00D619E6 /* Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36A3245CEA3C00D619E6 /* Ticket.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		294DCDA7247A047F007D90D5 /* EditTicketController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTicketController.swift; sourceTree = "<group>"; };
 		296C52D92453D7C80012CADE /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		29EFFD2B245AB1AC003FFA87 /* CreateOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOptions.swift; sourceTree = "<group>"; };
 		8F0D36A3245CEA3C00D619E6 /* Ticket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticket.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				8F611F342466530300D0CC5E /* CustomerUITableViewController.swift */,
 				8F0D36A7245CF85100D619E6 /* TicketUICollectionViewCell.swift */,
 				8F0D36AD245D02FB00D619E6 /* TicketUICollectionViewController.swift */,
+				294DCDA7247A047F007D90D5 /* EditTicketController.swift */,
 			);
 			path = Tutorial5;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				D3290756221FAC6800D31C68 /* ViewController.swift in Sources */,
 				8F0D36A4245CEA3C00D619E6 /* Ticket.swift in Sources */,
 				8F611F362466530300D0CC5E /* CustomerUITableViewController.swift in Sources */,
+				294DCDA8247A047F007D90D5 /* EditTicketController.swift in Sources */,
 				29EFFD2C245AB1AC003FFA87 /* CreateOptions.swift in Sources */,
 				8F0D36AE245D02FB00D619E6 /* TicketUICollectionViewController.swift in Sources */,
 				8F68A0EC245E37F000026D5D /* Customer.swift in Sources */,
