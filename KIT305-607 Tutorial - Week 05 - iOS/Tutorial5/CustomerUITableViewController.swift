@@ -10,6 +10,7 @@ import UIKit
 
 class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
     var customers = [Customer]()
+    var orderCustomers = [Customer]()
     var nameFromPreviousView: String?
     var iDFromPreviousView: Int32 = 0
     
@@ -62,9 +63,16 @@ class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
         let ticket = database.selectTicketBy(id: iDFromPreviousView)
         let ticketCost = ticket!.price
         
-        let customer = customers[(customers.count-1) - indexPath.row] //displays most recently added ticket at top.
+        
+        
+        
+        let orderList = customers.sorted(by: { $0.ticketNum > $1.ticketNum})
+        let customer = orderList[(orderList.count-1) - indexPath.row] //displays most recently added ticket at top.
+        
         if let  customerCell = cell as? CustomerUITableViewCell
         {
+            
+                
             customerCell.name.text = customer.name
             customerCell.ticketNum.text = String(customer.ticketNum)
             customerCell.purchaseTime.text = String(customer.purchaseTime)
@@ -80,10 +88,12 @@ class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
             "Pink": UIColor.systemPink]
             
             customerCell.ticketColour.backgroundColor = colors[ticket!.colour]
+                cell.delegate = self
+                
+                return cell
         }
-        cell.delegate = self
-        return cell
         
+        return cell
     }
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
