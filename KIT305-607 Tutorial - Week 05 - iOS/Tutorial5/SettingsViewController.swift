@@ -260,6 +260,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 }
             }
         }*/
+        
     }
     //updates counter after refunding tickets.
     override func viewWillAppear(_ animated: Bool) {
@@ -294,6 +295,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }else{
             imageView.image = nil
         }
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController,
