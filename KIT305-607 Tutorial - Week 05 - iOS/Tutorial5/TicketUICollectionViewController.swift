@@ -33,7 +33,7 @@ class TicketUICollectionViewController: UICollectionViewController {
         }else{
             emptyLibraryWindow.isHidden = true
         }
-        
+        self.navigationItem.setHidesBackButton(true, animated: true);
     }
     override func viewWillAppear(_ animated: Bool) {
         let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
@@ -47,6 +47,7 @@ class TicketUICollectionViewController: UICollectionViewController {
         }else{
             emptyLibraryWindow.isHidden = true
         }
+        self.navigationItem.setHidesBackButton(true, animated: true);
     }
 
     @IBAction func moveToCreateRaffle(_ sender: Any) {
