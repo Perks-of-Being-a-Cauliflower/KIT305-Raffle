@@ -2,8 +2,8 @@
 //  TicketUICollectionViewController.swift
 //  Tutorial5
 //
-//  Created by Liam kenna on 2/5/20.
-//  Copyright © 2020 Lindsay Wells. All rights reserved.
+//  Created by Liam Kenna on 2/5/20.
+//  Copyright © 2020 Liam Kenna. All rights reserved.
 //
 
 import UIKit
@@ -47,7 +47,10 @@ class TicketUICollectionViewController: UICollectionViewController {
     }
 
     @IBAction func moveToCreateRaffle(_ sender: Any) {
-        self.tabBarController!.selectedIndex = 0
+        
+        //self.tabBarController!.selectedIndex = 0
+        self.performSegue(withIdentifier: "moveToCreatefromLibray", sender: self)
+        //moveToCreatefromLibray
     }
 
     // MARK: UICollectionViewDataSource

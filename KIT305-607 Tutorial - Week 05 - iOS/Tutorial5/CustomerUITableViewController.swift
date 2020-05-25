@@ -2,8 +2,8 @@
 //  CustomerUITableViewController.swift
 //  Tutorial5
 //
-//  Created by Liam kenna on 9/5/20.
-//  Copyright © 2020 Lindsay Wells. All rights reserved.
+//  Created by Liam Kenna on 9/5/20.
+//  Copyright © 2020 Liam Kenna. All rights reserved.
 //
 
 import UIKit

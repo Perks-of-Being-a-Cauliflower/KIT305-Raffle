@@ -372,6 +372,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
 }
 
+//via https://stackoverflow.com/questions/29726643/how-to-compress-of-reduce-the-size-of-an-image-before-uploading-to-parse-as-pffi/29726675
 extension UIImage {
     enum JPEGQuality: CGFloat {
         case lowest  = 0
