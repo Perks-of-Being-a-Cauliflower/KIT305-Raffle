@@ -405,7 +405,6 @@
                                         <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
-                                        <action selector="confirmDetailsButton:" destination="aqs-Wn-0aU" eventType="touchUpInside" id="mfb-hi-CZ9"/>
                                         <action selector="moveToCreateRaffle:" destination="gjE-LX-Xng" eventType="touchUpInside" id="eS9-DA-XkM"/>
                                     </connections>
                                 </button>
@@ -500,6 +499,7 @@
                     <navigationItem key="navigationItem" title="Library" id="5tx-sf-3Jz"/>
                     <connections>
                         <outlet property="emptyLibraryWindow" destination="w7k-Gu-soS" id="rCa-Pl-FDO"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="moveToCreatefromLibray" id="9tO-5E-7wt"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AVC-JC-LNf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1455,7 +1455,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="2Sc-Sh-C6u"/>
+        <segue reference="rhw-2y-tkf"/>
         <segue reference="SOg-Cx-aNU"/>
         <segue reference="Aw6-Xc-NeD"/>
     </inferredMetricsTieBreakers>
