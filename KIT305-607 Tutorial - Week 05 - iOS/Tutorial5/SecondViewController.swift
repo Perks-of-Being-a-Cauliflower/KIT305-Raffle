@@ -37,17 +37,18 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var numberToPurchaseField: UITextField!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var ticketIdentifier: UILabel!
-    @IBOutlet weak var ticketsSoldCounter: UILabel!
     @IBOutlet weak var userguide: UILabel!
+    @IBOutlet weak var rightID: UILabel!
     
     @IBOutlet weak var winnerField: UITextField!
     
     @IBOutlet var ticketsField: UITextField!
     @IBOutlet var descriptionField: UITextView!
     
-    @IBOutlet var soldTicketCounterSmall: UILabel!
     
     
+    @IBOutlet weak var soldpicker2: UIPickerView!
+    @IBOutlet weak var soldPicker: UIPickerView!
     @IBOutlet var customerName: UITextField!
     @IBOutlet var customerPhone: UITextField!
     @IBOutlet var customerEmail: UITextField!
@@ -55,35 +56,65 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var ableToClose = false
     
     private let tPicker = ["1", "2", "3", "4", "5", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
+    
+    private let nPicker = Array(0...999)
 
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func rowSelecter() {
-        let finder = tPicker.firstIndex(of: numberToPurchaseField.text!)
-            pickerView.selectRow(finder!, inComponent: 0, animated: false)
+    func ticketTicker(targetField: Ticket, array: [Int], targetPicker: UIPickerView) {
+        let finder = array.firstIndex(of: Int(targetField.soldTickets))
+            targetPicker.selectRow(finder!, inComponent: 0, animated: true)
             return
     }
     
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent
+        component: Int) -> NSAttributedString? {
+        if pickerView.tag == 1 {
             return NSAttributedString(string: tPicker[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        } else if pickerView.tag == 2 {
+            print("row is: ", nPicker[row])
+            let intCompare: Int = nPicker[row]
+            let intCompString = String(intCompare)
+            let finalString: String
+            
+            if intCompare == 0 {
+                finalString = "000"
+            } else if intCompare <= 9 {
+                finalString = "00" + intCompString
+            } else if intCompare >= 10 && intCompare <= 99 {
+                finalString = "0" + intCompString
+                } else {
+                finalString = intCompString
+            }
+            print("final string is: ", finalString)
+            return NSAttributedString(string: finalString, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        } else {
+            return NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        }
     
     }
     
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView.tag == 1 {
             return tPicker.count
+        } else {
+            return nPicker.count
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView.tag == 1 {
         numberToPurchaseField.text = tPicker[row]
         let basePrice = Double(ticketData!.price)
         let nOfTickets = Double(numberToPurchaseField.text!)!
         let newCost = basePrice*nOfTickets
         let totePrice:String = String(format:"$ %.1f", newCost)
         totalCost.text = totePrice
+        }
     }
     
     @IBAction func drawWinner(_ sender: Any) {
@@ -112,20 +143,11 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                             
                             self.ticketData?.soldTickets-=1
                             self.database.updateSoldTickets(ticketID: self.ticketData!.ID, newNum: self.ticketData!.soldTickets)
-                            let newString: String? = String(self.ticketData!.soldTickets)
-                            let intCompare: Int = Int(self.ticketData!.soldTickets)
                             
-                            if intCompare == 0 {
-                                self.ticketsSoldCounter.text = "000"
-                                
-                            } else if intCompare <= 9 {
-                                self.ticketsSoldCounter.text = "00" + newString!
-                            } else if intCompare >= 10 && intCompare <= 99 {
-                                self.ticketsSoldCounter.text = "0" + newString!
-                                } else {
-                                self.ticketsSoldCounter.text = newString!
-                            }
-                            self.soldTicketCounterSmall.text = self.ticketsSoldCounter.text
+                            self.ticketTicker(targetField: self.ticketData!, array: self.nPicker, targetPicker: self.soldpicker2)
+                            self.ticketTicker(targetField: self.ticketData!, array: self.nPicker, targetPicker: self.soldPicker)
+                            self.ticketsField.text = String(self.ticketData!.soldTickets) + "/" + String(self.ticketData!.maxTickets)
+                            
                             self.winnerField.text = "Please Enter Margin Value"
                             self.winnerField.textColor = UIColor.lightGray
                             
@@ -189,22 +211,11 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 self.database.deleteCustomer(id: self.winner!.ID)
                 self.ticketData?.soldTickets-=1
                 self.database.updateSoldTickets(ticketID: self.ticketData!.ID, newNum: self.ticketData!.soldTickets)
-                let newString: String? = String(self.ticketData!.soldTickets)
-                let intCompare: Int = Int(self.ticketData!.soldTickets)
                 
-                if intCompare == 0 {
-                    self.ticketsSoldCounter.text = "000"
-                    self.soldTicketCounterSmall.text = "000"
-                } else if intCompare <= 9 {
-                    self.ticketsSoldCounter.text = "00" + newString!
-                    self.soldTicketCounterSmall.text = "00" + newString!
-                } else if intCompare >= 10 && intCompare <= 99 {
-                    self.ticketsSoldCounter.text = "0" + newString!
-                    self.soldTicketCounterSmall.text = "0" + newString!
-                    } else {
-                    self.ticketsSoldCounter.text = newString!
-                    self.soldTicketCounterSmall.text = newString!
-                }
+                self.ticketTicker(targetField: self.ticketData!, array: self.nPicker, targetPicker: self.soldpicker2)
+                self.ticketTicker(targetField: self.ticketData!, array: self.nPicker, targetPicker: self.soldPicker)
+                
+                self.ticketsField.text = String(self.ticketData!.soldTickets) + "/" + String(self.ticketData!.maxTickets)
                 self.winnerField.text = ""
                 self.userguide.isHidden = true
                 self.winnerField.isUserInteractionEnabled = false
@@ -246,25 +257,11 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             "Pink": UIColor.systemPink]
             colourBarOne.backgroundColor = colors[ticket!.colour]
             colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
-            ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
+            ticketIdentifier.text = ticket!.colour + " - " + ticket!.iDLetter
+            rightID.text = ticket!.iDLetter
             
-            let newString: String? = String(ticketData!.soldTickets)
-            let intCompare: Int = Int(ticketData!.soldTickets)
-            
-            
-            if intCompare == 0 {
-                ticketsSoldCounter.text = "000"
-                soldTicketCounterSmall.text = "000"
-            } else if intCompare <= 9 {
-                ticketsSoldCounter.text = "00" + newString!
-                soldTicketCounterSmall.text = "00" + newString!
-            } else if intCompare >= 10 && intCompare <= 99 {
-                ticketsSoldCounter.text = "0" + newString!
-                soldTicketCounterSmall.text = "0" + newString!
-                } else {
-                ticketsSoldCounter.text = newString!
-                soldTicketCounterSmall.text = newString!
-            }
+            ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldpicker2)
+            ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldPicker)
             
             descriptionField.text = ticketData!.desc
             ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
@@ -281,7 +278,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     // MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let ticket = database.selectTicketBy(id: idFromPreviousView) 
         ticketData = ticket
         if(ticket == nil){
@@ -298,7 +294,8 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             "Pink": UIColor.systemPink]
             colourBarOne.backgroundColor = colors[ticket!.colour]
             colourBarTwo.backgroundColor = colors[(ticket?.colour)!]
-            ticketIdentifier.text = ticket!.iDLetter + " - " + ticket!.colour
+            ticketIdentifier.text = ticket!.colour + " - " + ticket!.iDLetter
+            rightID.text = ticket!.iDLetter
             descriptionField.layer.borderWidth = 1.0
             let descolour = UIColor.lightGray.cgColor
             descriptionField.layer.borderColor = descolour
@@ -310,24 +307,13 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 winnerField.isUserInteractionEnabled = false
             }
             
-            
-        if(ticketData!.image != "na"){
-            let newString: String? = String(ticketData!.soldTickets)
-            let intCompare: Int = Int(ticketData!.soldTickets)
-            
-            if intCompare == 0 {
-                ticketsSoldCounter.text = "000"
-            } else if intCompare <= 9 {
-                ticketsSoldCounter.text = "00" + newString!
-            } else if intCompare >= 10 && intCompare <= 99 {
-                ticketsSoldCounter.text = "0" + newString!
-                } else {
-                ticketsSoldCounter.text = newString!
-            }
-        }
         
         descriptionField.text = ticketData!.desc
         ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
+            
+            ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldpicker2)
+            ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldPicker)
+            ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
     }
     }
     
@@ -388,7 +374,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             } else if sender.tag == 4 {
                 pickerView.isHidden = false
                 pickerView.becomeFirstResponder()
-                rowSelecter()
+       
                 ticketLabel.text = "Tickets to Purchase: "
             }
             popUpMenu2.isHidden = false
@@ -496,22 +482,9 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         ticketData!.soldTickets = curr + num!
         database.updateSoldTickets(ticketID: ticketData!.ID, newNum: ticketData!.soldTickets)
         
-        let newString: String? = String(ticketData!.soldTickets)
-        let intCompare: Int = Int(ticketData!.soldTickets)
         
-        if intCompare == 0 {
-            ticketsSoldCounter.text = "000"
-            soldTicketCounterSmall.text = "000"
-        } else if intCompare <= 9 {
-            ticketsSoldCounter.text = "00" + newString!
-            soldTicketCounterSmall.text = "00" + newString!
-        } else if intCompare >= 10 && intCompare <= 99 {
-            ticketsSoldCounter.text = "0" + newString!
-            soldTicketCounterSmall.text = "0" + newString!
-            } else {
-            ticketsSoldCounter.text = newString!
-            soldTicketCounterSmall.text = newString!
-        }
+        ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldpicker2)
+        ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldPicker)
         
         ticketsField.text = String(ticketData!.soldTickets) + "/" + String(ticketData!.maxTickets)
         customerName.text = ""

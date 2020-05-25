@@ -34,35 +34,68 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var colourPickerView: UIPickerView!
     @IBOutlet weak var descEditField: UITextView!
     
-    @IBOutlet var soldTicketCounterSmall: UILabel!
-    @IBOutlet var soldTicketCounterBig: UILabel!
+    @IBOutlet weak var soldPicker1: UIPickerView!
+    @IBOutlet weak var soldPicker2: UIPickerView!
+    @IBOutlet weak var loneID: UILabel!
+    
     
     var imageSTR64: String?
     
     private let cPicker = ["Red", "Blue", "Green", "Yellow", "Brown", "Pink", "Orange"]
-
+    private let nPicker = Array(0...999)
+    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        if pickerView.tag == 1 {
             return NSAttributedString(string: cPicker[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        } else if pickerView.tag == 2 {
+            print("row is: ", nPicker[row])
+            let intCompare: Int = nPicker[row]
+            let intCompString = String(intCompare)
+            let finalString: String
+            
+            if intCompare == 0 {
+                finalString = "000"
+            } else if intCompare <= 9 {
+                finalString = "00" + intCompString
+            } else if intCompare >= 10 && intCompare <= 99 {
+                finalString = "0" + intCompString
+                } else {
+                finalString = intCompString
+            }
+            print("final string is: ", finalString)
+            return NSAttributedString(string: finalString, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        } else {
+            return NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        }
+    }
+    
+    func ticketTicker(targetField: Ticket, array: [Int], targetPicker: UIPickerView) {
+        let finder = array.firstIndex(of: Int(targetField.soldTickets))
+            targetPicker.selectRow(finder!, inComponent: 0, animated: true)
+            return
     }
     
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            return cPicker.count
+            if pickerView.tag == 1 {
+                return cPicker.count
+            } else {
+                return nPicker.count
+            }
     }
-    func rowSelecter() {
-        print("Hi")
-        let finder = cPicker.firstIndex(of: editColour.text!)
-            print(finder!)
-            colourPickerView.selectRow(finder!, inComponent: 0, animated: false)
+    func rowSelecter(targetField: UITextField, array: [String], targetPicker: UIPickerView) {
+        let finder = array.firstIndex(of: targetField.text!)
+            targetPicker.selectRow(finder!, inComponent: 0, animated: false)
             return
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView.tag == 2 {
         editColour.text = cPicker[row]
         let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
         UIColor.orange, "Blue": UIColor.blue,"Green":
@@ -71,6 +104,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         firstColourBar.backgroundColor = colors[editColour.text!]
         secondColourBar.backgroundColor = colors[editColour.text!]
         settingsID.text = ticketData!.iDLetter + " - " + editColour.text!
+        }
     }
     
     @IBAction func showInputMenu(_ sender: UITextField) {
@@ -108,7 +142,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             } else if sender.tag == 4 {
                 colourPickerView.isHidden = false
                 colourPickerView.becomeFirstResponder()
-                rowSelecter()
+                rowSelecter(targetField: editColour, array: cPicker, targetPicker: colourPickerView)
                 popUpTitle.text = "Edit Colour: "
             }
             popUpView.isHidden = false
@@ -188,33 +222,19 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         "Pink": UIColor.systemPink]
         firstColourBar.backgroundColor = colors[ticket!.colour]
         secondColourBar.backgroundColor = colors[ticket!.colour]
-        print(ticket!.maxTickets)
         editColour.text = ticket?.colour
         descriptionField.text = ticket!.desc
         endConField.text = String(ticket!.maxTickets)
-        settingsID.text = ticket!.iDLetter + " - " + ticket!.colour
+        settingsID.text = ticket!.colour + " - " + ticket!.iDLetter
+        loneID.text = ticket!.iDLetter
         // Do any additional setup after loading the view.
         ticketTitle.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
         
-        let newString: String? = String(ticket!.soldTickets)
-        let intCompare: Int = Int(ticket!.soldTickets)
-        
-        if intCompare == 0 {
-            soldTicketCounterBig.text = "000"
-            soldTicketCounterSmall.text = "000"
-        } else if intCompare <= 9 {
-            soldTicketCounterBig.text = "00" + newString!
-            soldTicketCounterSmall.text = "00" + newString!
-        } else if intCompare >= 10 && intCompare <= 99 {
-            soldTicketCounterBig.text = "0" + newString!
-            soldTicketCounterSmall.text = "0" + newString!
-            } else {
-            soldTicketCounterBig.text = newString!
-            soldTicketCounterSmall.text = newString!
-        }
+        ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldPicker1)
+        ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldPicker2)
 
         if(ticketData!.image != "na"){
-            var newImageData = Data(base64Encoded: ticketData!.image)
+            let newImageData = Data(base64Encoded: ticketData!.image)
             //print("new data is: ", newImageData)
             if let newImageData = newImageData {
                imageView.image = UIImage(data: newImageData)
@@ -224,32 +244,21 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
-    //updates counter after refunding tickets.
+    //updates couletr after refunding tickets.
     override func viewWillAppear(_ animated: Bool) {
         let ticket = database.selectTicketBy(id: idFromPreviousView)
         ticketID = ticket!.ID
         ticketData = ticket
         ticketID = ticket!.ID
         
-        let newString: String? = String(ticket!.soldTickets)
-        let intCompare: Int = Int(ticket!.soldTickets)
+        ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldPicker1)
+        ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldPicker2)
         
-        if intCompare == 0 {
-            soldTicketCounterBig.text = "000"
-            soldTicketCounterSmall.text = "000"
-        } else if intCompare <= 9 {
-            soldTicketCounterBig.text = "00" + newString!
-            soldTicketCounterSmall.text = "00" + newString!
-        } else if intCompare >= 10 && intCompare <= 99 {
-            soldTicketCounterBig.text = "0" + newString!
-            soldTicketCounterSmall.text = "0" + newString!
-            } else {
-            soldTicketCounterBig.text = newString!
-            soldTicketCounterSmall.text = newString!
-        }
+        settingsID.text = ticket!.colour + " - " + ticket!.iDLetter
+        loneID.text = ticket!.iDLetter
         
         if(ticketData!.image != "na"){
-            var newImageData = Data(base64Encoded: ticketData!.image)
+            let newImageData = Data(base64Encoded: ticketData!.image)
             //print("new data is: ", newImageData)
             if let newImageData = newImageData {
                imageView.image = UIImage(data: newImageData)

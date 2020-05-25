@@ -563,12 +563,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iFm-zS-Fze">
-                                        <rect key="frame" x="94" y="367.5" width="31" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oif-Al-Ney">
                                         <rect key="frame" x="171" y="52" width="128" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -642,13 +636,6 @@
                                             <action selector="AddCustomer:" destination="aqs-Wn-0aU" eventType="touchUpInside" id="lka-3I-YeR"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSn-cL-GYk">
-                                        <rect key="frame" x="566" y="275" width="97" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="R" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eme-G2-MyV">
                                         <rect key="frame" x="729" y="306" width="61" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -766,12 +753,6 @@
                                             <action selector="closeRaffle:" destination="aqs-Wn-0aU" eventType="touchUpInside" id="DC2-IX-Pnh"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Red - C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bw9-4R-gzV">
-                                        <rect key="frame" x="298" y="362" width="58.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="teg-eX-CTD">
                                         <rect key="frame" x="378" y="50" width="61" height="61"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -793,12 +774,23 @@
                                         </connections>
                                     </button>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap for more details!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFJ-51-9oo">
-                                        <rect key="frame" x="195" y="274" width="157" height="21"/>
+                                        <rect key="frame" x="195" y="265" width="157" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <pickerView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JSu-3w-AWW">
+                                        <rect key="frame" x="171" y="297" width="115" height="56"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                                        </accessibility>
+                                        <connections>
+                                            <outlet property="dataSource" destination="aqs-Wn-0aU" id="VuY-iE-8Cx"/>
+                                            <outlet property="delegate" destination="aqs-Wn-0aU" id="B1D-lR-ztv"/>
+                                        </connections>
+                                    </pickerView>
                                     <view hidden="YES" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SPa-uZ-Ccg">
                                         <rect key="frame" x="0.0" y="1" width="896" height="413"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -842,7 +834,7 @@
                                                     <action selector="confirmDetailsButton:" destination="aqs-Wn-0aU" eventType="touchUpInside" id="eTB-PV-goc"/>
                                                 </connections>
                                             </button>
-                                            <pickerView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXR-Hi-LVD" userLabel="pickerView">
+                                            <pickerView hidden="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXR-Hi-LVD" userLabel="pickerView">
                                                 <rect key="frame" x="245" y="63" width="415" height="216"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <connections>
@@ -853,14 +845,26 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
+                                    <pickerView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xsk-t6-a04">
+                                        <rect key="frame" x="525" y="273" width="119" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                                        </accessibility>
+                                        <connections>
+                                            <outlet property="dataSource" destination="aqs-Wn-0aU" id="VjR-Z6-8OD"/>
+                                            <outlet property="delegate" destination="aqs-Wn-0aU" id="YU0-mz-sH2"/>
+                                        </connections>
+                                    </pickerView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Red - C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bw9-4R-gzV">
+                                        <rect key="frame" x="320" y="315" width="120" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="iFm-zS-Fze" firstAttribute="leading" secondItem="xKL-3D-TgW" secondAttribute="leading" constant="50" id="2UR-cc-44C"/>
-                                    <constraint firstItem="Bw9-4R-gzV" firstAttribute="leading" secondItem="iFm-zS-Fze" secondAttribute="trailing" constant="175" id="Oa3-r3-4z9"/>
-                                    <constraint firstItem="xKL-3D-TgW" firstAttribute="bottom" secondItem="iFm-zS-Fze" secondAttribute="bottom" constant="5" id="iI0-gv-0DX"/>
-                                    <constraint firstItem="xKL-3D-TgW" firstAttribute="bottom" secondItem="Bw9-4R-gzV" secondAttribute="bottom" constant="5" id="udL-zY-VbY"/>
-                                </constraints>
                                 <viewLayoutGuide key="safeArea" id="xKL-3D-TgW"/>
                             </view>
                         </subviews>
@@ -878,14 +882,15 @@
                         <outlet property="numberToPurchaseField" destination="EW6-Tx-IU7" id="0IX-AN-P8s"/>
                         <outlet property="pickerView" destination="uXR-Hi-LVD" id="TwV-Za-DJs"/>
                         <outlet property="popUpMenu2" destination="SPa-uZ-Ccg" id="iaN-ZD-Yue"/>
-                        <outlet property="soldTicketCounterSmall" destination="iFm-zS-Fze" id="0zH-JH-tMC"/>
+                        <outlet property="rightID" destination="eme-G2-MyV" id="7iI-j3-7bT"/>
+                        <outlet property="soldPicker" destination="Xsk-t6-a04" id="BQz-N8-xV2"/>
+                        <outlet property="soldpicker2" destination="JSu-3w-AWW" id="NwN-JC-kAl"/>
                         <outlet property="textInteractField" destination="yu3-xr-vr3" id="dWE-eW-p0k"/>
                         <outlet property="ticketGoal" destination="oif-Al-Ney" id="sl3-9s-UBY"/>
                         <outlet property="ticketIdentifier" destination="Bw9-4R-gzV" id="xwQ-Mn-VRD"/>
                         <outlet property="ticketLabel" destination="bv5-Gq-OgD" id="Kc5-p0-Ua7"/>
                         <outlet property="ticketName" destination="Ca6-Ue-mnb" id="udR-ha-H31"/>
                         <outlet property="ticketsField" destination="oif-Al-Ney" id="LVi-Bp-Q9b"/>
-                        <outlet property="ticketsSoldCounter" destination="kSn-cL-GYk" id="e2m-UI-mP0"/>
                         <outlet property="totalCost" destination="uGs-eZ-xfT" id="Zjj-Sy-NJF"/>
                         <outlet property="userguide" destination="PFJ-51-9oo" id="iA1-BZ-kD4"/>
                         <outlet property="winnerField" destination="Ere-YP-0G2" id="RKW-gE-rui"/>
@@ -1000,7 +1005,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56l-Dw-fDr">
                                 <rect key="frame" x="641" y="113" width="243" height="189"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="82"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="82"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1178,18 +1183,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gjy-bW-OOp">
-                                        <rect key="frame" x="94" y="352.5" width="31" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Red - C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jo8-RW-P6j">
-                                        <rect key="frame" x="300" y="352.5" width="58.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <textField opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="psE-Tc-OtK">
                                         <rect key="frame" x="220" y="50" width="205" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1228,13 +1221,6 @@
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="R" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKV-W5-bnL">
                                         <rect key="frame" x="729" y="304" width="61" height="39"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rh-17-F9V">
-                                        <rect key="frame" x="566" y="268" width="97" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="textColor"/>
@@ -1304,14 +1290,37 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <pickerView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pxn-Ck-kRz">
+                                        <rect key="frame" x="545" y="271" width="119" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                                        </accessibility>
+                                        <connections>
+                                            <outlet property="dataSource" destination="KTz-9x-PBM" id="RQ6-TH-GcJ"/>
+                                            <outlet property="delegate" destination="KTz-9x-PBM" id="eUc-xZ-pHS"/>
+                                        </connections>
+                                    </pickerView>
+                                    <pickerView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n9U-9A-u57">
+                                        <rect key="frame" x="145" y="295" width="115" height="56"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                                        </accessibility>
+                                        <connections>
+                                            <outlet property="dataSource" destination="KTz-9x-PBM" id="9dy-eE-4rN"/>
+                                            <outlet property="delegate" destination="KTz-9x-PBM" id="WOE-n0-HYB"/>
+                                        </connections>
+                                    </pickerView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Red - C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jo8-RW-P6j">
+                                        <rect key="frame" x="319" y="313" width="120" height="20.5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="Gjy-bW-OOp" firstAttribute="leading" secondItem="Nx7-Io-LOa" secondAttribute="leading" constant="50" id="6cQ-sv-H8r"/>
-                                    <constraint firstItem="Nx7-Io-LOa" firstAttribute="bottom" secondItem="jo8-RW-P6j" secondAttribute="bottom" constant="20" id="71k-Kf-z7X"/>
-                                    <constraint firstItem="jo8-RW-P6j" firstAttribute="leading" secondItem="Gjy-bW-OOp" secondAttribute="trailing" constant="175" id="H9P-MC-10p"/>
-                                    <constraint firstItem="Nx7-Io-LOa" firstAttribute="bottom" secondItem="Gjy-bW-OOp" secondAttribute="bottom" constant="20" id="Qib-af-jb8"/>
-                                </constraints>
                                 <viewLayoutGuide key="safeArea" id="Nx7-Io-LOa"/>
                             </view>
                             <view hidden="YES" alpha="0.89999997615814209" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LbM-IX-hPl">
@@ -1359,7 +1368,7 @@
                                             <action selector="confirmDetailsButton:" destination="KTz-9x-PBM" eventType="touchUpInside" id="lqN-8R-8rE"/>
                                         </connections>
                                     </button>
-                                    <pickerView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ilb-vg-jaB" userLabel="pickerView">
+                                    <pickerView hidden="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ilb-vg-jaB" userLabel="pickerView">
                                         <rect key="frame" x="245" y="63" width="415" height="216"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <connections>
@@ -1398,12 +1407,13 @@
                         <outlet property="endConField" destination="mGu-mC-m4b" id="jLZ-Rq-Xbg"/>
                         <outlet property="firstColourBar" destination="2Db-LO-Add" id="yFT-Vl-6BL"/>
                         <outlet property="imageView" destination="AZT-9C-cx8" id="ZWm-Gg-m3q"/>
+                        <outlet property="loneID" destination="eKV-W5-bnL" id="B4C-Aw-PZx"/>
                         <outlet property="popUpTitle" destination="omJ-Fb-LgR" id="4Ey-LA-ZhB"/>
                         <outlet property="popUpView" destination="LbM-IX-hPl" id="ljF-ub-HEp"/>
                         <outlet property="secondColourBar" destination="OW5-oa-5Lk" id="vrn-Lr-D1o"/>
                         <outlet property="settingsID" destination="jo8-RW-P6j" id="Abb-TZ-y6g"/>
-                        <outlet property="soldTicketCounterBig" destination="8rh-17-F9V" id="q8R-VC-dCB"/>
-                        <outlet property="soldTicketCounterSmall" destination="Gjy-bW-OOp" id="nTP-qY-ziM"/>
+                        <outlet property="soldPicker1" destination="pxn-Ck-kRz" id="Cbs-Nm-e6f"/>
+                        <outlet property="soldPicker2" destination="n9U-9A-u57" id="1eG-kb-T8l"/>
                         <outlet property="ticketTitle" destination="YsH-2w-Kpk" id="pBr-LY-3YZ"/>
                     </connections>
                 </viewController>
@@ -1455,7 +1465,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ARZ-li-xpc"/>
+        <segue reference="AaU-b7-Htf"/>
+        <segue reference="2Sc-Sh-C6u"/>
         <segue reference="SOg-Cx-aNU"/>
         <segue reference="Aw6-Xc-NeD"/>
     </inferredMetricsTieBreakers>
