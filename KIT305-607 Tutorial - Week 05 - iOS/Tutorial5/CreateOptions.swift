@@ -2,8 +2,8 @@
 //  CreateOptions.swift
 //  Tutorial5
 //
-//  Created by Fiona Colbert on 30/4/20.
-//  Copyright © 2020 Lindsay Wells. All rights reserved.
+//  Created by Will Colbert on 30/4/20.
+//  Copyright © 2020 Will Colbert. All rights reserved.
 //
 
 import Foundation

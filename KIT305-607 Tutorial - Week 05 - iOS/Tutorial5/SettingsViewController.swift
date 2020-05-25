@@ -3,7 +3,7 @@
 //  Tutorial5
 //
 //  Created by Will Colbert on 25/4/20.
-//  Copyright © 2020 Lindsay Wells. All rights reserved.
+//  Copyright © 2020 Will Colbert. All rights reserved.
 //
 
 import UIKit

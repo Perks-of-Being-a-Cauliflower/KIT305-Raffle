@@ -2,8 +2,8 @@
 //  Customer.swift
 //  Tutorial5
 //
-//  Created by Liam kenna on 3/5/20.
-//  Copyright © 2020 Lindsay Wells. All rights reserved.
+//  Created by Liam Kenna on 3/5/20.
+//  Copyright © 2020 Liam Kenna. All rights reserved.
 //
 
 import Foundation

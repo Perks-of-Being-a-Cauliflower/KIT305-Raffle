@@ -3,7 +3,7 @@
 //  Tutorial5
 //
 //  Created by Will Colbert on 25/4/20.
-//  Copyright © 2020 Lindsay Wells. All rights reserved.
+//  Copyright © 2020 Will Colbert. All rights reserved.
 //
 
 import UIKit
@@ -171,6 +171,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                         title: "Return",
                         style: .default,
                         handler: nil))
+                    ableToClose = true
                     self.present(alert, animated: true, completion: nil)
                 }
             
@@ -582,7 +583,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 
                 self.performSegue(withIdentifier: "returnToLibraryPostDeletion", sender: self)
                 
-                self.tabBarController!.selectedIndex = 1
+                //self.tabBarController!.selectedIndex = 1
                 
                 return
             }))

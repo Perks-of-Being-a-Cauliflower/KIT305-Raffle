@@ -2,8 +2,8 @@
 //  EditTicketController.swift
 //  Tutorial5
 //
-//  Created by Fiona Colbert on 24/5/20.
-//  Copyright © 2020 Lindsay Wells. All rights reserved.
+//  Created by Will Colbert on 24/5/20.
+//  Copyright © 2020 Will Colbert. All rights reserved.
 //
 
 import UIKit
