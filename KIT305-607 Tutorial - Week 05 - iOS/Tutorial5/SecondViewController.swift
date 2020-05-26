@@ -24,7 +24,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var nameFromPreviousView: String?
     var idFromPreviousView: Int32 = 0
     var colourFromPreviousView: UIColor? = UIColor.red
-    var  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+    var  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase2")
     var winner: Customer?
     var allTickets: [Customer] = []
     var ticketsToSell: Set<Int> = []
@@ -75,7 +75,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         if pickerView.tag == 1 {
             return NSAttributedString(string: tPicker[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         } else if pickerView.tag == 2 {
-            print("row is: ", nPicker[row])
             let intCompare: Int = nPicker[row]
             let intCompString = String(intCompare)
             let finalString: String
@@ -89,7 +88,6 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 } else {
                 finalString = intCompString
             }
-            print("final string is: ", finalString)
             return NSAttributedString(string: finalString, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         } else {
             return NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
@@ -240,9 +238,10 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     
     override func viewWillAppear(_ animated: Bool) {
-        let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+        let  database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase2")
         let ticket = database.selectTicketBy(id: idFromPreviousView)
         ticketData = ticket
+        print("image coming out is: ", ticket!.image.prefix(40))
         if(ticket == nil){
             print("ticket nil")
             self.performSegue(withIdentifier: "returnToCreatePageIfNoTicket", sender: self)
@@ -443,7 +442,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func AddCustomerConfirmed(){
-        let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+        let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase2")
         
         if(ticketData == nil){
             print("found lost name")

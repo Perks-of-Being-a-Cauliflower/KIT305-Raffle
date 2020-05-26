@@ -13,7 +13,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     // a handle to the database itself
     // you can switch databases or create new blank ones by changing databaseName
-    var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+    var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase2")
     
     @IBOutlet weak var titleField: UILabel!
     @IBOutlet weak var raffleCID: UILabel!
@@ -63,7 +63,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func imagePickerController(_ picker: UIImagePickerController,
     didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
     {
-        print("first")
         if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.editedImage.rawValue)] as? UIImage
         {
             //print("image is: ", image)

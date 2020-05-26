@@ -28,7 +28,7 @@ class EditTicketController: UIViewController {
     @IBOutlet weak var editCustField: UITextField!
     
     
-    var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+    var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase2")
     
     override func viewDidLoad() {
         super.viewDidLoad()

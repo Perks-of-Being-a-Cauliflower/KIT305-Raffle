@@ -34,7 +34,7 @@ class CustomerUITableViewCell: UITableViewCell {
         }))
         
         alert.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { action in
-            let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+            let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase2")
             database.deleteCustomer(id: self.specificCustomerTicketID)
             let ticket = database.selectTicketBy(id: self.specificTicketID)
             print("updating database: \(ticket!.ID) | \(ticket!.soldTickets-1)")

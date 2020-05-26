@@ -16,14 +16,16 @@ class TicketUICollectionViewController: UICollectionViewController {
     @IBOutlet var emptyLibraryWindow: UIView!
     
     var tickets = [Ticket]()
+    var database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase2")
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
+        
 
         tickets = database.selectAllTickets()
+        
         if(tickets.count <= 0){
             emptyLibraryWindow.isHidden = false
         }else{
@@ -32,7 +34,6 @@ class TicketUICollectionViewController: UICollectionViewController {
         self.navigationItem.setHidesBackButton(true, animated: true);
     }
     override func viewWillAppear(_ animated: Bool) {
-        let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
 
         tickets = database.selectAllTickets()
         
@@ -102,6 +103,7 @@ class TicketUICollectionViewController: UICollectionViewController {
             if(ticket.image != "na"){
                 ticketCell.imageField.isHidden = false
                 let newImageData = Data(base64Encoded: ticket.image)
+                print("ticket image for: ", ticket.ID, " is ", ticket.image.prefix(5))
                 //print("new data is: ", newImageData)
                 if let newImageData = newImageData {
                    ticketCell.imageField.image = UIImage(data: newImageData)

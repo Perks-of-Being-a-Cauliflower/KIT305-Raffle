@@ -20,7 +20,7 @@ class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
+        let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase2")
         
         let ticket = database.selectTicketBy(id: iDFromPreviousView)
         
@@ -34,7 +34,7 @@ class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
     
     func updateTableView() {
         print("yyyxxx")
-        let database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
+        let database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase2")
         let ticket = database.selectTicketBy(id: iDFromPreviousView)
         customers = database.selectAllCustomersFromRaffle(id: ticket!.ID)
         self.tableView.reloadData()
@@ -52,7 +52,7 @@ class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerUITableViewCell", for: indexPath) as! CustomerUITableViewCell
         
-        let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase")
+        let  database : SQLiteDatabase = SQLiteDatabase(databaseName: "MyDatabase2")
         ticket = database.selectTicketBy(id: iDFromPreviousView)
         let ticketCost = ticket!.price
         

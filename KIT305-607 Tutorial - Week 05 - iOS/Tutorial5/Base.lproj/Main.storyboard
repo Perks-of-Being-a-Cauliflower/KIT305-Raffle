@@ -1406,7 +1406,6 @@
                         <outlet property="editField" destination="kLQ-40-f9L" id="uV7-1M-TSH"/>
                         <outlet property="endConField" destination="mGu-mC-m4b" id="jLZ-Rq-Xbg"/>
                         <outlet property="firstColourBar" destination="2Db-LO-Add" id="yFT-Vl-6BL"/>
-                        <outlet property="imageView" destination="AZT-9C-cx8" id="ZWm-Gg-m3q"/>
                         <outlet property="loneID" destination="eKV-W5-bnL" id="B4C-Aw-PZx"/>
                         <outlet property="popUpTitle" destination="omJ-Fb-LgR" id="4Ey-LA-ZhB"/>
                         <outlet property="popUpView" destination="LbM-IX-hPl" id="ljF-ub-HEp"/>
@@ -1415,6 +1414,7 @@
                         <outlet property="soldPicker1" destination="pxn-Ck-kRz" id="Cbs-Nm-e6f"/>
                         <outlet property="soldPicker2" destination="n9U-9A-u57" id="1eG-kb-T8l"/>
                         <outlet property="ticketTitle" destination="YsH-2w-Kpk" id="pBr-LY-3YZ"/>
+                        <outlet property="updateImageViewer" destination="AZT-9C-cx8" id="Pwd-Pi-76B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jAd-A1-3pZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1465,10 +1465,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="AaU-b7-Htf"/>
         <segue reference="2Sc-Sh-C6u"/>
         <segue reference="SOg-Cx-aNU"/>
-        <segue reference="Aw6-Xc-NeD"/>
+        <segue reference="9tO-5E-7wt"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.circle.fill" catalog="system" width="128" height="121"/>

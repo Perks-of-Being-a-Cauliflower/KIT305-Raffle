@@ -26,7 +26,7 @@ class SQLiteDatabase
      
         WARNING: DOING THIS WILL WIPE YOUR DATA, unless you modify how updateDatabase() works.
      */
-    private let DATABASE_VERSION = 106
+    private let DATABASE_VERSION = 114
     
     
     
@@ -304,7 +304,7 @@ class SQLiteDatabase
             //execute
             if sqlite3_step(updateStatement) == SQLITE_DONE
             {
-                print("Successfully inserted row.")
+                print("Successfully updated row.")
             }
             else
             {
@@ -336,12 +336,12 @@ class SQLiteDatabase
         CREATE TABLE Ticket (
             ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             Open INTEGER,
-            Name CHAR(255),
-            Desc CHAR(255),
+            Name TEXT,
+            Desc TEXT,
             Margin INTEGER,
             Price DOUBLE,
-            IDLetter CHAR(255),
-            Colour CHAR(255),
+            IDLetter TEXT,
+            Colour TEXT,
             MaxTickets INTEGER,
             SoldTickets INTEGER,
             Image TEXT
@@ -597,18 +597,24 @@ class SQLiteDatabase
     
     func updateTicketImage(ticketID:Int32, newString:String){
         //check for other tickets with name.
-        
-        //print("id is " + String(ticketID))
-        print("update ticket image " + String(newString))
+        /*
         
         let updateStatementQuery = "UPDATE Ticket SET Image = ? WHERE ID = ?;"
-        //let newUpdateStatement = "UPDATE .... SET Name = ? .... WHERE ID = ?"
         updateWithQuery(updateStatementQuery,
                         bindingFunction: { (updateStatement) in
                             sqlite3_bind_text(updateStatement, 1, newString, -1, nil)
                             sqlite3_bind_int(updateStatement, 2, ticketID)
                             
         })
+ */
+        let updateStatementQuery = "UPDATE Ticket SET Image = \"\(newString)\" WHERE ID = \(ticketID);"
+        updateWithQuery(updateStatementQuery,
+                        bindingFunction: { (updateStatement) in
+                            
+                            
+        })
+ 
+
     }
         
      func updateTicketDesc(ticketID:Int32, newString:String){
@@ -668,22 +674,10 @@ class SQLiteDatabase
                             
         })
     }
-        
+        /*
     func updateTicketInfo(ticket:Ticket){
         
         print("update ticket not called ")
-        //let updateStatementQuery = "UPDATE Ticket SET soldTickets = " + String(newNum) + " WHERE id = " + String(ticketID) + ";"
-        
-        //let updateStatementQuery = "UPDATE Ticket SET open = " + ticket.open + ", name = " + ticket.name + ", desc = " + ticket.desc + ", margin = " + ticket.margin + ", price = " + ticket.price + ", iDLetter = " + ticket.iDLetter + ", colour = " + ticket.colour + ", maxTickets = " + ticket.maxTickets + ", soldTickets = " + ticket.soldTickets + " WHERE id = " + ticket.ID + ";"
-        
-        //let updateStatementQuery = "UPDATE Ticket SET open = " + ticket.open + ", name = " + ticket.name + ", desc = " + ticket.desc + ", margin = " + ticket.margin + ", price = " + ticket.price + ", iDLetter = " + ticket.iDLetter + ", colour = " + ticket.colour + ", maxTickets = " + ticket.maxTickets + " WHERE id = " + ticket.ID + ";"
-        
-        /*let updateStatementQuery = "UPDATE Ticket SET open = " + ticket.open + ", name = " + ticket.name + ", desc = " + ticket.desc
-            
-            updateStatementQuery += ", margin = " + ticket.margin + ", price = " + ticket.price + ", iDLetter = " + ticket.iDLetter
-        
-            updateStatementQuery += ", colour = " + ticket.colour + ", maxTickets = " + ticket.maxTickets + ", soldTickets = " + ticket.soldTickets + " WHERE id = " + ticket.ID + ";"
-        */
         
         let updateStatementQuery = "UPDATE Ticket SET open = \(ticket.open), name = '\(ticket.name)', desc = '\(ticket.desc)', margin = \(ticket.margin), price = \(ticket.price), iDLetter = '\(ticket.iDLetter)', colour = '\(ticket.colour)', maxTickets = \(ticket.maxTickets) WHERE id = \(ticket.ID);"
         
@@ -700,7 +694,7 @@ class SQLiteDatabase
                             //sqlite3_bind_int(updateStatement, 9, ticket.soldTickets)
                         })
     }
-    
+    */
     func deleteCustomer(id:Int32)
     {
         //var result = [Customer]()

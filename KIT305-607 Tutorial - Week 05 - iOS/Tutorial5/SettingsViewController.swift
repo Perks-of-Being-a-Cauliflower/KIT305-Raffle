@@ -10,13 +10,14 @@ import UIKit
 
 class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    @IBOutlet var imageView: UIImageView!
+ 
+    @IBOutlet weak var updateImageViewer: UIImageView!
     @IBOutlet var ticketTitle: UILabel!
     var nameFromPreviousView: String?
     var idFromPreviousView: Int32 = 0
     var ticketData: Ticket?
     var ticketID: Int32 = 0
-    var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
+    var database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase2")
     @IBOutlet weak var settingsID: UILabel!
     @IBOutlet weak var endConField: UITextField!
     @IBOutlet weak var descriptionField: UITextField!
@@ -53,7 +54,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         if pickerView.tag == 1 {
             return NSAttributedString(string: cPicker[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         } else if pickerView.tag == 2 {
-            print("row is: ", nPicker[row])
             let intCompare: Int = nPicker[row]
             let intCompString = String(intCompare)
             let finalString: String
@@ -67,7 +67,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 } else {
                 finalString = intCompString
             }
-            print("final string is: ", finalString)
             return NSAttributedString(string: finalString, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         } else {
             return NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
@@ -95,7 +94,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView.tag == 2 {
+        if pickerView.tag == 1 {
         editColour.text = cPicker[row]
         let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
         UIColor.orange, "Blue": UIColor.blue,"Green":
@@ -237,10 +236,10 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             let newImageData = Data(base64Encoded: ticketData!.image)
             //print("new data is: ", newImageData)
             if let newImageData = newImageData {
-               imageView.image = UIImage(data: newImageData)
+               updateImageViewer.image = UIImage(data: newImageData)
             }
         }else{
-            imageView.image = nil
+            updateImageViewer.image = nil
         }
     }
     
@@ -249,7 +248,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let ticket = database.selectTicketBy(id: idFromPreviousView)
         ticketID = ticket!.ID
         ticketData = ticket
-        ticketID = ticket!.ID
         
         ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldPicker1)
         ticketTicker(targetField: ticketData!, array: nPicker, targetPicker: soldPicker2)
@@ -261,10 +259,10 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             let newImageData = Data(base64Encoded: ticketData!.image)
             //print("new data is: ", newImageData)
             if let newImageData = newImageData {
-               imageView.image = UIImage(data: newImageData)
+               updateImageViewer.image = UIImage(data: newImageData)
             }
         }else{
-            imageView.image = nil
+            updateImageViewer.image = nil
         }
         
     }
@@ -272,20 +270,26 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func imagePickerController(_ picker: UIImagePickerController,
        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
        {
-           print("first")
            if let image = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.editedImage.rawValue)] as? UIImage
            {
-                imageView.contentMode = .scaleAspectFit
-                imageView.image = image
-               
-                dismiss(animated: true, completion: nil)
-               
-                let imageData = image.jpegData(compressionQuality: 0)
-                let imageBase64String = imageData!.base64EncodedString()
-                print("wew " + String(ticketID))
-                let database : SQLiteDatabase = SQLiteDatabase(databaseName:"MyDatabase")
-                database.updateTicketImage(ticketID: ticketID, newString: imageBase64String)
-                print("weeew " + String(ticketID))
+            
+            updateImageViewer.contentMode = .scaleAspectFit
+            updateImageViewer.image = image
+            
+            
+            dismiss(animated: true, completion: nil)
+            
+            let image : UIImage = updateImageViewer.image!
+            let imageData = image.pngData()
+            let imageBase64String = imageData!.base64EncodedString()
+            imageSTR64 = imageBase64String
+            print("ticket id going in: ", ticketID)
+            print("image going in is: ", imageBase64String.prefix(40))
+            //database.updateTicketImage(ticketID: ticketID, newString: "test")
+            database.updateTicketImage(ticketID: ticketID, newString: imageBase64String)
+            ticketData = database.selectTicketBy(id: ticketID)!
+            print("image coming out is: ", ticketData!.image.prefix(40))
+            print("ticket id coming out: ", ticketData!.ID)
            }
        }
        
@@ -309,12 +313,11 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         if segue.identifier == "TransferTicketArchive"
         {
-            print("zing!")
-            
             let nextScreen = segue.destination as! CustomerUITableViewController
             
             nextScreen.iDFromPreviousView = idFromPreviousView
