@@ -181,8 +181,18 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         } else if returnField == "Edit Raffle Ticket Goal: " {
             editField.isHidden = true
             let newName: String? = editField.text
-            endConField.text = newName
-            database.updateMaxTickets(ticketID: ticketID, newNum: Int32(newName!)!)
+            if Int(newName!)! < Int(ticketData!.maxTickets) {
+                let alert = UIAlertController(title: "Whoops!", message: "Max Tickets Must Be Greater Than Tickets Sold!", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true)
+                popUpView.isHidden = true
+                return
+            } else {
+                endConField.text = newName
+                database.updateMaxTickets(ticketID: ticketID, newNum: Int32(newName!)!)
+            }
             editField.keyboardType = UIKeyboardType.default
         } else if returnField == "Edit Colour: " {
             colourPickerView.isHidden = true
