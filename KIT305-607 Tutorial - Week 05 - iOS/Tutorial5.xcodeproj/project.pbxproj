@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		294DCDA8247A047F007D90D5 /* EditTicketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DCDA7247A047F007D90D5 /* EditTicketController.swift */; };
 		296C52DA2453D7C80012CADE /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296C52D92453D7C80012CADE /* SecondViewController.swift */; };
-		29EFFD2C245AB1AC003FFA87 /* CreateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EFFD2B245AB1AC003FFA87 /* CreateOptions.swift */; };
 		8F0D36A4245CEA3C00D619E6 /* Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36A3245CEA3C00D619E6 /* Ticket.swift */; };
 		8F0D36A8245CF85100D619E6 /* TicketUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36A7245CF85100D619E6 /* TicketUICollectionViewCell.swift */; };
 		8F0D36AE245D02FB00D619E6 /* TicketUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0D36AD245D02FB00D619E6 /* TicketUICollectionViewController.swift */; };
@@ -29,7 +28,6 @@
 /* Begin PBXFileReference section */
 		294DCDA7247A047F007D90D5 /* EditTicketController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTicketController.swift; sourceTree = "<group>"; };
 		296C52D92453D7C80012CADE /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
-		29EFFD2B245AB1AC003FFA87 /* CreateOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOptions.swift; sourceTree = "<group>"; };
 		8F0D36A3245CEA3C00D619E6 /* Ticket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticket.swift; sourceTree = "<group>"; };
 		8F0D36A7245CF85100D619E6 /* TicketUICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketUICollectionViewCell.swift; sourceTree = "<group>"; };
 		8F0D36AD245D02FB00D619E6 /* TicketUICollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketUICollectionViewController.swift; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 				D3290753221FAC6800D31C68 /* AppDelegate.swift */,
 				D3290755221FAC6800D31C68 /* ViewController.swift */,
 				D3290757221FAC6800D31C68 /* Main.storyboard */,
-				29EFFD2B245AB1AC003FFA87 /* CreateOptions.swift */,
 				8F62BDA72454FEAF0023E0D9 /* SettingsViewController.swift */,
 				296C52D92453D7C80012CADE /* SecondViewController.swift */,
 				D329075A221FAC6800D31C68 /* Assets.xcassets */,
@@ -180,7 +177,6 @@
 				8F0D36A4245CEA3C00D619E6 /* Ticket.swift in Sources */,
 				8F611F362466530300D0CC5E /* CustomerUITableViewController.swift in Sources */,
 				294DCDA8247A047F007D90D5 /* EditTicketController.swift in Sources */,
-				29EFFD2C245AB1AC003FFA87 /* CreateOptions.swift in Sources */,
 				8F0D36AE245D02FB00D619E6 /* TicketUICollectionViewController.swift in Sources */,
 				8F68A0EC245E37F000026D5D /* Customer.swift in Sources */,
 				D3290754221FAC6800D31C68 /* AppDelegate.swift in Sources */,

@@ -58,7 +58,7 @@ class CustomerUITableViewController: UITableViewController, CustomCellUpdater {
         
         
         
-        
+        // sorting code reference https://stackoverflow.com/questions/26719744/swift-sort-array-of-objects-alphabetically
         orderList = customers.sorted(by: { $0.ticketNum > $1.ticketNum})
         customer = orderList[(orderList.count-1) - indexPath.row] //displays most recently added ticket at top.
         

@@ -45,11 +45,11 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     private let cPicker = ["Red", "Blue", "Green", "Yellow", "Brown", "Pink", "Orange"]
     private let nPicker = Array(0...999)
     
-    
+    // see viewController for pickerView References
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+    // see viewController for pickerView References
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         if pickerView.tag == 1 {
             return NSAttributedString(string: cPicker[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
@@ -72,14 +72,14 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             return NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         }
     }
-    
+    // see viewController for pickerView References
     func ticketTicker(targetField: Ticket, array: [Int], targetPicker: UIPickerView) {
         let finder = array.firstIndex(of: Int(targetField.soldTickets))
             targetPicker.selectRow(finder!, inComponent: 0, animated: true)
             return
     }
     
-    
+    // see viewController for pickerView References
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
             if pickerView.tag == 1 {
                 return cPicker.count
@@ -87,12 +87,13 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 return nPicker.count
             }
     }
+    // see viewController for pickerView References
     func rowSelecter(targetField: UITextField, array: [String], targetPicker: UIPickerView) {
         let finder = array.firstIndex(of: targetField.text!)
             targetPicker.selectRow(finder!, inComponent: 0, animated: false)
             return
     }
-    
+    // see viewController for pickerView References
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == 1 {
         editColour.text = cPicker[row]
@@ -266,7 +267,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
         
     }
-    
+    // image controller stuff used from IOS week 7 Lecture
     func imagePickerController(_ picker: UIImagePickerController,
        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
        {
@@ -278,7 +279,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             
             
             dismiss(animated: true, completion: nil)
-            
+            // string decompression/decoding reference https://stackoverflow.com/questions/11251340/convert-between-uiimage-and-base64-string
             let image : UIImage = updateImageViewer.image!
             let imageData = image.pngData()
             let imageBase64String = imageData!.base64EncodedString()

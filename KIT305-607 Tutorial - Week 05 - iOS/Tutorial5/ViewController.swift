@@ -44,7 +44,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     let rID = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
 
     
-    
+    // Week 7 IOS Lecture code
     @IBAction func uploadPhoto(_ sender: Any) {
         if
         UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
@@ -60,6 +60,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    // Week 7 IOS Lecture code
     func imagePickerController(_ picker: UIImagePickerController,
     didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
     {
@@ -71,7 +72,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             
             dismiss(animated: true, completion: nil)
-            
+            // String compression reference https://stackoverflow.com/questions/11251340/convert-between-uiimage-and-base64-string
             let image : UIImage = imageView.image!
             let imageData = image.jpegData(compressionQuality: 0)
             let imageBase64String = imageData!.base64EncodedString()
@@ -79,22 +80,25 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
  
         }
     }
-    
+    // Week 7 IOS Lecture code
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
     {
         dismiss(animated: true, completion: nil)
     }
     
+    // Tutorial used for pickerView functionality https://www.youtube.com/watch?v=tGr7qsKGkzY
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    //defualt row selection code used from https://stackoverflow.com/questions/25917693/swift-how-to-set-a-default-value-of-a-uipickerview-with-three-components-in-swi
     func rowSelecter(targetField: UITextField, array: [String], targetPicker: UIPickerView) {
         let finder = array.firstIndex(of: targetField.text!)
             targetPicker.selectRow(finder ?? 0, inComponent: 0, animated: false)
             return
     }
     
+    // change picker view colour code used at https://stackoverflow.com/questions/25900632/how-do-i-change-the-text-color-of-uipickerview-with-multiple-components-in-swift
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         if pickerView.tag == 5 {
             return NSAttributedString(string: rID[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
@@ -104,7 +108,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     }
     
-    
+// see above for reference
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == 5 {
             return rID.count
@@ -114,6 +118,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     }
     
+    // see above for reference
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == 5 {
             idfield.text = rID[row]
@@ -149,22 +154,23 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         desField.resignFirstResponder()
         ticketPrice.resignFirstResponder()
         endCon.resignFirstResponder()
-        if let opt = Options(tag: sender.tag) {
-            //print (opt.options)
-            titleField.text = opt.options
+            
             if sender.tag == 1 {
+                titleField.text = "Name:"
                 confirmedName.isUserInteractionEnabled = true
                 confirmedName.isHidden = false
                 confirmedName.becomeFirstResponder()
                 let temp: String? = chosenNameField.text
                 confirmedName.text = temp
             } else if sender.tag == 2 {
+                titleField.text = "Description:"
                 descriptInput.isUserInteractionEnabled = true
                 descriptInput.isHidden = false
                 descriptInput.becomeFirstResponder()
                 let temp: String? = desField.text
                 descriptInput.text = temp
             } else if sender.tag == 3 {
+                titleField.text = "Price:"
                 confirmedName.keyboardType = UIKeyboardType.numberPad
                 confirmedName.isUserInteractionEnabled = true
                 confirmedName.isHidden = false
@@ -172,6 +178,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 let temp: String? = ticketPrice.text
                 confirmedName.text = temp
             } else if sender.tag == 4 {
+                titleField.text = "Enter Ticket Sell Limit:"
                 confirmedName.keyboardType = UIKeyboardType.numberPad
                 confirmedName.isUserInteractionEnabled = true
                 confirmedName.isHidden = false
@@ -179,16 +186,17 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 let temp: String? = endCon.text
                 confirmedName.text = temp
             } else if sender.tag == 5 {
+                titleField.text = "Raffle ID:"
                 iDPicker.isHidden = false
                 iDPicker.becomeFirstResponder()
                 rowSelecter(targetField: idfield, array: rID, targetPicker: iDPicker)
             } else if sender.tag == 6 {
+                titleField.text = "Raffle Colour:"
                 colourPicker.isHidden = false
                 colourPicker.becomeFirstResponder()
                 rowSelecter(targetField: colourField, array: rColour, targetPicker: colourPicker)
             }
             popUpView.isHidden = false
-        }
         
        
     }
@@ -356,6 +364,28 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
     } }
+    
+    
+    @IBAction func cancelRaffleCreation(_ sender: Any) {
+        chosenNameField.text = ""
+        desField.text = ""
+        ticketPrice.text = ""
+        idfield.text = "A"
+        colourField.text = "Red"
+        endCon.text = ""
+        raffleCID.text = idfield.text! + " - " + colourField.text!
+        let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
+        UIColor.orange, "Blue": UIColor.blue,"Green":
+        UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
+        "Pink": UIColor.systemPink]
+        colourBar1.backgroundColor = colors[colourField.text!]
+        colourBar2.backgroundColor = colors[colourField.text!]
+        marginSwitch.setOn(false, animated: false)
+        
+        imageSTR64 = nil
+        imageView.image = nil
+    }
+    
     // MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()

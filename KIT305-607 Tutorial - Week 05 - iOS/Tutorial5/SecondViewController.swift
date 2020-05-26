@@ -55,25 +55,31 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     var ableToClose = false
     
-    private let tPicker = ["1", "2", "3", "4", "5", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
+    private let tPicker = Array(1...100)
     
     private let nPicker = Array(0...999)
 
-    
+    // see viewController.swift for pickerView References
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+    // see viewController.swift for pickerView References
     func ticketTicker(targetField: Ticket, array: [Int], targetPicker: UIPickerView) {
         let finder = array.firstIndex(of: Int(targetField.soldTickets))
             targetPicker.selectRow(finder!, inComponent: 0, animated: true)
             return
     }
-    
+    // see viewController.swift for pickerView References
+    func ticketPickerSet(targetField: UITextField, array: [Int], targetPicker: UIPickerView) {
+        let finder = array.firstIndex(of: Int(targetField.text!)!)
+            targetPicker.selectRow(finder!, inComponent: 0, animated: false)
+            return
+    }
+    // see viewController.swift for pickerView References
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent
         component: Int) -> NSAttributedString? {
         if pickerView.tag == 1 {
-            return NSAttributedString(string: tPicker[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+            return NSAttributedString(string: String(tPicker[row]), attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         } else if pickerView.tag == 2 {
             let intCompare: Int = nPicker[row]
             let intCompString = String(intCompare)
@@ -95,7 +101,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     }
     
-    
+    // see viewController.swift for pickerView References
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == 1 {
             return tPicker.count
@@ -103,10 +109,10 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             return nPicker.count
         }
     }
-    
+    // see viewController.swift for pickerView References
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == 1 {
-        numberToPurchaseField.text = tPicker[row]
+        numberToPurchaseField.text = String(tPicker[row])
         let basePrice = Double(ticketData!.price)
         let nOfTickets = Double(numberToPurchaseField.text!)!
         let newCost = basePrice*nOfTickets
@@ -114,6 +120,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         totalCost.text = totePrice
         }
     }
+    
     
     @IBAction func drawWinner(_ sender: Any) {
         if ticketData?.margin == 1 {
@@ -288,6 +295,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             ticketName.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
             let totePrice:String = String(format:"$ %.1f", ticket!.price)
             totalCost.text = totePrice
+            // dictionary example https://developer.apple.com/documentation/swift/dictionary
             let colors : [String:UIColor] = ["White": UIColor.white, "Orange":
             UIColor.orange, "Blue": UIColor.blue,"Green":
             UIColor.green,"Red": UIColor.red,"Yellow":UIColor.yellow,"Brown": UIColor.brown,
@@ -374,7 +382,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             } else if sender.tag == 4 {
                 pickerView.isHidden = false
                 pickerView.becomeFirstResponder()
-       
+                ticketPickerSet(targetField: numberToPurchaseField, array: tPicker, targetPicker: pickerView)
                 ticketLabel.text = "Tickets to Purchase: "
             }
             popUpMenu2.isHidden = false
@@ -490,9 +498,9 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         customerName.text = ""
         customerPhone.text = ""
         customerEmail.text = ""
-        numberToPurchaseField.text = tPicker[0]
+        numberToPurchaseField.text = String(tPicker[0])
     }
-    
+    // I am very proud of this function
     func ticketAdd ()-> Int {
            allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
             newSet.removeAll()
@@ -513,6 +521,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
            return 0
        }
     
+    // Sets are the best
     func marginRand ()-> Int {
         allTickets = database.selectAllCustomersFromRaffle(id: ticketData!.ID)
         for i in 1 ... ticketData!.maxTickets {
